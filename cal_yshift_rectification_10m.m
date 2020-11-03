@@ -18,8 +18,8 @@ folder_path='C:\Users\ASUS\Desktop\徐工双目素材\';
 % I2 = imread([folder_path,'R2.png']);
 
 % right image 2:right image
-I1 = imread([folder_path,'L3.bmp']);
-I2 = imread([folder_path,'R3.bmp']);
+I1 = imread([folder_path,'L4.bmp']);
+I2 = imread([folder_path,'R4.bmp']);
 
 disp(' ')
 disp('...')
