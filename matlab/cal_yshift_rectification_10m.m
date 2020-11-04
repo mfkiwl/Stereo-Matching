@@ -46,16 +46,15 @@ title('Original Image')
 %whether to excute ROI definition
 [bool_AB,bool_BC,bool_CA]=calculation_decision_roi(imagePoints,index_A,index_B,index_C);
 
-if not(bool_AB&bool_BC&bool_CA)|(size(imagePoints ,1)==0)
+if not(bool_AB&bool_BC&bool_CA)||(size(imagePoints ,1)==0)
     
-    %ROI from left image
-    ROI_left = calculation_boundary_roi(image_left);
-    ROI_right = calculation_boundary_roi(image_right);
+    %ROI from left and right image
+    [ROI_left,boundary_left]=calculation_boundary_roi(image_left);
+    [ROI_right,boundary_right]=calculation_boundary_roi(image_right);
 
-    [ROI_A_new,ROI_B_new] = calculation_combination_roi(ROI_A,ROI_B)
+    [ROI_left_new,ROI_right_new] = calculation_combination_roi(ROI_left,ROI_right)
     
-    imagePoints  = detectCheckerboardPoints(ROI_left, ROI_right);
-    
+    imagePoints  = detectCheckerboardPoints(ROI_left_new,ROI_right_new);
     
     imagePoints([1 21 41],:,1,1)
     
