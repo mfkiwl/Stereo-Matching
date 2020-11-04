@@ -1,0 +1,17 @@
+#post-fix
+#image
+*.bmp
+*.png
+
+#matlab
+*.asv
+
+#cpp
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+
+#folder
+.vs
+x64
