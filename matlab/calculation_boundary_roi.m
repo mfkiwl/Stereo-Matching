@@ -1,25 +1,25 @@
-function [ROI,boundary] = calculation_boundary_roi(image)
+function [ROI,boundary] = calculation_boundary_roi(image,str_title)
 
 %left image
 figure;
 imshow(image);
-title('Left Image: Please define ROI whose boundary was from your click');
+title([str_title,' Image: Please define ROI whose boundary was from your click']);
 
 % define ROI boundary box from points selected
-[x,y] = ginput(4);
+[col,row] = ginput(4);
 
 % boundary coordinates
-x_min=round(min(x));
-x_max=round(max(x));
-y_min=round(min(y));
-y_max=round(max(y));
+col_min=round(min(col));
+col_max=round(max(col));
+row_min=round(min(row));
+row_max=round(max(row));
 
 close;
 
 %boundary parameter
-boundary=[y_min,y_max,x_min,x_max];
+boundary=[row_min,row_max,col_min,col_max];
 
 %determine ROI
-ROI=image(y_min:y_max,x_min:x_max);
+ROI=image(row_min:row_max,col_min:col_max);
 
 end

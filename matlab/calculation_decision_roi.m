@@ -1,4 +1,8 @@
-function [bool_AB,bool_BC,bool_CA]=calculation_decision_roi(imagePoints,index_A,index_B,index_C)
+function [bool_AB,bool_BC,bool_CA]=calculation_decision_roi(imagePoints,list_index)
+
+index_A=list_index(1);
+index_B=list_index(2);
+index_C=list_index(3);
 
 %select 3 dual points to check out
 point_A_left=imagePoints([index_A],:,1,1);

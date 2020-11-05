@@ -9,7 +9,7 @@ close all;
 % Load the stereoParameters object
 % load('AVTstereoParams.mat');
 
-%% calculate y-shift of the original stereo images
+% calculate y-shift of the original stereo images
 % test image 
 folder_path='Material\';
 
@@ -27,92 +27,142 @@ disp('......')
 disp('-- Extracting Feature Points, please wait...');
 
 %feature points index
-index_A=1;
-index_B=21;
-index_C=41;
+list_index=[1 21 41];
 
 % Detect checkerboards in images
-imagePoints  = detectCheckerboardPoints(image_left,image_right);
+image_points= detectCheckerboardPoints(image_left,image_right);
+
+image_points_left=image_points(list_index,:,1,1);
+image_points_right=image_points(list_index,:,1,2);
 
 % Visualize candidate matches
 figure;
 showMatchedFeatures(image_left,...
                     image_right,...
-                    imagePoints([index_A,index_B,index_C],:,1,1),...
-                    imagePoints([index_A,index_B,index_C],:,1,2),...
+                    image_points_left,...
+                    image_points_right,...
                     'montage');
-title('Original Image')
+title('Original Image: Feature Points Matching')
 
 %whether to excute ROI definition
-[bool_AB,bool_BC,bool_CA]=calculation_decision_roi(imagePoints,index_A,index_B,index_C);
+[bool_AB,bool_BC,bool_CA]=calculation_decision_roi(image_points,list_index);
 
 if not(bool_AB&bool_BC&bool_CA)||(size(imagePoints ,1)==0)
     
+    close
+    
     %ROI from left and right image
-    [ROI_left,boundary_left]=calculation_boundary_roi(image_left);
-    [ROI_right,boundary_right]=calculation_boundary_roi(image_right);
+    [ROI_left,boundary_left]=calculation_boundary_roi(image_left,'Left');
+    [ROI_right,boundary_right]=calculation_boundary_roi(image_right,'Right');
 
-    [ROI_left_new,ROI_right_new] = calculation_combination_roi(ROI_left,ROI_right)
+    [ROI_left_new,ROI_right_new] = calculation_combination_roi(ROI_left,ROI_right);
+
+    %relative coordinates in combination set
+    image_points_ROI= detectCheckerboardPoints(ROI_left_new,ROI_right_new);
     
-    imagePoints  = detectCheckerboardPoints(ROI_left_new,ROI_right_new);
+    %boundary parameter
+    row_min_left=boundary_left(1);
+    col_min_left=boundary_left(3);
+    row_min_right=boundary_right(1);
+    col_min_right=boundary_right(3);
     
-    imagePoints([1 21 41],:,1,1)
+    %image points from ROI
+    image_points_left=image_points_ROI(list_index,:,1,1);
+    image_points_right=image_points_ROI(list_index,:,1,2);
+    
+    %compensate the offset
+    %left image
+    image_points_left(:,1)=image_points_left(:,1)+col_min_left;
+    image_points_left(:,2)=image_points_left(:,2)+row_min_left;
+    
+    %right image
+    image_points_right(:,1)=image_points_right(:,1)+col_min_right;
+    image_points_right(:,2)=image_points_right(:,2)+row_min_right;
     
     figure;
     showMatchedFeatures(image_left,...
                         image_right,...
-                        imagePoints([index_A,index_B,index_C],:,1,1),...
-                        imagePoints([index_A,index_B,index_C],:,1,2),...
+                        image_points_left,...
+                        image_points_right,...
                         'montage');
+    title('Original Image: Feature Points Matching')
     
-    title('Left Image (ROI)')
+    % all 15x20=300 feature points
+    ptsShift = image_points_left-image_points_right;
+    shift_x_y_mean_std = [mean(ptsShift) std(abs(ptsShift))];
+
+    % offset in x and y direction
+    x_shift=shift_x_y_mean_std(1);
+    y_shift=4*round(shift_x_y_mean_std(2)/4);
+
+    [rows,cols]=size(image_left);
     
-end
-
-% all 15x20=300 feature points
-ptsShift = imagePoints(:,:,1,1)-imagePoints(:,:,1,2);
-shift_x_y_mean_std = [mean(ptsShift) std(abs(ptsShift))];
-
-%% image rectification and calculate the y-shift
-% [J1, J2] = rectifyStereoImages(I1, I2, stereoParams);
-%  
-% % Detect checkerboards in images  
-% imagePoints_rec = detectCheckerboardPoints(J1, J2);
-% % Visualize candidate matches
-% figure;
-% showMatchedFeatures(J1,J2,imagePoints_rec([1 11 21 31 41],:,1,1),imagePoints_rec([1 11 21 31 41],:,1,2),'montage');
-% % x- and y-shift 
-% ptsShift_rec = imagePoints_rec(:,:,1,1)-imagePoints_rec(:,:,1,2);
-% shift_x_y_mean_std = [mean(abs(ptsShift_rec)) std(abs(ptsShift_rec))]
-
-%% rectify in y direction
-% offset in x and y direction
-x_shift=shift_x_y_mean_std(1);
-y_shift=4*round(shift_x_y_mean_std(2)/4);
-
-[y_shape,x_shape]=size(I1);
-
-% rectify in y direction
-if y_shift>0
-   
-    K1=I1(1+y_shift:y_shape,:,:);
-    K2=I2(1:y_shape-y_shift,:,:);
+    %define rectified image points
+    image_points_left_rec=image_points_left;
+    image_points_right_rec=image_points_right;
+        
+    % rectify in y direction
+    if y_shift>0
+        
+        image_left_rec=image_left(1+y_shift:rows,:,:);
+        image_right_rec=image_right(1:rows-y_shift,:,:);
+        image_points_left_rec(:,2)=image_points_left_rec(:,2)-y_shift;
+    end
     
-end
-if y_shift<0
+    if y_shift<0
+        
+        image_left_rec=image_left(1-y_shift:rows,:,:);
+        image_right_rec=image_right(1:y_shape+rows,:,:);
+        image_points_right_rec(:,2)=image_points_right_rec(:,2)+y_shift;
+    end
     
-    K1=I1(1-y_shift:y_shape,:,:);
-    K2=I2(1:y_shape+y_shift,:,:);
+    figure;
+    
+    % Visualize candidate matches
+    showMatchedFeatures(image_left_rec,...
+                        image_right_rec,...
+                        image_points_left_rec,...
+                        image_points_right_rec,...
+                        'montage');      
+     title(['After Y-Shift Rectification:  Right image is ',num2str(abs(y_shift)),' pixels higher than left one']);
+else
 
+    % all 15x20=300 feature points
+    ptsShift = image_points_left-image_points_right;
+    shift_x_y_mean_std = [mean(ptsShift) std(abs(ptsShift))];
+
+    % offset in x and y direction
+    x_shift=shift_x_y_mean_std(1);
+    y_shift=4*round(shift_x_y_mean_std(2)/4);
+
+    [rows,cols]=size(image_left);
+
+    % rectify in y direction
+    if y_shift>0    
+        image_left_rec=image_left(1+y_shift:rows,:,:);
+        image_right_rec=image_right(1:rows-y_shift,:,:);
+    end
+    
+    if y_shift<0      
+        image_left_rec=image_left(1-y_shift:rows,:,:);
+        image_right_rec=image_right(1:y_shape+rows,:,:);     
+    end
+    
     title(['After Y-Shift Rectification:  Right image is ',num2str(abs(y_shift)),' pixels higher than left one']);
+
+    figure;
+
+    % Detect checkerboards in images
+    image_points_rec = detectCheckerboardPoints(image_left_rec,image_right_rec);
+
+    % Visualize candidate matches
+
+    showMatchedFeatures(image_left_rec,...
+                        image_right_rec,...
+                        image_points_rec(list_index,:,1,1),...
+                        image_points_rec(list_index,:,1,2),...
+                        'montage');
 end
-figure;
-
-% Detect checkerboards in images
-imagePoints_rec = detectCheckerboardPoints(K1, K2);
-% Visualize candidate matches
-
-showMatchedFeatures(K1,K2,imagePoints_rec([1 21 41],:,1,1),imagePoints_rec([1 21 41],:,1,2),'montage');
 
 if y_shift<0
     
@@ -124,7 +174,4 @@ if y_shift>0
     title(['After Y-Shift Rectification:  Right image is ',num2str(abs(y_shift)),' pixels higher than left one']);
 end
 
-% x- and y-shift 
-ptsShift_rec = imagePoints_rec(:,:,1,1)-imagePoints_rec(:,:,1,2);
-shift_x_y_mean_std = [mean(abs(ptsShift_rec)) std(abs(ptsShift_rec))];
 
