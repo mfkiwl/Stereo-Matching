@@ -9,11 +9,11 @@ Created on Thu Nov  5 14:12:53 2020
 @title：script-feature points matching
 """
 
-from matplotlib import pyplot as plt
-# from imagedt.decorator import time_cost
 import cv2
-print('cv version: ', cv2.__version__)
-#%%
+from matplotlib import pyplot as plt
+
+print('opencv version: ', cv2.__version__)
+
 def bgr_rgb(img):
     (r, g, b) = cv2.split(img)
     return cv2.merge([b, g, r])
