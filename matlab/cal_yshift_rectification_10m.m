@@ -40,7 +40,7 @@ if not(bool_AB&bool_BC&bool_CA)||(size(image_points ,1)==0)
     close
     
     %get matched points from roi definition
-    [image_points_left,image_points_right]=calculation_definition_roi(image_left,image_right,list_index);
+    [image_points_left,image_points_right]=calculation_match_points_roi(image_left,image_right,list_index)
     
     % all 15x20=300 feature points
     ptsShift = image_points_left-image_points_right;
