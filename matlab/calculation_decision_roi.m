@@ -1,17 +1,17 @@
-function [bool_AB,bool_BC,bool_CA]=calculation_decision_roi(imagePoints,list_index)
+function [bool_AB,bool_BC,bool_CA]=calculation_decision_roi(image_points_left_right,list_index)
 
 index_A=list_index(1);
 index_B=list_index(2);
 index_C=list_index(3);
 
 %select 3 dual points to check out
-point_A_left=imagePoints([index_A],:,1,1);
-point_B_left=imagePoints([index_B],:,1,1);
-point_C_left=imagePoints([index_C],:,1,1);
+point_A_left=image_points_left_right([index_A],:,1,1);
+point_B_left=image_points_left_right([index_B],:,1,1);
+point_C_left=image_points_left_right([index_C],:,1,1);
 
-point_A_right=imagePoints([index_A],:,1,2);
-point_B_right=imagePoints([index_B],:,1,2);
-point_C_right=imagePoints([index_C],:,1,2);
+point_A_right=image_points_left_right([index_A],:,1,2);
+point_B_right=image_points_left_right([index_B],:,1,2);
+point_C_right=image_points_left_right([index_C],:,1,2);
 
 %calculate the difference
 diff_A=point_A_left-point_A_right;

@@ -1,4 +1,4 @@
-function [image_points_left,image_points_right]=calculation_match_points_roi(image_left,image_right,list_index)
+function [image_points_left,image_points_right]=calculation_matched_points_roi(image_left,image_right,list_index)
 
 %init this variable
 image_points_ROI=[];
@@ -6,7 +6,7 @@ image_points_ROI=[];
 %counting the loop
 count=0;
 
-while size(image_points_ROI,1)<=max(list_index)
+while size(image_points_ROI,1)<max(list_index)
 
     if count>0
 
