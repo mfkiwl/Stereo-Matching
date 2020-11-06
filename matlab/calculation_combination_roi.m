@@ -1,3 +1,15 @@
+%--------------------------------------------------------------------------
+%{
+Definition of ROI
+
+Args:
+    ROI_A
+    ROI_B
+    
+Returns:
+    ROI_A_new
+    ROI_B_new
+%}
 function [ROI_A_new,ROI_B_new] = calculation_combination_roi(ROI_A,ROI_B)
 
 %number of row column of ROI

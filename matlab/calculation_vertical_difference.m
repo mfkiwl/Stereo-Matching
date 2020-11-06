@@ -7,4 +7,4 @@ shift_x_y_mean_std = [mean(points_shift) std(abs(points_shift))];
 
 % offset in x and y direction
 x_shift=shift_x_y_mean_std(1);
-y_shift=4*round(shift_x_y_mean_std(2)/4);
+y_shift=shift_x_y_mean_std(2);

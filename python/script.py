@@ -12,7 +12,7 @@ Created on Thu Nov  5 14:12:53 2020
 import cv2
 from matplotlib import pyplot as plt
 
-print('opencv version: ', cv2.__version__)
+print('Built with OpenCV ', cv2.__version__)
 
 def bgr_rgb(img):
     (r, g, b) = cv2.split(img)

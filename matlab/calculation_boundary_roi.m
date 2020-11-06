@@ -1,3 +1,15 @@
+%--------------------------------------------------------------------------
+%{
+Definition of ROI
+
+Args:
+    image: input image
+    str_title: string to be displayed in the screen
+    
+Returns:
+    ROI: ROI matrix
+    boundary: parameter of boundary [row_min,row_max,col_min,col_max]
+%}
 function [ROI,boundary] = calculation_boundary_roi(image,str_title)
 
 %left image

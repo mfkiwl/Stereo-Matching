@@ -1,6 +1,11 @@
-% calculate y-shift from AVT real images after rectification (for test image 01, 02, 03, 04)
-%
-% Wei, 2020-Nov-4
+%-*- coding: utf-8 -*-
+%{
+@author: Wei Huajing
+@company: KAMERAWERK
+@e-mail: jerryweihuajing@126.com
+
+@title: script-calculate y-shift from AVT real images after rectification
+%}
 
 clc;
 clear;
@@ -12,11 +17,11 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L1.png']);
-% image_right=imread([folder_path,'R1.png']);
+% image_left=imread([folder_path,'L3.png']);
+% image_right=imread([folder_path,'R3.png']);
 
-image_left = imread([folder_path,'L3.bmp']);
-image_right = imread([folder_path,'R3.bmp']);
+image_left = imread([folder_path,'L4.bmp']);
+image_right = imread([folder_path,'R4.bmp']);
 
 %feature points index
 list_index=[1 21 41];

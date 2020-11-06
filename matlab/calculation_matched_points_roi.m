@@ -24,8 +24,8 @@ while size(image_points_ROI,1)<max(list_index)
     %relative coordinates in combination set
     image_points_ROI= detectCheckerboardPoints(ROI_left_new,ROI_right_new);
 
-    disp(' ')
-    disp(['=> ',num2str(size(image_points_ROI,1)),' points detected.'])
+%     disp(' ')
+%     disp(['=> ',num2str(size(image_points_ROI,1)),' points detected.'])
 
     count=count+1;
 
