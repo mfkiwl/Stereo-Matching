@@ -1,5 +1,7 @@
 function [image_points_rec_left,image_points_rec_right]=calculation_rectified_matched_points(image_left,image_right,list_index)
 
+close
+
 %get matched points from roi definition
 image_points_matrix=calculation_matched_points(image_left,image_right,list_index);
 

@@ -1,10 +1,10 @@
-function [image_points_left_rec,image_points_rec_right]=calculation_rectified_match_points_roi(image_left,image_right,list_index)
+function [image_points_left_rec,image_points_rec_right]=calculation_rectified_matched_points_roi(image_left,image_right,list_index)
 
 title('Original Image: Feature Points Matching (Incorrect)')
 % close
 
 %get matched points from roi definition
-[image_points_left,image_points_right]=calculation_match_points_roi(image_left,image_right,list_index);
+[image_points_left,image_points_right]=calculation_matched_points_roi(image_left,image_right,list_index);
     
 y_shift=calculation_vertical_difference(image_points_left,image_points_right);
 
