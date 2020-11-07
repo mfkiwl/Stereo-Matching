@@ -1,22 +1,22 @@
-function [image_points_matrix]=calculation_matched_points(image_left,image_right,list_index)
-
-disp(' ')
-disp('...')
-disp('......')
-disp('-- Extracting Feature Points, please wait...');
+function [image_points_left,...
+          image_points_right]=calculation_matched_points(image_left,...
+                                                         image_right,...
+                                                         list_index)
 
 %detect checkerboards in images
-image_points_matrix=detectCheckerboardPoints(image_left,image_right);
+image_points_left=calculation_image_points(image_left,list_index);
+image_points_right=calculation_image_points(image_right,list_index);
 
-%init output variable
-image_points_left=image_points_matrix(list_index,:,1,1);
-image_points_right=image_points_matrix(list_index,:,1,2);
+%unvoid output
+if size(image_points_left,1)~=0&&size(image_points_right,1)~=0
 
-% Visualize candidate matches
-figure;
-showMatchedFeatures(image_left,...
-                    image_right,...
-                    image_points_left,...
-                    image_points_right,...
-                    'montage');
-title('Feature Points Matching (Original Image)')
+    % Visualize candidate matches
+    figure;
+    showMatchedFeatures(image_left,...
+                        image_right,...
+                        image_points_left,...
+                        image_points_right,...
+                        'montage');
+    title('Feature Points Matching (Original Image)')
+    
+end

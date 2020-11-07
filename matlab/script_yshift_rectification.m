@@ -17,33 +17,55 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L3.png']);
-% image_right=imread([folder_path,'R3.png']);
+% image_left=imread([folder_path,'L1.png']);
+% image_right=imread([folder_path,'R1.png']);
 
-image_left = imread([folder_path,'L4.bmp']);
-image_right = imread([folder_path,'R4.bmp']);
+image_left = imread([folder_path,'R3.bmp']);
+image_right = imread([folder_path,'L3.bmp']);
 
 %feature points index
 list_index=[1 21 41];
 
 %match feature points
-image_points_matrix=calculation_matched_points(image_left,image_right,list_index);
+[image_points_left,...
+ image_points_right]=calculation_matched_points(image_left,...
+                                                image_right,...
+                                                list_index);
 
-%whether to excute ROI definition
-[bool_AB,bool_BC,bool_CA]=calculation_decision_roi(image_points_matrix,list_index);
+%first decision deteced points did exist
+if size(image_points_left,1)==0||...
+   size(image_points_right,1)==0
 
-%first decision deteced points did exist and suitable slope
-if size(image_points_matrix,1)==0||not(bool_AB&&bool_BC&&bool_CA)
-    
     %calculate matched points after rectification from self-defined ROI
-    calculation_rectified_matched_points_roi(image_left,image_right,list_index);
+    calculation_rectified_matched_points_roi(image_left,...
+                                             image_right,...
+                                             list_index);
 
 else 
     
-    %calculate matched points after rectification from orignal image
-    calculation_rectified_matched_points(image_left,image_right,list_index); 
+    %whether to excute ROI definition
+    [bool_AB,...
+     bool_BC,...
+     bool_CA]=calculation_decision_roi(image_points_left,...
+                                       image_points_right);
 
-end
+    if bool_AB&&...
+       bool_BC&&...
+       bool_CA
         
-                  
+        %calculate matched points after rectification from orignal image
+        calculation_rectified_matched_points(image_left,...
+                                             image_right,...
+                                             list_index);
+                                         
+    else
+        
+        %calculate matched points after rectification from self-defined ROI
+        calculation_rectified_matched_points_roi(image_left,...
+                                                 image_right,...
+                                                 list_index);  
+                                             
+    end
+ 
+end
 

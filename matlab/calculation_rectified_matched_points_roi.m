@@ -1,11 +1,45 @@
-function [image_points_rec_left,image_points_rec_right]=calculation_rectified_matched_points_roi(image_left,image_right,list_index)
+function [image_points_rec_left,...
+          image_points_rec_right]=calculation_rectified_matched_points_roi(image_left,...
+                                                                           image_right,...
+                                                                           list_index)
+disp('')
+disp('-- Calculation Rectified Matched Points Roi')
 
 title('Original Image: Feature Points Matching (Incorrect)')
 close
 
-%get matched points from roi definition
-[image_points_left,image_points_right]=calculation_matched_points_roi(image_left,image_right,list_index);
+%init bool
+bool_AB=false;
+bool_BC=false;
+bool_CA=false;
+   
+count=0
+
+%expire incorrect matching
+while not(bool_AB&&...
+          bool_BC&&...
+          bool_CA)
+      
+    if count>0
+        
+        close
+        
+    end
+    %get matched points from roi definition
+    [image_points_left,...
+     image_points_right]=calculation_matched_points_roi(image_left,...
+                                                        image_right,...
+                                                        list_index);
+    %slope determination
+    [bool_AB,...
+     bool_BC,...
+     bool_CA]=calculation_decision_roi(image_points_left,...
+                                       image_points_right);   
     
+   count=count+1;
+   
+end
+
 %calculate difference in y direction
 y_shift=calculation_vertical_difference(image_points_left,image_points_right);
 y_shift_round=round(y_shift);
@@ -28,8 +62,8 @@ end
 
 if y_shift<0     
 
-    image_left_rec=image_left(1-y_shift_round:rows,:,:);
-    image_right_rec=image_right(1:y_shift_round+rows,:,:);   
+    image_left_rec=image_left(1:y_shift_round+rows,:,:);  
+    image_right_rec=image_right(1-y_shift_round:rows,:,:); 
     image_points_rec_right(:,2)=image_points_rec_right(:,2)+y_shift_round;
     
 end
@@ -54,6 +88,7 @@ if y_shift<0
           num2str(abs(y_shift)),...
           ' in reality) ',...
           ' pixels higher than right one']);
+      
     title(['Y-Shift Rectification: Left image is ',...
             num2str(abs(y_shift_final)),...
             ' (-',...
@@ -72,6 +107,7 @@ if y_shift>0
           num2str(abs(y_shift)),...
           ' in reality) ',...
           ' pixels higher than left one']);
+      
     title(['Y-Shift Rectification: Right image is ',...
            num2str(abs(y_shift_final)),...
            ' (+',...
