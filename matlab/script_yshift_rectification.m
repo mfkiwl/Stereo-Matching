@@ -17,8 +17,8 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L5.png']);
-% image_right=imread([folder_path,'R5.png']);
+% image_left=imread([folder_path,'L2.png']);
+% image_right=imread([folder_path,'R2.png']);
 % 
 image_left = imread([folder_path,'L3.bmp']);
 image_right = imread([folder_path,'R3.bmp']);

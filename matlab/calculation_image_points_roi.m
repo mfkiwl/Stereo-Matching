@@ -1,6 +1,7 @@
 function [image_points]=calculation_image_points_roi(image,...
                                                      list_index,...
                                                      str_title)
+load('configuration_points_checkboard.mat');
 
 %init this variable
 image_points_ROI=[];
@@ -9,7 +10,7 @@ image_points_ROI=[];
 count=0;
 
 %self-defined ROI
-while size(image_points_ROI,1)<max(list_index)
+while size(image_points_ROI,1)~=n_image_points
 
     if count>0
 
