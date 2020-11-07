@@ -17,11 +17,11 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L1.png']);
-% image_right=imread([folder_path,'R1.png']);
-
-image_left = imread([folder_path,'R3.bmp']);
-image_right = imread([folder_path,'L3.bmp']);
+% image_left=imread([folder_path,'L5.png']);
+% image_right=imread([folder_path,'R5.png']);
+% 
+image_left = imread([folder_path,'L3.bmp']);
+image_right = imread([folder_path,'R3.bmp']);
 
 %feature points index
 list_index=[1 21 41];
