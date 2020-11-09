@@ -8,6 +8,10 @@ disp('-- Calculation Rectified Matched Points Roi')
 title('Original Image: Feature Points Matching (Incorrect)')
 close
 
+%size of dual images
+[rows,cols]=calculation_image_size(image_left,...
+                                   image_right);
+                                          
 %init bool
 bool_AB=false;
 bool_BC=false;
@@ -36,7 +40,9 @@ while not(bool_AB&&...
     [bool_AB,...
      bool_BC,...
      bool_CA]=calculation_decision_roi(image_points_left,...
-                                       image_points_right);   
+                                       image_points_right,...
+                                       rows,...
+                                       cols);   
     
    count=count+1;
    
@@ -47,7 +53,8 @@ y_shift=calculation_vertical_difference(image_points_left,image_points_right);
 y_shift_round=round(y_shift);
 y_shift_final=round(y_shift/4)*4;
 
-[rows,~]=size(image_left);
+[rows,~]=calculation_image_size(image_left,...
+                                image_right);
     
 %define rectified image points
 image_points_rec_left=image_points_left;

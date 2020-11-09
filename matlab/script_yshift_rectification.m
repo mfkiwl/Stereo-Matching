@@ -11,18 +11,20 @@ clc;
 clear;
 close all;
 
-% calculate y-shift of the original stereo images
-
 % test image folder
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L2.png']);
-% image_right=imread([folder_path,'R2.png']);
-% 
-image_left = imread([folder_path,'L3.bmp']);
-image_right = imread([folder_path,'R3.bmp']);
+image_left=imread([folder_path,'L6.png']);
+image_right=imread([folder_path,'R6.png']);
 
+% image_left = imread([folder_path,'L3.bmp']);
+% image_right = imread([folder_path,'R3.bmp']);
+
+%size of dual images
+[rows,cols]=calculation_image_size(image_left,...
+                                   image_right);
+                                          
 %feature points index
 list_index=[1 21 41];
 
@@ -47,7 +49,9 @@ else
     [bool_AB,...
      bool_BC,...
      bool_CA]=calculation_decision_roi(image_points_left,...
-                                       image_points_right);
+                                       image_points_right,...
+                                       rows,...
+                                       cols);
 
     if bool_AB&&...
        bool_BC&&...
@@ -68,4 +72,3 @@ else
     end
  
 end
-

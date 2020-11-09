@@ -16,7 +16,8 @@ y_shift=calculation_vertical_difference(image_points_left,image_points_right);
 y_shift_round=round(y_shift);
 y_shift_final=round(y_shift/4)*4;
 
-[rows,~]=size(image_left);
+[rows,~]=calculation_image_size(image_left,...
+                                image_right);
 
 %define rectified image points
 image_points_rec_left=image_points_left;
@@ -40,13 +41,6 @@ if y_shift<0
 end
 
 figure;
-
-% Detect checkerboards in images
-image_points_rec = detectCheckerboardPoints(image_left_rec,image_right_rec);
-
-%rectified matched points from left and right image
-image_points_rec_left=image_points_rec(list_index,:,1,1);
-image_points_rec_right=image_points_rec(list_index,:,1,2);
 
 % Visualize candidate matches
 showMatchedFeatures(image_left_rec,...
