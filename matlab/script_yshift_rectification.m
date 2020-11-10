@@ -15,11 +15,11 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-image_left=imread([folder_path,'L6.png']);
-image_right=imread([folder_path,'R6.png']);
+% image_left=imread([folder_path,'L6.png']);
+% image_right=imread([folder_path,'R6.png']);
 
-% image_left = imread([folder_path,'L3.bmp']);
-% image_right = imread([folder_path,'R3.bmp']);
+image_left = imread([folder_path,'L8.bmp']);
+image_right = imread([folder_path,'R8.bmp']);
 
 %size of dual images
 [rows,cols]=calculation_image_size(image_left,...
