@@ -15,9 +15,13 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-
 using namespace std;
 using namespace cv;
+
+int CalculateVerticalDifference() {
+
+	return 0;
+}
 
 int main(){
 	
