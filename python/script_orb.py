@@ -18,13 +18,45 @@ import calculation_ransac as C_R
 def bgr_rgb(img):
     
     (r, g, b) = cv2.split(img)
+    
     return cv2.merge([b, g, r])
 
-def DrawMatchedLines(img1, img2, kp1, kp2, match):
+def DrawMatch(img1, img2, kp1, kp2, match):
     
     outimage = cv2.drawMatches(img1, kp1, img2, kp2, match, outImg=None)
     plt.imshow(bgr_rgb(outimage))
 
+def DrawMatchedLines(key_points_left,key_points_right,image_left):
+    
+    for k in range(len(key_points_left)):
+        
+        plt.plot([key_points_left[k][0],key_points_right[k][0]+np.shape(image_left)[1]],
+                 [key_points_left[k][1],key_points_right[k][1]],
+                 '-',
+                 linewidth=.13)
+        
+def MergeDualImages(image_left,image_right):
+    
+    if np.shape(image_left)!=np.shape(image_right):
+        
+        print('=> ERROR: Incorrect Dimension of Dual Images')
+        
+        return
+    
+    image_merged=np.zeros((np.shape(image_left)[0],
+                           np.shape(image_left)[1]*2,
+                           3))
+    
+    #left image
+    image_merged[:,:np.shape(image_left)[1],:]=image_left[:,:,:]
+    image_merged[:,np.shape(image_left)[1]:np.shape(image_left)[1]*2,:]=image_right[:,:,:]
+          
+    return image_merged.astype(image_left[0,0,0])
+
+def DrawDualImages(image_left,image_right):
+    
+    plt.imshow(bgr_rgb(MergeDualImages(image_left,image_right)))
+    
 # load image
 folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
 
@@ -113,14 +145,16 @@ def DrawMatchedPoints(image_left,kp1,kp2,matches):
         
         plt.plot(kp1[this_index].pt[0],
                  kp1[this_index].pt[1],
-                 'r.')
+                 'r.',
+                 markersize=2.3)
         
     #draw good match on right image
     for this_index in list_train_index:
         
         plt.plot(kp2[this_index].pt[0]+np.shape(image_left)[1],
                  kp2[this_index].pt[1],
-                 'b.')
+                 'b.',
+                 markersize=2.3)
     
 #max slope
 slope_threshold=0.02
@@ -169,24 +203,26 @@ for k in range(len(slope_key_points)):
         
 # C_R.RANSAC(range(len(slope_key_points)),slope_key_points)
 
-plt.figure()
-
-DrawMatchedPoints(image_left,kp1,kp2,good_matches)
-
-#draw matching result lines
-DrawMatchedLines(image_left,image_left,kp1,kp2,good_matches)
-
 #key points from good matches
 good_key_points_left,good_key_points_right=KeyPointsFromMatches(good_matches)
 
 #y coordinate of key points
-y_key_points_left=[this_key_point[1] for this_key_point in good_key_points_left]
-y_key_points_right=[this_key_point[1] for this_key_point in good_key_points_right]
+y_good_key_points_left=[this_key_point[1] for this_key_point in good_key_points_left]
+y_good_key_points_right=[this_key_point[1] for this_key_point in good_key_points_right]
 
-y_shift=np.average(np.array(y_key_points_left)-np.array(y_key_points_right))
+y_shift=np.average(np.array(y_good_key_points_left)-np.array(y_good_key_points_right))
+
+plt.figure()
+
+#draw matching result dual images
+DrawDualImages(image_left,image_right)
+
+#draw matching result lines
+DrawMatchedLines(good_key_points_left,good_key_points_right,image_left)
+
+#draw matching result points
+DrawMatchedPoints(image_left,kp1,kp2,good_matches)
 
 print(y_shift)
 
 plt.title(str(y_shift))
-
-#matched result constrain the key points
