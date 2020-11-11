@@ -4,7 +4,7 @@
 @company: KAMERAWERK
 @e-mail: jerryweihuajing@126.com
 
-@title: script-calculate y-shift from AVT real images after rectification
+@title: script-calculate y-shift from binocular images after rectification
 %}
 
 clc;
@@ -15,11 +15,14 @@ close all;
 folder_path='Material\';
 
 % 1:left image 2:right image
-% image_left=imread([folder_path,'L6.png']);
-% image_right=imread([folder_path,'R6.png']);
+% image_left=imread([folder_path,'L11.png']);
+% image_right=imread([folder_path,'R11.png']);
 
-image_left = imread([folder_path,'L8.bmp']);
-image_right = imread([folder_path,'R8.bmp']);
+% image_left = imread([folder_path,'L8.bmp']);
+% image_right = imread([folder_path,'R8.bmp']);
+
+image_left=imread([folder_path,'L13.jpg']);
+image_right=imread([folder_path,'R13.jpg']);
 
 %size of dual images
 [rows,cols]=calculation_image_size(image_left,...

@@ -57,41 +57,6 @@ def DrawDualImages(image_left,image_right):
     
     plt.imshow(bgr_rgb(MergeDualImages(image_left,image_right)))
     
-# load image
-folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
-
-image_left=cv2.imread(folder_path+'\\L8.bmp')#绝对路径
-image_right=cv2.imread(folder_path+'\\R8.bmp')#绝对路径
-
-# image_a=cv2.imread('top_VCM_390.png')
-# image_b=cv2.imread('top_VCM_400.png')
-
-# 初始化ORB
-orb = cv2.ORB_create()
-
-# 寻找关键点
-kp1 = orb.detect(image_left)
-kp2 = orb.detect(image_right)
-
-# 计算描述符
-kp1, des1 = orb.compute(image_left,kp1)
-kp2, des2 = orb.compute(image_right,kp2)
-
-# 画出关键点
-outimg1 = cv2.drawKeypoints(image_left,keypoints=kp1,outImage=None)
-outimg2 = cv2.drawKeypoints(image_right,keypoints=kp2,outImage=None)
-	
-# 示关键点
-# outimg3 = np.hstack([outimg1, outimg2])
-# cv2.imshow("Key Points", outimg3)
-# cv2.waitKey(0)
-
-# 初始化 BFMatcher
-bf = cv2.BFMatcher(cv2.NORM_HAMMING)
-
-# 对描述子进行匹配
-matches = bf.match(des1, des2)
-
 def KeyPointsFromMatches(matches):
     
     key_points_left=[]
@@ -122,13 +87,7 @@ def SlopeFromKeyPoints(key_points_left,key_points_right,image_left):
             
         slope_key_points.append(this_slope)
     
-    return slope_key_points
-
-#key points from left and right image
-key_points_left,key_points_right=KeyPointsFromMatches(matches)
-
-#slope of each key point in the list
-slope_key_points=SlopeFromKeyPoints(key_points_left,key_points_right,image_left)
+    return slope_key_points 
 
 def DrawMatchedPoints(image_left,kp1,kp2,matches):
 
@@ -155,7 +114,48 @@ def DrawMatchedPoints(image_left,kp1,kp2,matches):
                  kp2[this_index].pt[1],
                  'b.',
                  markersize=2.3)
-    
+        
+# load image
+folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
+
+image_left=cv2.imread(folder_path+'\\L13.jpg')#绝对路径
+image_right=cv2.imread(folder_path+'\\R13.jpg')#绝对路径
+
+# image_a=cv2.imread('top_VCM_390.png')
+# image_b=cv2.imread('top_VCM_400.png')
+
+# 初始化ORB
+orb = cv2.ORB_create()
+
+# 寻找关键点
+kp1 = orb.detect(image_left)
+kp2 = orb.detect(image_right)
+
+# 计算描述符
+kp1, des1 = orb.compute(image_left,kp1)
+kp2, des2 = orb.compute(image_right,kp2)
+
+# 画出关键点
+outimg1 = cv2.drawKeypoints(image_left,keypoints=kp1,outImage=None)
+outimg2 = cv2.drawKeypoints(image_right,keypoints=kp2,outImage=None)
+	
+# 示关键点
+# outimg3 = np.hstack([outimg1, outimg2])
+# cv2.imshow("Key Points", outimg3)
+# cv2.waitKey(0)
+
+# 初始化 BFMatcher
+bf = cv2.BFMatcher(cv2.NORM_HAMMING)
+
+# 对描述子进行匹配
+matches = bf.match(des1, des2)
+
+#key points from left and right image
+key_points_left,key_points_right=KeyPointsFromMatches(matches)
+
+#slope of each key point in the list
+slope_key_points=SlopeFromKeyPoints(key_points_left,key_points_right,image_left)
+
 #max slope
 slope_threshold=0.02
 n_interval=50
