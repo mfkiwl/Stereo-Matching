@@ -42,8 +42,6 @@ int main(){
 	Mat image_left = imread(folder_path + "\\" + name_image_left);
 	Mat image_right = imread(folder_path + "\\" + name_image_right);
 
-	cout << image_left.cols << endl;
-
 	if (!image_left.data || !image_right.data)
 	{
 		cout << "==> ERROR: Images not found" << endl;
@@ -98,7 +96,7 @@ int main(){
 		double y_keypoints_right = keypoints_left[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
-		double diff_x = x_keypoints_right - x_keypoints_left;
+		double diff_x = x_keypoints_right - x_keypoints_left + image_left.cols;
 		double diff_y = y_keypoints_right - y_keypoints_left;
 
 		//slope
