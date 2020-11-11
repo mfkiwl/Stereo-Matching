@@ -42,7 +42,7 @@ int main(){
 	Mat image_left = imread(folder_path + "\\" + name_image_left);
 	Mat image_right = imread(folder_path + "\\" + name_image_right);
 
-	cout << image_left.width << endl;
+	cout << image_left.cols << endl;
 
 	if (!image_left.data || !image_right.data)
 	{
