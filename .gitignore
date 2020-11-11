@@ -1,6 +1,7 @@
 #post-fix
 #image
 *.bmp
+*.jpg
 *.png
 
 #matlab
