@@ -158,7 +158,7 @@ slope_key_points=SlopeFromKeyPoints(key_points_left,key_points_right,image_left)
 
 #max slope
 slope_threshold=0.02
-n_interval=50
+n_interval=10
 
 #list to collect distance sum for each slope 
 list_distance_for_each_slope=[]
