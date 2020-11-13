@@ -4,8 +4,7 @@ Created on Mon Nov  9 14:44:53 2020
 
 @author: Wei Huajing
 @company: KAMERAWERK
-@e-mail: jerryweihuajing@126.com
-
+@e-mail: wei@kamerawerk.cn
 @title：script-ransac example
 """
 

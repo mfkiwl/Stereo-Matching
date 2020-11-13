@@ -4,7 +4,7 @@ Created on Thu Nov  5 14:12:53 2020
 
 @author: Wei Huajing
 @company: KAMERAWERK
-@e-mail: jerryweihuajing@126.com
+@e-mail: wei@kamerawerk.cn
 
 @title：script-feature points matching
 """
@@ -35,12 +35,12 @@ def orb_detect(image_a, image_b):
     return bgr_rgb(img3)
 
 # @time_cost
-def sift_detect(img1, img2, detector='surf'):
+def sift_detect(img1, img2, detector='sift'):
     
     if detector.startswith('si'):
         
         print("sift detector......")
-        sift = cv2.xfeatures2d.SURF_create()
+        sift = cv2.xfeatures2d.SIFT_create()
         
     else:
         
@@ -69,8 +69,7 @@ folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
 image_a = cv2.imread(folder_path+'\\R3.bmp')#绝对路径
 image_b = cv2.imread(folder_path+'\\L3.bmp')#绝对路径
 
-plt.imshow(orb_detect(image_a, image_b))
+# plt.imshow(orb_detect(image_a, image_b))
 
 # SIFT or SURF
-# img = sift_detect(image_a, image_b)
-# plt.show()
+plt.imshow(sift_detect(image_a, image_b,'sift'))

@@ -13,10 +13,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <opencv2/core/core.hpp>
-#include <opencv2/features2d/features2d.hpp>
+#include <opencv2/xfeatures2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
-
 
 using namespace std;
 using namespace cv;
@@ -47,6 +45,25 @@ int main(){
 		cout << "==> ERROR: Images not found" << endl;
 		return -1;
 	}
+
+	//提取特征点方法
+	int n_feature_points = 1000;
+
+	//SIFT
+	Ptr<SIFT> sift = SIFT::create();
+	
+	//ORB
+	//cv::Ptr<cv::ORB> orb = cv::ORB::create();
+	//SURF
+	//Ptr<SURF> surf = SURF::create(400);
+
+	vector<KeyPoint> keypoints_SIFT, keypoints_SURF;
+
+	sift->detect(image_left, keypoints_SIFT);
+	//surf->detect(image_left, keypoints_SIFT);
+
+	cout << "SIFT: " << keypoints_SIFT.size() << endl;
+	//cout << "SURF" << keypoints_SURF.size() << endl;
 
 	//amount of key points
 	int Hession = 600;
@@ -100,10 +117,8 @@ int main(){
 		double diff_y = y_keypoints_right - y_keypoints_left;
 
 		//slope
-
-		cout<< keypoints_left[matches[k].queryIdx].pt.x<<endl;
-		cout << keypoints_right[matches[k].trainIdx].pt.y << endl;
+		//cout<< keypoints_left[matches[k].queryIdx].pt.x<<endl;
+		//cout << keypoints_right[matches[k].trainIdx].pt.y << endl;
 	}
-
 	return 0;
 }

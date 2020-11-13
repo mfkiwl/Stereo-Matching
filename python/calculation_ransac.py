@@ -4,9 +4,9 @@ Created on Mon Nov  9 18:05:39 2020
 
 @author: Wei Huajing
 @company: KAMERAWERK
-@e-mail: jerryweihuajing@126.com
+@e-mail: wei@kamerawerk.cn
 
-@title：script-ORB Matching
+@title：Module-RANSAC
 """
 
 import matplotlib.pyplot as plt
