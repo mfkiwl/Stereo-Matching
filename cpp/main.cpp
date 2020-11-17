@@ -184,6 +184,7 @@ int main(){
 	vector<KeyPoint> key_points_left;
 	vector<KeyPoint> key_points_right;
 
+	//slope of all key points
 	vector<double> slope_key_points;
 
 	//threshold of slope
@@ -218,11 +219,11 @@ int main(){
 		double y_keypoints_right = keypoints_left[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
-		double diff_x = x_keypoints_right - x_keypoints_left + image_left.cols;
-		double diff_y = y_keypoints_right - y_keypoints_left;
+		double diff_x = x_keypoints_left - x_keypoints_right;
+		double diff_y = y_keypoints_left - y_keypoints_right;
 
 		//slope
-		slope_key_points.push_back(diff_y / diff_x);
+		slope_key_points.push_back((diff_y - image_left.cols) / diff_x);
 
 		//cout<< keypoints_left[matches[k].queryIdx].pt.x<<endl;
 		//cout << keypoints_right[matches[k].trainIdx].pt.y << endl;
@@ -277,8 +278,8 @@ int main(){
 		double y_keypoints_right = keypoints_left[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
-		double diff_x = x_keypoints_right - x_keypoints_left + image_left.cols;
-		double diff_y = y_keypoints_right - y_keypoints_left;
+		double diff_x = x_keypoints_left - x_keypoints_right;
+		double diff_y = y_keypoints_left - y_keypoints_right;
 
 		//diff in x and y direction
 		vector_x_shift.push_back(diff_x);
