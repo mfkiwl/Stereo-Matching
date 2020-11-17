@@ -14,11 +14,17 @@ from matplotlib import pyplot as plt
 
 import calculation_feature_matching as C_F_M
 
-# load image
+#load image
 folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
 
-image_left=cv2.imread(folder_path+'\\L13.jpg')#绝对路径
-image_right=cv2.imread(folder_path+'\\R13.jpg')#绝对路径
+# image_left=cv2.imread(folder_path+'\\L13.jpg')
+# image_right=cv2.imread(folder_path+'\\R13.jpg')
+
+# image_left=cv2.imread('top_VCM_390.png')
+# image_right=cv2.imread('top_VCM_400.png')
+
+image_left=cv2.imread(folder_path+'\\L3.bmp')
+image_right=cv2.imread(folder_path+'\\R3.bmp')
 
 print("SIFT detector......")
 

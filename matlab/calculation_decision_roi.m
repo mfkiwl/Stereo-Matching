@@ -20,9 +20,9 @@ diff_B=point_B_left-point_B_right;
 diff_C=point_C_left-point_C_right;
 
 %calculate the inclination
-slope_A=diff_A(2)/cols-diff_A(2);
-slope_B=diff_B(2)/cols-diff_A(2);
-slope_C=diff_C(2)/cols-diff_A(2);
+slope_A=diff_A(2)/(cols-diff_A(2));
+slope_B=diff_B(2)/(cols-diff_A(2));
+slope_C=diff_C(2)/(cols-diff_A(2));
 
 %diff of slope
 diff_slope=0.001;
