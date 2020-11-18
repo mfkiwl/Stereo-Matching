@@ -20,30 +20,30 @@ import calculation_feature_matching as C_F_M
 # load image
 folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
 
-image_left=cv2.imread(folder_path+'\\L11.jpg')
-image_right=cv2.imread(folder_path+'\\R11.jpg')
+# image_left=cv2.imread(folder_path+'\\L11.jpg')
+# image_right=cv2.imread(folder_path+'\\R11.jpg')
 
 # image_left=cv2.imread('top_VCM_390.png')
 # image_right=cv2.imread('top_VCM_400.png')
 
-# image_left=cv2.imread(folder_path+'\\L3.bmp')
-# image_right=cv2.imread(folder_path+'\\R3.bmp')
+image_left=cv2.imread(folder_path+'\\L3.bmp')
+image_right=cv2.imread(folder_path+'\\R3.bmp')
 
 n_key_points=500
 
-# 初始化ORB
-ORB = cv2.ORB_create(n_key_points)
+# 初始化detector
+detector=cv2.ORB_create(n_key_points)
 
 # 寻找关键点并计算描述符
-key_points_original_left,descriptor_left=ORB.detectAndCompute(image_left,None)
-key_points_original_right,descriptor_right=ORB.detectAndCompute(image_right,None)
+key_points_original_left,descriptor_left=detector.detectAndCompute(image_left,None)
+key_points_original_right,descriptor_right=detector.detectAndCompute(image_right,None)
 
 # 初始化 BFMatcher
-bf = cv2.BFMatcher(cv2.NORM_HAMMING)
+matcher=cv2.BFMatcher(cv2.NORM_HAMMING)
 
 # 对描述子进行匹配
-matches = bf.match(descriptor_left, 
-                   descriptor_right)
+matches=matcher.match(descriptor_left, 
+                      descriptor_right)
 
 #key points from left and right image
 key_points_matched_left,\

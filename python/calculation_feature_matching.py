@@ -81,11 +81,11 @@ def SlopeFromKeyPoints(key_points_left,key_points_right,image_left):
         point_left=key_points_left[k]
         point_right=key_points_right[k]
         
-        diff_x=np.shape(image_left)[1]-(point_left.pt[0]-point_right.pt[0])
-        diff_y=point_right.pt[1]-point_left.pt[1]
+        diff_x=point_left.pt[0]-point_right.pt[0]
+        diff_y=point_left.pt[1]-point_right.pt[1]
     
         #calculate slope of key points
-        this_slope=diff_y/diff_x
+        this_slope=diff_y/(diff_x-np.shape(image_left)[1])
 
         slope_key_points.append(this_slope)
     

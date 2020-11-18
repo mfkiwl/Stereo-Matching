@@ -117,9 +117,12 @@ int main(){
 
 	string folder_path = "D:\\GitHub\\KAMERAWERK\\Binocular-Stereo-Matching\\matlab\\Material";
 
-	//left and right image name
-	string name_image_left = "L11.jpg";
-	string name_image_right = "R11.jpg";
+	////left and right image name
+	//string name_image_left = "L11.jpg";
+	//string name_image_right = "R11.jpg";
+
+	string name_image_left = "L3.bmp";
+	string name_image_right = "R3.bmp";
 
 	/*cout << folder_path + "\\" + name_image_left << endl;
 	cout << folder_path + "\\" + name_image_right << endl;*/
@@ -156,33 +159,55 @@ int main(){
 	//double t1 = getTickCount();
 
 	//特征点提取
-	Ptr<ORB> detector = ORB::create(n_feature_points);
-	vector<KeyPoint> keypoints_left;
-	vector<KeyPoint> keypoints_right;
+	//Ptr<ORB> detector = ORB::create(n_feature_points);
+	Ptr<SIFT> detector = SIFT::create(n_feature_points);
+
+	vector<KeyPoint> key_points_left;
+	vector<KeyPoint> key_points_right;
 
 	//定义描述子
 	Mat descriptor_left, descriptor_right;
 
 	//检测并计算成描述子
-	detector->detectAndCompute(image_left, Mat(), keypoints_left, descriptor_left);
-	detector->detectAndCompute(image_right, Mat(), keypoints_right, descriptor_right);
+	detector->detectAndCompute(image_left, Mat(), key_points_left, descriptor_left);
+	detector->detectAndCompute(image_right, Mat(), key_points_right, descriptor_right);
 
 	//结束时间
 	//double t2 = getTickCount();
 	//double t = (t2 - t1) * 1000 / getTickFrequency();
 
-	//特征匹配
-	FlannBasedMatcher fbmatcher(new flann::LshIndexParams(20, 10, 2));
-	vector<DMatch> matches;
+	//使用BruteForce（暴力匹配）进行匹配
+	BFMatcher matcher;
+	//FlannBasedMatcher matcher;
+	vector<DMatch> matches;  //存储里面的一些点的信息
 
-	//将找到的描述子进行匹配并存入matches中
-	fbmatcher.match(descriptor_left, descriptor_right, matches);
+	matcher.match(descriptor_left, descriptor_left, matches, Mat());
+
+	double zoom_factor = 0.3;
+	//Mat image_matches;
+
+	//drawMatches(image_left,
+	//			key_points_left, 
+	//			image_right, 
+	//			key_points_right, 
+	//			matches, 
+	//			image_matches);
+	////factor of zooming
+	//
+	//namedWindow("ORB Brute Force Matching", 0);
+	//resizeWindow("ORB Brute Force Matching", image_matches.cols * zoom_factor, image_matches.rows * zoom_factor);
+	//imshow("ORB Brute Force Matching", image_matches);
+	//waitKey(0);
+
+	////特征匹配
+	//FlannBasedMatcher matcher(new flann::LshIndexParams(20, 10, 2));
+	//vector<DMatch> matches;
+
+	////将找到的描述子进行匹配并存入matches中
+	//fbmatcher.match(descriptor_left, descriptor_right, matches);
 
 	//cout << matches.size() << endl;
 	//cout << keypoints_left.size() << endl;
-
-	vector<KeyPoint> key_points_left;
-	vector<KeyPoint> key_points_right;
 
 	//slope of all key points
 	vector<double> slope_key_points;
@@ -211,19 +236,19 @@ int main(){
 	for (int k = 0; k < matches.size(); ++k) {
 
 		//left key point
-		double x_keypoints_left = keypoints_left[matches[k].queryIdx].pt.x;
-		double y_keypoints_left = keypoints_left[matches[k].queryIdx].pt.y;
+		double x_keypoints_left = key_points_left[matches[k].queryIdx].pt.x;
+		double y_keypoints_left = key_points_left[matches[k].queryIdx].pt.y;
 
 		//right key point
-		double x_keypoints_right = keypoints_left[matches[k].trainIdx].pt.x;
-		double y_keypoints_right = keypoints_left[matches[k].trainIdx].pt.y;
+		double x_keypoints_right = key_points_right[matches[k].trainIdx].pt.x;
+		double y_keypoints_right = key_points_right[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
 		double diff_x = x_keypoints_left - x_keypoints_right;
 		double diff_y = y_keypoints_left - y_keypoints_right;
 
 		//slope
-		slope_key_points.push_back((diff_y - image_left.cols) / diff_x);
+		slope_key_points.push_back(diff_y /( diff_x - image_left.cols));
 
 		//cout<< keypoints_left[matches[k].queryIdx].pt.x<<endl;
 		//cout << keypoints_right[matches[k].trainIdx].pt.y << endl;
@@ -262,6 +287,7 @@ int main(){
 		}
 	}
 	cout << matches.size() << endl;
+	cout << good_matches.size() << endl;
 	//vector to collect x and y shift
 	vector<double> vector_x_shift;
 	vector<double> vector_y_shift;
@@ -270,12 +296,12 @@ int main(){
 	for (int k = 0; k < good_matches.size(); ++k) {
 
 		//left key point
-		double x_keypoints_left = keypoints_left[matches[k].queryIdx].pt.x;
-		double y_keypoints_left = keypoints_left[matches[k].queryIdx].pt.y;
+		double x_keypoints_left = key_points_left[matches[k].queryIdx].pt.x;
+		double y_keypoints_left = key_points_left[matches[k].queryIdx].pt.y;
 
 		//right key point
-		double x_keypoints_right = keypoints_left[matches[k].trainIdx].pt.x;
-		double y_keypoints_right = keypoints_left[matches[k].trainIdx].pt.y;
+		double x_keypoints_right = key_points_right[matches[k].trainIdx].pt.x;
+		double y_keypoints_right = key_points_right[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
 		double diff_x = x_keypoints_left - x_keypoints_right;
@@ -288,5 +314,20 @@ int main(){
 
 	double y_shift = VectorAverage(vector_y_shift);
 	cout << y_shift << endl;
+
+	Mat image_good_matches;
+	drawMatches(image_left,
+				key_points_left,
+				image_right,
+				key_points_right,
+				good_matches,
+				image_good_matches);
+	//factor of zooming
+
+	namedWindow("ORB Brute Force Matching (good)", 0);
+	resizeWindow("ORB Brute Force Matching (good)", image_good_matches.cols * zoom_factor, image_good_matches.rows * zoom_factor);
+	imshow("ORB Brute Force Matching (good)", image_good_matches);
+	waitKey(0);
+
 	return 0;
 }
