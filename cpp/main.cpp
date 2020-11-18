@@ -118,11 +118,11 @@ int main(){
 	string folder_path = "D:\\GitHub\\KAMERAWERK\\Binocular-Stereo-Matching\\matlab\\Material";
 
 	////left and right image name
-	//string name_image_left = "L11.jpg";
-	//string name_image_right = "R11.jpg";
+	string name_image_left = "L12.jpg";
+	string name_image_right = "R12.jpg";
 
-	string name_image_left = "L3.bmp";
-	string name_image_right = "R3.bmp";
+	//string name_image_left = "L3.bmp";
+	//string name_image_right = "R3.bmp";
 
 	/*cout << folder_path + "\\" + name_image_left << endl;
 	cout << folder_path + "\\" + name_image_right << endl;*/
@@ -213,7 +213,7 @@ int main(){
 	vector<double> slope_key_points;
 
 	//threshold of slope
-	double slope_threshold = 0.2;
+	double slope_threshold = 0.1;
 
 	//search interval
 	int n_interval = 50;
