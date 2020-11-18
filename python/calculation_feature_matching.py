@@ -70,6 +70,8 @@ def KeyPointsFromMatches(key_points_left,
         key_points_left_sorted.append(key_points_left[this_match.queryIdx])
         key_points_right_sorted.append(key_points_right[this_match.trainIdx])
  
+        print(matches.index(this_match),this_match.queryIdx,this_match.trainIdx)
+        
     return key_points_left_sorted,key_points_right_sorted
 
 def SlopeFromKeyPoints(key_points_left,key_points_right,image_left):
