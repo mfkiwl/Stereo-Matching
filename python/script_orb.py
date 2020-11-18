@@ -17,6 +17,11 @@ import calculation_ransac as C_R
 
 import calculation_feature_matching as C_F_M
 
+title_prop={'family':'Gill Sans MT',
+            'weight':'normal',
+            'style':'normal',
+            'size':18}
+
 # load image
 folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
 
@@ -83,9 +88,36 @@ C_F_M.DrawMatchedPoints(image_left,
                         good_key_points_left,
                         good_key_points_right)
 
+x_shift=C_F_M.CalculateHorizontalDifference(good_key_points_left,
+                                            good_key_points_right)
+
 y_shift=C_F_M.CalculateVerticalDifference(good_key_points_left,
                                           good_key_points_right)
 
-print(y_shift)
+print('==> x shift:',x_shift)
+print('==> y shift:',y_shift)
 
-plt.title(str(y_shift))
+y_shift_final=np.round(y_shift/4)*4
+
+if x_shift>0:
+    
+    print('-- Conclusion: The 1st image is left, the 2nd image is right.')
+
+if x_shift<0:
+    
+    print('-- Conclusion: The 1st image is right, the 2nd image is left.')
+
+if y_shift>0:
+    
+    title_str='Result: Right image is %d (+%.4f in reality) pixels higher than left one'%(y_shift_final,y_shift)
+
+if y_shift<0:
+    
+    title_str='Result: Left image is %d (-%.4f in reality) pixels higher than right one'%(y_shift_final,y_shift)
+    
+plt.xticks([])
+plt.yticks([])
+
+plt.title(title_str,fontdict=title_prop)
+
+print('-- Result:',title_str)

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <opencv2/xfeatures2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -159,8 +160,8 @@ int main(){
 	//double t1 = getTickCount();
 
 	//特征点提取
-	Ptr<ORB> detector = ORB::create(n_feature_points);
-	//Ptr<SIFT> detector = SIFT::create(n_feature_points);
+	//Ptr<ORB> detector = ORB::create(n_feature_points);
+	Ptr<SIFT> detector = SIFT::create(n_feature_points);
 
 	vector<KeyPoint> key_points_left;
 	vector<KeyPoint> key_points_right;
@@ -177,13 +178,13 @@ int main(){
 	//double t = (t2 - t1) * 1000 / getTickFrequency();
 
 	//使用BruteForce（暴力匹配）进行匹配
-	BFMatcher matcher;
-	//FlannBasedMatcher matcher;
+	//BFMatcher matcher;
+	FlannBasedMatcher matcher;
 	vector<DMatch> matches;  //存储里面的一些点的信息
 
 	matcher.match(descriptor_left, descriptor_left, matches, Mat());
 
-	double zoom_factor = 0.7;
+	double zoom_factor = 0.1;
 	//Mat image_matches;
 
 	//drawMatches(image_left,
@@ -194,9 +195,8 @@ int main(){
 	//			image_matches);
 	////factor of zooming
 	//
-	//namedWindow("ORB Brute Force Matching", 0);
-	//resizeWindow("ORB Brute Force Matching", image_matches.cols * zoom_factor, image_matches.rows * zoom_factor);
-	//imshow("ORB Brute Force Matching", image_matches);
+	//namedWindow("Feature Matching", 1);
+	//imshow("Feature Matching", image_matches);
 	//waitKey(0);
 
 	////特征匹配
@@ -213,10 +213,10 @@ int main(){
 	vector<double> slope_key_points;
 
 	//threshold of slope
-	double slope_threshold = 0.1;
+	double slope_threshold = 0.6;
 
 	//search interval
-	int n_interval = 100;
+	int n_interval = 200;
 
 	//select a suitable slop from this list
 	vector<double> vector_slope_candidate;
@@ -250,9 +250,16 @@ int main(){
 		//slope
 		slope_key_points.push_back(diff_y /( diff_x - image_left.cols));
 
-		//cout << matches[k].queryIdx << endl;
-		//cout << matches[k].trainIdx << endl;
+		cout << k << " " << matches[k].queryIdx << " " << matches[k].trainIdx << endl;
 		//cout << slope_key_points[k] << endl;
+	}
+	//write slope into txt file
+	ofstream out_file;
+	out_file.open("slope.txt");
+
+	for (int k = 0; k < slope_key_points.size(); k++) {
+
+		out_file << slope_key_points[k] << endl;
 	}
 	//list to collect distance sum for each slope
 	vector<double>vector_distance_for_each_slope;
@@ -273,7 +280,7 @@ int main(){
 
 	//suitable slope from matching result
 	double matched_slope = vector_slope_candidate[index_min];
-
+	cout << "==> matched slope:" << matched_slope << endl;
 	//list good matched result
 	vector<DMatch> good_matches;
 
@@ -286,8 +293,8 @@ int main(){
 			good_matches.push_back(matches[k]);
 		}
 	}
-	cout << matches.size() << endl;
-	cout << good_matches.size() << endl;
+	//cout << matches.size() << endl;
+	//cout << good_matches.size() << endl;
 	//vector to collect x and y shift
 	vector<double> vector_x_shift;
 	vector<double> vector_y_shift;
@@ -311,12 +318,44 @@ int main(){
 		vector_x_shift.push_back(diff_x);
 		vector_y_shift.push_back(diff_y);
 
-		cout << diff_y << endl;
+		//cout << diff_x << endl;
+		//cout << diff_y << endl;
 	}
-
+	double x_shift = VectorAverage(vector_x_shift);
 	double y_shift = VectorAverage(vector_y_shift);
-	cout << y_shift << endl;
+	int y_shift_final = round(y_shift / 4) * 4;
 
+	cout << "==> x shift: " << x_shift << endl;
+	cout << "==> y shift: " << y_shift << endl;
+
+	if (x_shift > 0) {
+		
+		cout << "-- Conclusion: The 1st image is left, the 2nd image is right." << endl;
+	}
+	if (x_shift < 0) {
+
+		cout << "-- Conclusion: The 1st image is right, the 2nd image is left." << endl;
+	}
+	if (y_shift > 0) {
+	
+		cout << "-- Result: Right image is " 
+			 << abs(y_shift_final)
+			 << " (+"
+			 << y_shift
+			 << " in reality) " 
+			 << "pixels higher than left one"
+			 << endl;
+	}
+	if (y_shift < 0) {
+
+		cout << "-- Result: Left image is " 
+			 << abs(y_shift_final) 
+			 << " (-"
+			 << y_shift
+			 << " in reality) "
+			 << "pixels higher than right one" 
+			 << endl;
+	}
 	Mat image_good_matches;
 	drawMatches(image_left,
 				key_points_left,
@@ -324,11 +363,10 @@ int main(){
 				key_points_right,
 				good_matches,
 				image_good_matches);
-	//factor of zooming
 
-	namedWindow("ORB Brute Force Matching (good)", 0);
-	resizeWindow("ORB Brute Force Matching (good)", image_good_matches.cols * zoom_factor, image_good_matches.rows * zoom_factor);
-	imshow("ORB Brute Force Matching (good)", image_good_matches);
+	namedWindow("Feature Matching (good)", 1);
+	resizeWindow("Feature Force Matching (good)", image_good_matches.cols * zoom_factor, image_good_matches.rows * zoom_factor);
+	imshow("Feature Matching (good)", image_good_matches);
 	waitKey(0);
 
 	return 0;

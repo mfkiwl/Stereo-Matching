@@ -114,8 +114,8 @@ def DrawMatchedPoints(image_left,
 def CalculateGoodMatches(slope_key_points,matches):
     
     #max slope
-    slope_threshold=0.1
-    n_interval=100
+    slope_threshold=0.6
+    n_interval=200
     
     #list to collect distance sum for each slope 
     list_distance_for_each_slope=[]
@@ -139,7 +139,9 @@ def CalculateGoodMatches(slope_key_points,matches):
    
     #suitable slope from matching result
     matched_slope=list_slope_candidate[index_min]
-
+    
+    print('==> matched slope:',matched_slope)
+    
     plt.figure()
     
     #list good matched result
@@ -161,6 +163,8 @@ def CalculateGoodMatches(slope_key_points,matches):
                 
             plt.plot(k,this_slope,'g.')
 
+    plt.ylim([-slope_threshold,slope_threshold])
+    
     return good_matches
     
 def CalculateVerticalDifference(key_points_left,key_points_right):
@@ -171,3 +175,10 @@ def CalculateVerticalDifference(key_points_left,key_points_right):
     
     return np.average(np.array(y_key_points_left)-np.array(y_key_points_right))
     
+def CalculateHorizontalDifference(key_points_left,key_points_right):
+    
+    #x coordinate of key points
+    x_key_points_left=[this_key_point.pt[0] for this_key_point in key_points_left]
+    x_key_points_right=[this_key_point.pt[0] for this_key_point in key_points_right]
+    
+    return np.average(np.array(x_key_points_left)-np.array(x_key_points_right))
