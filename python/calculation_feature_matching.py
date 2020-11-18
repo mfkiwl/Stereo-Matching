@@ -114,8 +114,8 @@ def DrawMatchedPoints(image_left,
 def CalculateGoodMatches(slope_key_points,matches):
     
     #max slope
-    slope_threshold=0.2
-    n_interval=20
+    slope_threshold=0.1
+    n_interval=100
     
     #list to collect distance sum for each slope 
     list_distance_for_each_slope=[]

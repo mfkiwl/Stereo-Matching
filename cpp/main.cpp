@@ -159,8 +159,8 @@ int main(){
 	//double t1 = getTickCount();
 
 	//特征点提取
-	//Ptr<ORB> detector = ORB::create(n_feature_points);
-	Ptr<SIFT> detector = SIFT::create(n_feature_points);
+	Ptr<ORB> detector = ORB::create(n_feature_points);
+	//Ptr<SIFT> detector = SIFT::create(n_feature_points);
 
 	vector<KeyPoint> key_points_left;
 	vector<KeyPoint> key_points_right;
@@ -183,7 +183,7 @@ int main(){
 
 	matcher.match(descriptor_left, descriptor_left, matches, Mat());
 
-	double zoom_factor = 0.3;
+	double zoom_factor = 0.7;
 	//Mat image_matches;
 
 	//drawMatches(image_left,
@@ -216,7 +216,7 @@ int main(){
 	double slope_threshold = 0.1;
 
 	//search interval
-	int n_interval = 50;
+	int n_interval = 100;
 
 	//select a suitable slop from this list
 	vector<double> vector_slope_candidate;
@@ -250,8 +250,8 @@ int main(){
 		//slope
 		slope_key_points.push_back(diff_y /( diff_x - image_left.cols));
 
-		//cout<< keypoints_left[matches[k].queryIdx].pt.x<<endl;
-		//cout << keypoints_right[matches[k].trainIdx].pt.y << endl;
+		//cout << matches[k].queryIdx << endl;
+		//cout << matches[k].trainIdx << endl;
 		//cout << slope_key_points[k] << endl;
 	}
 	//list to collect distance sum for each slope
@@ -296,12 +296,12 @@ int main(){
 	for (int k = 0; k < good_matches.size(); ++k) {
 
 		//left key point
-		double x_keypoints_left = key_points_left[matches[k].queryIdx].pt.x;
-		double y_keypoints_left = key_points_left[matches[k].queryIdx].pt.y;
+		double x_keypoints_left = key_points_left[good_matches[k].queryIdx].pt.x;
+		double y_keypoints_left = key_points_left[good_matches[k].queryIdx].pt.y;
 
 		//right key point
-		double x_keypoints_right = key_points_right[matches[k].trainIdx].pt.x;
-		double y_keypoints_right = key_points_right[matches[k].trainIdx].pt.y;
+		double x_keypoints_right = key_points_right[good_matches[k].trainIdx].pt.x;
+		double y_keypoints_right = key_points_right[good_matches[k].trainIdx].pt.y;
 
 		//diff of x and y
 		double diff_x = x_keypoints_left - x_keypoints_right;
@@ -310,6 +310,8 @@ int main(){
 		//diff in x and y direction
 		vector_x_shift.push_back(diff_x);
 		vector_y_shift.push_back(diff_y);
+
+		cout << diff_y << endl;
 	}
 
 	double y_shift = VectorAverage(vector_y_shift);
