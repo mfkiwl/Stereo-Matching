@@ -167,6 +167,7 @@ def CalculateGoodMatches(slope_key_points,matches):
 
     plt.ylim([-slope_threshold,slope_threshold])
     
+    print('==> amount of matches:',len(matches))
     print('==> amount of good matches:',len(good_matches))
     
     return good_matches

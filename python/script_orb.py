@@ -34,7 +34,7 @@ image_right=cv2.imread(folder_path+'\\R13.jpg')
 # image_left=cv2.imread(folder_path+'\\L3.bmp')
 # image_right=cv2.imread(folder_path+'\\R3.bmp')
 
-n_key_points=500
+n_key_points=1000
 
 # 初始化detector
 detector=cv2.ORB_create(n_key_points)
