@@ -97,7 +97,7 @@ y_shift=C_F_M.CalculateVerticalDifference(good_key_points_left,
 print('==> x shift:',x_shift)
 print('==> y shift:',y_shift)
 
-y_shift_final=np.round(y_shift/4)*4
+y_shift_final=int(np.round(y_shift/4)*4)
 
 if x_shift>0:
     
