@@ -1,8 +1,10 @@
 %-*- coding: utf-8 -*-
 %{
+Created on Mon Nov  9 14:51:37 2020
+
 @author: Wei Huajing
 @company: KAMERAWERK
-@e-mail: jerryweihuajing@126.com
+@e-mail: wei@kamerawerk.cn
 
 @title: script-calculate y-shift from binocular images after rectification
 %}

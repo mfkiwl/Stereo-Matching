@@ -1,10 +1,12 @@
 ﻿// -*- coding: utf-8 -*-
 /******************************************************************************
+Created on Mon Nov  9 14:51:37 2020
+
 @author: Wei Huajing
 @company: KAMERAWERK
-@e-mail: jerryweihuajing@126.com
+@e-mail: wei@kamerawerk.cn
 
-@title: script-Self Calibration by Feature Matching
+@title：script-ORB Matching
 ******************************************************************************/
 
 // main.cpp: This file contains the "main" function.
@@ -119,8 +121,8 @@ int main(){
 	string folder_path = "D:\\GitHub\\KAMERAWERK\\Binocular-Stereo-Matching\\matlab\\Material";
 
 	////left and right image name
-	string name_image_left = "L12.jpg";
-	string name_image_right = "R12.jpg";
+	string name_image_left = "L13.jpg";
+	string name_image_right = "R13.jpg";
 
 	//string name_image_left = "L3.bmp";
 	//string name_image_right = "R3.bmp";
@@ -138,7 +140,7 @@ int main(){
 	}
 
 	//提取特征点方法
-	int n_feature_points = 1000;
+	int n_feature_points = 500;
 
 	//SIFT
 	//Ptr<SIFT> sift = SIFT::create();
@@ -161,6 +163,7 @@ int main(){
 
 	//特征点提取
 	//Ptr<ORB> detector = ORB::create(n_feature_points);
+	
 	Ptr<SIFT> detector = SIFT::create(n_feature_points);
 
 	vector<KeyPoint> key_points_left;
@@ -178,11 +181,11 @@ int main(){
 	//double t = (t2 - t1) * 1000 / getTickFrequency();
 
 	//使用BruteForce（暴力匹配）进行匹配
-	//BFMatcher matcher;
-	FlannBasedMatcher matcher;
+	BFMatcher matcher;
+	//FlannBasedMatcher matcher;
 	vector<DMatch> matches;  //存储里面的一些点的信息
 
-	matcher.match(descriptor_left, descriptor_left, matches, Mat());
+	matcher.match(descriptor_left, descriptor_right, matches, Mat());
 
 	double zoom_factor = 0.1;
 	//Mat image_matches;
@@ -250,7 +253,7 @@ int main(){
 		//slope
 		slope_key_points.push_back(diff_y /( diff_x - image_left.cols));
 
-		cout << k << " " << matches[k].queryIdx << " " << matches[k].trainIdx << endl;
+		//cout << k << " " << matches[k].queryIdx << " " << matches[k].trainIdx << endl;
 		//cout << slope_key_points[k] << endl;
 	}
 	//write slope into txt file
@@ -280,7 +283,7 @@ int main(){
 
 	//suitable slope from matching result
 	double matched_slope = vector_slope_candidate[index_min];
-	cout << "==> matched slope:" << matched_slope << endl;
+	cout << "==> matched slope: " << matched_slope << endl;
 	//list good matched result
 	vector<DMatch> good_matches;
 
@@ -294,7 +297,7 @@ int main(){
 		}
 	}
 	//cout << matches.size() << endl;
-	//cout << good_matches.size() << endl;
+	cout << "==> amount of good matches: " << good_matches.size() << endl;
 	//vector to collect x and y shift
 	vector<double> vector_x_shift;
 	vector<double> vector_y_shift;
