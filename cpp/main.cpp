@@ -59,10 +59,10 @@ int main(){
 	int frameRate = capture.get(CAP_PROP_FPS);  //帧率 x frames/s
 	int totalFrames = capture.get(CAP_PROP_FRAME_COUNT); //总帧数
 
-	cout << "==> 视频宽度:" << width << endl;
-	cout << "==> 视频高度:" << height << endl;
-	cout << "==> 视频总帧数:" << totalFrames << endl;
-	cout << "==> 帧率:" << frameRate << endl;
+	cout << "==> 视频宽度: " << width << endl;
+	cout << "==> 视频高度: " << height << endl;
+	cout << "==> 视频总帧数: " << totalFrames << endl;
+	cout << "==> 帧率: " << frameRate << endl;
 
 	/*string leftFileName = "left.avi";
 	string rightFileName = "right.avi";
@@ -71,7 +71,7 @@ int main(){
 	m_video2 = VideoWriter(rightFileName, VideoWriter::fourcc('X', 'V', 'I', 'D'), 20, Size(2048, 1088), true);*/
 
 	Mat merged_image, left_image, right_image;
-	Mat newLeft, newRight;
+	Mat new_left_image, new_right_image;
 
 	int cnt = totalFrames;
 
@@ -79,7 +79,7 @@ int main(){
 	ofstream out_file;
 	out_file.open("y-shift.txt");
 
-	int interval = 100;
+	int interval = 1;
 
 	while (cnt--){
 
@@ -94,16 +94,16 @@ int main(){
 		cout << "==> frames remained: " << cnt << endl;
 
 		// 获取左边图像 获取右边图像
-		//工业相机
+		//工业相机 2048*1088
 		left_image = merged_image(Rect(0, 0, 1024, 1088));
 		right_image = merged_image(Rect(1024, 0, 1024, 1088));
 
-		//网络相机
+		//网络相机 1920*1080
 		//left_image= res(Rect(0, 0, 960, 1080));
 		//right_image = res(Rect(960, 0, 960, 1080));
 
-		resize(left_image, newLeft, Size(2048, 1088));
-		resize(right_image, newRight, Size(2048, 1088));
+		resize(left_image, new_left_image, Size(2048, 1088));
+		resize(right_image, new_right_image, Size(2048, 1088));
 
 		//imshow("left", left);
 		//imshow("right", right);

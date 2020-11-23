@@ -9,13 +9,7 @@ Created on Mon Nov  9 14:51:37 2020
 @title：script-ORB Matching
 """
 
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-import calculation_ransac as C_R
-
-import calculation_feature_matching as C_F_M
+from __init__ import *
 
 title_prop={'family':'Gill Sans MT',
             'weight':'normal',

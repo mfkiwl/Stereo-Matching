@@ -9,8 +9,7 @@ Created on Wed Nov 18 17:16:03 2020
 @title：script-read slope data and plot
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
+from __init__ import *
 
 file_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\cpp\slope.txt'
 
@@ -52,7 +51,7 @@ matched_slope=list_slope_candidate[index_min]
 
 print('==> matched slope:',matched_slope)
 
-plt.figure()
+plt.figure(figsize=(13,6))
 
 #list good matched result
 good_matches=[]
@@ -74,3 +73,13 @@ for k in range(len(slope_key_points)):
 plt.ylim([-slope_threshold,slope_threshold])
 
 # plt.hlines(-0.021,0,len(slope_key_points),'r')
+
+plt.ylabel('y-shift (pixel)',fontdict=label_prop)
+plt.xlabel('frame (-)',fontdict=label_prop)
+
+#set ticks fonts
+plt.tick_params(labelsize=12)
+labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()
+
+#label fonts
+[this_label.set_fontname('Times New Roman') for this_label in labels]

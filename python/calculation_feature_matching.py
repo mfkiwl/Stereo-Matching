@@ -15,6 +15,12 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
+from configuration_font import legend_prop,\
+                               text_prop,\
+                               label_prop,\
+                               title_prop,\
+                               annotation_prop
+                               
 def bgr_rgb(img):
     
     (r, g, b) = cv2.split(img)
@@ -144,7 +150,7 @@ def CalculateGoodMatches(slope_key_points,matches):
     
     print('==> matched slope:',matched_slope)
     
-    plt.figure()
+    plt.figure(figsize=(13,6))
     
     #list good matched result
     good_matches=[]
@@ -169,6 +175,16 @@ def CalculateGoodMatches(slope_key_points,matches):
     plt.hlines(matched_slope+slope_threshold/n_interval,0,len(slope_key_points),color='r',linestyle='--')
     
     plt.ylim([-slope_threshold,slope_threshold])
+    
+    plt.ylabel('slope (-)',fontdict=label_prop)
+    plt.xlabel('key points (-)',fontdict=label_prop)
+
+    #set ticks fonts
+    plt.tick_params(labelsize=12)
+    labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()
+    
+    #label fonts
+    [this_label.set_fontname('Times New Roman') for this_label in labels]
     
     print('==> amount of matches:',len(matches))
     print('==> amount of good matches:',len(good_matches))
