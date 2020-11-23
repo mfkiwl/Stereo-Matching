@@ -1,4 +1,6 @@
 #post-fix
+*.txt
+
 #image
 *.bmp
 *.jpg
@@ -17,6 +19,7 @@
 
 #py
 python\__pycache__
+*.pyc
 
 #folder
 .vs
