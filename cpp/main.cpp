@@ -87,10 +87,9 @@ int main(){
 
 			continue;
 		}
-		// 从视频中读取一帧
+		//read frames from video one by one
 		capture >> merged_image;
 
-		//         2048            1088
 		cout << "==> frames remained: " << cnt << endl;
 
 		// 获取左边图像 获取右边图像
