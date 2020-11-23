@@ -15,6 +15,7 @@ Created on Mon Nov 11 14:51:37 2020
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <opencv2/opencv.hpp>
 #include <opencv2/xfeatures2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
 

@@ -246,7 +246,7 @@ vector<Mat> DualOrder(Mat image_a, Mat image_b) {
 
 	return vector_image;
 }
-int CalculateVerticalDifference(Mat image_left, Mat image_right) {
+double CalculateVerticalDifference(Mat image_left, Mat image_right) {
 	
 	cout << endl;
 	cout << "-- Calculate Vertical Difference" << endl;
@@ -254,7 +254,7 @@ int CalculateVerticalDifference(Mat image_left, Mat image_right) {
 	//horizontal difference
 	double y_shift = CalculateDifference(image_left, image_right, true)[1];
 
-	int y_shift_final = int(round(y_shift / 4) * 4);
+	double y_shift_final = round(y_shift / 4) * 4;
 
 	if (y_shift > 0) {
 
@@ -276,6 +276,7 @@ int CalculateVerticalDifference(Mat image_left, Mat image_right) {
 			<< "pixels higher than right one"
 			<< endl;
 	}
-	return y_shift_final;
+	return y_shift;
+	//return y_shift_final;
 }
 	

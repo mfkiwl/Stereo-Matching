@@ -3,6 +3,7 @@
 *.bmp
 *.jpg
 *.png
+*.avi
 
 #matlab
 *.asv
@@ -13,6 +14,9 @@
 *.vcxproj
 *.vcxproj.user
 *.vcxproj.filters
+
+#py
+python\__pycache__
 
 #folder
 .vs
