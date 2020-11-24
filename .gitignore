@@ -5,7 +5,10 @@
 *.bmp
 *.jpg
 *.png
+
+#video
 *.avi
+*.mp4
 
 #matlab
 *.asv
