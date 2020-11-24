@@ -14,7 +14,7 @@ clear;
 close all;
 
 % test image folder
-folder_path='Material\';
+folder_path='../Material/';
 
 % 1:left image 2:right image
 % image_left=imread([folder_path,'L11.png']);
