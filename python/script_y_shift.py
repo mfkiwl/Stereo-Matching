@@ -25,7 +25,10 @@ list_y_shift=[float(this_str) for this_str in data]
 plt.figure(figsize=(13,6))
 
 plt.ylim([-30,30])
-plt.plot(np.array(range(len(list_y_shift)))/1500,list_y_shift,'k.',markersize=0.6)
+plt.plot(np.array(range(len(list_y_shift)))/1500,
+         list_y_shift,
+         'k.',
+         markersize=0.6)
 
 plt.ylabel('y-shift (pixel)',fontdict=label_prop)
 plt.xlabel('time (min)',fontdict=label_prop)
@@ -36,3 +39,5 @@ labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()
 
 #label fonts
 [this_label.set_fontname('Times New Roman') for this_label in labels]
+
+plt.savefig('y-shift.png',dpi=300,bbox_inches='tight')

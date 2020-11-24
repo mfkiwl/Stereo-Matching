@@ -1,10 +1,13 @@
+#folder
+Material
+python/*.png
+
 #post-fix
 *.txt
 
 #image
 *.bmp
 *.jpg
-*.png
 
 #video
 *.avi
