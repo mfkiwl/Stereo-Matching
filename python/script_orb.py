@@ -17,7 +17,7 @@ title_prop={'family':'Gill Sans MT',
             'size':13}
 
 # load image
-folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
+folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\Material'
 
 image_left=cv2.imread(folder_path+'\\L13.jpg')
 image_right=cv2.imread(folder_path+'\\R13.jpg')

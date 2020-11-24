@@ -16,38 +16,8 @@ Created on Mon Nov 11 14:51:37 2020
 
 #include "Header\calculation_feature_matching.h"
 
-int main(){
-	
-	cout << "Built with OpenCV " << CV_VERSION << endl;
+int VideoStreaming(string fileName) {
 
-	string folder_path = "D:\\GitHub\\KAMERAWERK\\Binocular-Stereo-Matching\\matlab\\Material";
-
-	////left and right image name
-	string name_image_a = "L13.jpg";
-	string name_image_b = "R13.jpg";
-
-	//string name_image_a = "L3.bmp";
-	//string name_image_b = "R3.bmp";
-
-	//Mat image_a = imread(folder_path + "\\" + name_image_a);
-	//Mat image_b = imread(folder_path + "\\" + name_image_b);
-
-	//if (!image_a.data || !image_b.data){
-
-	//	cout << "==> ERROR: Images not found" << endl;
-	//	return -1;
-	//}
-	////determine the order of duals
-	//vector<Mat> vector_image = DualOrder(image_a, image_b);
-
-	//Mat image_left = vector_image[0];
-	//Mat image_right = vector_image[1];
-
-	////calculate vertical difference between left and right images
-	//int y_shift = CalculateVerticalDifference(image_left, image_right);
-
-	//string fileName = "G:\\跑马山隧道3D视频素材\\网络相机3D视频素材\\Stiching20201114_134604.avi";
-	string fileName = "D:\\工作\\工业相机3D视频素材\\20201113_143105.avi";
 	VideoCapture capture(fileName);
 
 	if (!capture.isOpened())
@@ -81,7 +51,7 @@ int main(){
 
 	int interval = 1;
 
-	while (cnt--){
+	while (cnt--) {
 
 		if (!((totalFrames - cnt) % interval == 0)) {
 
@@ -120,4 +90,39 @@ int main(){
 	//m_video2.release();
 	capture.release();
 	return 0;
+}
+int main(){
+	
+	cout << "Built with OpenCV " << CV_VERSION << endl;
+
+	string folder_path = "D:\\GitHub\\KAMERAWERK\\Binocular-Stereo-Matching\\matlab\\Material";
+
+	////left and right image name
+	string name_image_a = "L13.jpg";
+	string name_image_b = "R13.jpg";
+
+	//string name_image_a = "L3.bmp";
+	//string name_image_b = "R3.bmp";
+
+	//Mat image_a = imread(folder_path + "\\" + name_image_a);
+	//Mat image_b = imread(folder_path + "\\" + name_image_b);
+
+	//if (!image_a.data || !image_b.data){
+
+	//	cout << "==> ERROR: Images not found" << endl;
+	//	return -1;
+	//}
+	////determine the order of duals
+	//vector<Mat> vector_image = DualOrder(image_a, image_b);
+
+	//Mat image_left = vector_image[0];
+	//Mat image_right = vector_image[1];
+
+	////calculate vertical difference between left and right images
+	//int y_shift = CalculateVerticalDifference(image_left, image_right);
+
+	//string fileName = "G:\\跑马山隧道3D视频素材\\网络相机3D视频素材\\Stiching20201114_134604.avi";
+	string fileName = "D:\\工作\\工业相机3D视频素材\\20201113_143105.avi";
+
+	VideoStreaming(fileName);
 }

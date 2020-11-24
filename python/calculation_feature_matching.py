@@ -171,8 +171,29 @@ def CalculateGoodMatches(slope_key_points,matches):
                 
             plt.plot(k,this_slope,'g.')
 
-    plt.hlines(matched_slope-slope_threshold/n_interval,0,len(slope_key_points),color='r',linestyle='--')
-    plt.hlines(matched_slope+slope_threshold/n_interval,0,len(slope_key_points),color='r',linestyle='--')
+    plt.hlines(y=matched_slope-3*slope_threshold/n_interval,
+               xmin=0,
+               xmax=len(slope_key_points),
+               color='r',
+               linestyle='--')
+    
+    plt.hlines(y=matched_slope+3*slope_threshold/n_interval,
+               xmin=0,
+               xmax=len(slope_key_points),
+               color='r',
+               linestyle='--')
+    
+    plt.vlines(x=0,
+               ymin=matched_slope-3*slope_threshold/n_interval,
+               ymax=matched_slope+3*slope_threshold/n_interval,
+               color='r',
+               linestyle='--')
+    
+    plt.vlines(x=len(slope_key_points),
+               ymin=matched_slope-3*slope_threshold/n_interval,
+               ymax=matched_slope+3*slope_threshold/n_interval,
+               color='r',
+               linestyle='--')
     
     plt.ylim([-slope_threshold,slope_threshold])
     
