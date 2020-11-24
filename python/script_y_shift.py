@@ -24,11 +24,11 @@ list_y_shift=[float(this_str) for this_str in data]
 
 plt.figure(figsize=(13,6))
 
-plt.ylim([-10,10])
-plt.plot(range(len(list_y_shift)),list_y_shift,'k-')
+plt.ylim([-30,30])
+plt.plot(np.array(range(len(list_y_shift)))/1500,list_y_shift,'k.',markersize=0.6)
 
 plt.ylabel('y-shift (pixel)',fontdict=label_prop)
-plt.xlabel('frame (-)',fontdict=label_prop)
+plt.xlabel('time (min)',fontdict=label_prop)
 
 #set ticks fonts
 plt.tick_params(labelsize=12)

@@ -11,9 +11,9 @@ Created on Mon Nov 23 11:47:26 2020
 
 import cv2
 
-folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching'
+folder_path=r'D:\工作\工业相机3D视频素材'
 
-video_path=folder_path+'\\myvideo_2.mp4'
+video_path=folder_path+'\\20201113_143105.avi'
 
 capture = cv2.VideoCapture(video_path)
 
@@ -39,4 +39,4 @@ capture.get(17)   × 暂时不支持
 capture.get(18)   立体摄像机的矫正标注（目前只有DC1394 v.2.x后端支持这个功能）
 """
 
-frame_count = int(capture.get(7))
+frame_count = int(capture.get(cv2.CAP_PROP_FPS))
