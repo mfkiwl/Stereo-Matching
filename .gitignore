@@ -6,7 +6,6 @@
 *.jpg
 *.png
 *.avi
-*.mp4
 
 #matlab
 *.asv
