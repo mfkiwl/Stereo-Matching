@@ -73,8 +73,8 @@ vector<double> CalculateDifference(Mat image_a,
 			matches,
 			image_matches);
 
-		namedWindow("Feature Matching (first)", 1);
-		imshow("Feature Matching (first)", image_matches);
+		namedWindow("Feature Matching (original)", 1);
+		imshow("Feature Matching (original)", image_matches);
 		waitKey(666);
 	}
 	//slope of all key points
