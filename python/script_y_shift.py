@@ -11,7 +11,7 @@ Created on Mon Nov 23 18:27:28 2020
 
 from __init__ import *
                                
-file_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\cpp\y-shift_20201113_143105.txt'
+file_path=r'D:\GitHub\KAMERAWERK\Stereo-Matching\cpp\y-shift_20201113_143105.txt'
 
 file=open(file_path,"r")   #设置文件对象
 
@@ -30,8 +30,10 @@ plt.plot(np.array(range(len(list_y_shift)))/1500,
          'k.',
          markersize=0.6)
 
-plt.ylabel('y-shift (pixel)',fontdict=label_prop)
-plt.xlabel('time (min)',fontdict=label_prop)
+plt.ylabel('Y-Shift (pixel)',fontdict=label_prop)
+plt.xlabel('Time (min)',fontdict=label_prop)
+
+plt.title('Y-Shift from all Frames in a Video Streaming',fontdict=title_prop)
 
 #set ticks fonts
 plt.tick_params(labelsize=12)

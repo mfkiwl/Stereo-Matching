@@ -197,9 +197,11 @@ def CalculateGoodMatches(slope_key_points,matches):
     
     plt.ylim([-slope_threshold,slope_threshold])
     
-    plt.ylabel('slope (-)',fontdict=label_prop)
-    plt.xlabel('key points (-)',fontdict=label_prop)
+    plt.ylabel('Slope (-)',fontdict=label_prop)
+    plt.xlabel('Key Points (-)',fontdict=label_prop)
 
+    plt.title('Slope Distribution of all Key Points',fontdict=title_prop)
+    
     #set ticks fonts
     plt.tick_params(labelsize=12)
     labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()

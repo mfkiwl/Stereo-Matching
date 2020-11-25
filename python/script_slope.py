@@ -74,8 +74,9 @@ plt.ylim([-slope_threshold,slope_threshold])
 
 # plt.hlines(-0.021,0,len(slope_key_points),'r')
 
-plt.ylabel('y-shift (pixel)',fontdict=label_prop)
-plt.xlabel('frame (-)',fontdict=label_prop)
+# plt.ylabel('y-shift (pixel)',fontdict=label_prop)
+# plt.xlabel('frame (-)',fontdict=label_prop)
+
 
 #set ticks fonts
 plt.tick_params(labelsize=12)

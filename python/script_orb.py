@@ -11,13 +11,8 @@ Created on Mon Nov  9 14:51:37 2020
 
 from __init__ import *
 
-title_prop={'family':'Gill Sans MT',
-            'weight':'normal',
-            'style':'normal',
-            'size':13}
-
 # load image
-folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\Material'
+folder_path=r'D:\GitHub\KAMERAWERK\Stereo-Matching\Material'
 
 image_left=cv2.imread(folder_path+'\\L13.jpg')
 image_right=cv2.imread(folder_path+'\\R13.jpg')
@@ -59,6 +54,8 @@ slope_key_points=C_F_M.SlopeFromKeyPoints(key_points_matched_left,
 good_matches=C_F_M.CalculateGoodMatches(slope_key_points,
                                         matches)
 
+plt.savefig('slope.png',dpi=300,bbox_inches='tight')
+
 # C_R.RANSAC(range(len(slope_key_points)),slope_key_points)
 
 #key points from good matches
@@ -66,7 +63,7 @@ good_key_points_left,\
 good_key_points_right=C_F_M.KeyPointsFromMatches(key_points_original_left,
                                                  key_points_original_right,
                                                  good_matches)
-plt.figure()
+plt.figure(figsize=(17,6))
 
 #draw matching result dual images
 C_F_M.DrawDualImages(image_left,
@@ -82,6 +79,8 @@ C_F_M.DrawMatchedPoints(image_left,
                         good_key_points_left,
                         good_key_points_right)
 
+
+
 x_shift=C_F_M.CalculateHorizontalDifference(good_key_points_left,
                                             good_key_points_right)
 
@@ -95,11 +94,11 @@ y_shift_final=int(np.round(y_shift/4)*4)
 
 if x_shift>0:
     
-    print('-- Conclusion: The 1st image is left, the 2nd image is right.')
+    print('-- Conclusion: Image A is left, and image B is right.')
 
 if x_shift<0:
     
-    print('-- Conclusion: The 1st image is right, the 2nd image is left.')
+    print('-- Conclusion: Image A is right, and image B is left.')
 
 if y_shift>0:
     
@@ -113,5 +112,7 @@ plt.xticks([])
 plt.yticks([])
 
 plt.title(title_str,fontdict=title_prop)
+
+plt.savefig('matching.png',dpi=300,bbox_inches='tight')
 
 print('-- Result:',title_str)
