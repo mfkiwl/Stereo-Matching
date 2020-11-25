@@ -11,7 +11,7 @@ Created on Mon Nov 23 18:27:28 2020
 
 from __init__ import *
                                
-file_path='..\cpp\y-shift_20201113_143105.txt'
+file_path='..\cpp\output\y-shift_20201113_143105.txt'
 
 file=open(file_path,"r")   #设置文件对象
 
@@ -42,4 +42,4 @@ labels=plt.gca().get_xticklabels()+plt.gca().get_yticklabels()
 #label fonts
 [this_label.set_fontname('Times New Roman') for this_label in labels]
 
-plt.savefig('y-shift.png',dpi=300,bbox_inches='tight')
+plt.savefig('output/y-shift.png',dpi=300,bbox_inches='tight')

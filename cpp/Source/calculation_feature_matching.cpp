@@ -123,7 +123,7 @@ vector<double> CalculateDifference(Mat image_a,
 	}
 	//write slope into txt file
 	ofstream out_file;
-	out_file.open("slope.txt");
+	out_file.open("output/slope.txt");
 
 	for (int k = 0; k < slope_key_points.size(); k++) {
 
@@ -218,18 +218,31 @@ vector<double> CalculateDifference(Mat image_a,
 	}
 	return vector_shift;
 }
-vector<Mat> DualOrder(Mat image_a, Mat image_b) {
+bool CheckOutOrder(Mat image_a, Mat image_b) {
+
+	//horizontal difference
+	double x_shift = CalculateDifference(image_a, image_b)[0];
+
+	if (x_shift > 0) {
+
+		return true;
+	}
+	else {
+
+		return false;
+	}
+}
+vector<Mat> DualCamerasOrder(Mat image_a, Mat image_b) {
 		
 	cout << endl;
 	cout << "-- Dual Order" << endl;
 
-	//horizontal difference
-	double x_shift = CalculateDifference(image_a, image_b)[0];
+	bool flag = CheckOutOrder(image_a, image_b);
 	
 	//vector to store 2 images
 	vector<Mat> vector_image;
 
-	if (x_shift > 0) {
+	if (flag) {
 
 		vector_image.push_back(image_a);
 		vector_image.push_back(image_b);

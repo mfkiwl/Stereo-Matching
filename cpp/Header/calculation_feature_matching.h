@@ -16,7 +16,9 @@ Created on Mon Nov 11 14:51:37 2020
 
 vector<double> CalculateDifference(Mat image_a, Mat image_b, bool display);
 
-vector<Mat> DualOrder(Mat image_a, Mat image_b);
+bool CheckOutOrder(Mat image_a, Mat image_b);
+
+vector<Mat> DualCamerasOrder(Mat image_a, Mat image_b);
 
 //Calculate vertical difference and determine which image is left or right
 double CalculateVerticalDifference(Mat image_left, Mat image_right);

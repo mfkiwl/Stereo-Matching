@@ -19,6 +19,8 @@ python/*.png
 
 #cpp
 *.sln
+*.user
+*.filters
 *.vcxproj
 *.vcxproj.user
 *.vcxproj.filters
@@ -30,3 +32,5 @@ python\__pycache__
 #folder
 .vs
 x64
+input
+output

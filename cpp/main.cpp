@@ -6,7 +6,7 @@ Created on Mon Nov 11 14:51:37 2020
 @company: KAMERAWERK
 @e-mail: wei@kamerawerk.cn
 
-@title：script-Stereo Matching
+@title：script-Veritical Difference Calculation
 
 ******************************************************************************/
 
@@ -41,7 +41,7 @@ int main(){
 		return -1;
 	}
 	//determine the order of duals
-	vector<Mat> vector_image = DualOrder(image_a, image_b);
+	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
 
 	Mat image_left = vector_image[0];
 	Mat image_right = vector_image[1];

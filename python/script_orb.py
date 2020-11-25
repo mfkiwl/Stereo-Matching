@@ -17,8 +17,8 @@ folder_path='../Material/'
 image_left=cv2.imread(folder_path+'L13.jpg')
 image_right=cv2.imread(folder_path+'R13.jpg')
 
-# image_left=cv2.imread('top_VCM_390.png')
-# image_right=cv2.imread('top_VCM_400.png')
+# image_left=cv2.imread('input/top_VCM_390.png')
+# image_right=cv2.imread('input/top_VCM_400.png')
 
 # image_left=cv2.imread(folder_path+'L3.bmp')
 # image_right=cv2.imread(folder_path+'R3.bmp')
@@ -54,7 +54,7 @@ slope_key_points=C_F_M.SlopeFromKeyPoints(key_points_matched_left,
 good_matches=C_F_M.CalculateGoodMatches(slope_key_points,
                                         matches)
 
-plt.savefig('slope.png',dpi=300,bbox_inches='tight')
+plt.savefig('output/slope.png',dpi=300,bbox_inches='tight')
 
 # C_R.RANSAC(range(len(slope_key_points)),slope_key_points)
 
@@ -86,7 +86,7 @@ plt.yticks([])
 
 plt.title('Feature Matching (original)',fontdict=title_prop)
 
-plt.savefig('original matching.png',dpi=300,bbox_inches='tight')
+plt.savefig('output/original matching.png',dpi=300,bbox_inches='tight')
 
 '''good matching'''
 plt.figure(figsize=(17,6))
@@ -139,6 +139,6 @@ plt.yticks([])
 
 plt.title('Feature Matching (good)',fontdict=title_prop)
 
-plt.savefig('good matching.png',dpi=300,bbox_inches='tight')
+plt.savefig('output/good matching.png',dpi=300,bbox_inches='tight')
 
 print('-- Result:',print_str)
