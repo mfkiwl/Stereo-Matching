@@ -6,7 +6,7 @@ Created on Mon Nov 11 14:51:37 2020
 @company: KAMERAWERK
 @e-mail: wei@kamerawerk.cn
 
-@title：script-ORB Matching
+@title：script-Stereo Matching
 ******************************************************************************/
 
 // main.cpp: This file contains the "main" function.
