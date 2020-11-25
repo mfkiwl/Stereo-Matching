@@ -11,7 +11,7 @@ Created on Mon Nov 23 18:27:28 2020
 
 from __init__ import *
                                
-file_path=r'D:\GitHub\KAMERAWERK\Stereo-Matching\cpp\y-shift_20201113_143105.txt'
+file_path='..\cpp\y-shift_20201113_143105.txt'
 
 file=open(file_path,"r")   #设置文件对象
 

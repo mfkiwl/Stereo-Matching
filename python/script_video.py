@@ -13,7 +13,7 @@ import cv2
 
 folder_path=r'D:\工作\工业相机3D视频素材'
 
-video_path=folder_path+'\\20201113_143105.avi'
+video_path=folder_path+'\20201113_143105.avi'
 
 capture = cv2.VideoCapture(video_path)
 

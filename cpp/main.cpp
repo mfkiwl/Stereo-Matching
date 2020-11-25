@@ -7,6 +7,7 @@ Created on Mon Nov 11 14:51:37 2020
 @e-mail: wei@kamerawerk.cn
 
 @title：script-Stereo Matching
+
 ******************************************************************************/
 
 // main.cpp: This file contains the "main" function.
@@ -22,7 +23,7 @@ int main(){
 	
 	cout << "Built with OpenCV " << CV_VERSION << endl;
 
-	string folder_path = "D:\\GitHub\\KAMERAWERK\\Stereo-Matching\\Material";
+	string folder_path = "../Material";
 
 	////left and right image name
 	string name_image_a = "L13.jpg";
@@ -31,8 +32,8 @@ int main(){
 	//string name_image_a = "L3.bmp";
 	//string name_image_b = "R3.bmp";
 
-	Mat image_a = imread(folder_path + "\\" + name_image_a);
-	Mat image_b = imread(folder_path + "\\" + name_image_b);
+	Mat image_a = imread(folder_path + "/" + name_image_a);
+	Mat image_b = imread(folder_path + "/" + name_image_b);
 
 	if (!image_a.data || !image_b.data){
 
@@ -48,8 +49,7 @@ int main(){
 	//calculate vertical difference between left and right images
 	double y_shift = CalculateVerticalDifference(image_left, image_right);
 
-	//string fileName = "G:\\跑马山隧道3D视频素材\\网络相机3D视频素材\\Stiching20201114_134604.avi";
-	//string fileName = "D:\\工作\\工业相机3D视频素材\\20201113_143105.avi";
+	//string fileName = "D:/工作/工业相机3D视频素材/20201113_143105.avi";
 
 	//VideoStreaming(fileName);
 }

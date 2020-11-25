@@ -12,16 +12,16 @@ Created on Mon Nov  9 14:51:37 2020
 from __init__ import *
 
 # load image
-folder_path=r'D:\GitHub\KAMERAWERK\Stereo-Matching\Material'
+folder_path='../Material/'
 
-image_left=cv2.imread(folder_path+'\\L13.jpg')
-image_right=cv2.imread(folder_path+'\\R13.jpg')
+image_left=cv2.imread(folder_path+'L13.jpg')
+image_right=cv2.imread(folder_path+'R13.jpg')
 
 # image_left=cv2.imread('top_VCM_390.png')
 # image_right=cv2.imread('top_VCM_400.png')
 
-# image_left=cv2.imread(folder_path+'\\L3.bmp')
-# image_right=cv2.imread(folder_path+'\\R3.bmp')
+# image_left=cv2.imread(folder_path+'L3.bmp')
+# image_right=cv2.imread(folder_path+'R3.bmp')
 
 n_key_points=1000
 
