@@ -1,4 +1,4 @@
-# Binocular-Stereo-Matching
+# Stereo-Matching
 ## 1 Slope of Key Points
 ![Image text](https://github.com/jerryweihuajing/Binocular-Stereo-Matching/blob/main/Product/slope.png)
 ## 2 Feature Points Matching
