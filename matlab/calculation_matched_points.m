@@ -17,6 +17,6 @@ if size(image_points_left,1)~=0&&size(image_points_right,1)~=0
                         image_points_left,...
                         image_points_right,...
                         'montage');
-    title('Feature Points Matching (Original Image)')
+    title('Feature Points Matching (original image)')
     
 end

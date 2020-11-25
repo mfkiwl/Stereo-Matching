@@ -63,6 +63,32 @@ good_key_points_left,\
 good_key_points_right=C_F_M.KeyPointsFromMatches(key_points_original_left,
                                                  key_points_original_right,
                                                  good_matches)
+
+'''original matching'''
+plt.figure(figsize=(17,6))
+
+#draw matching result dual images
+C_F_M.DrawDualImages(image_left,
+                     image_right)
+
+#draw matching result lines
+C_F_M.DrawMatchedLines(key_points_original_left,
+                       key_points_original_right,
+                       image_left)
+
+#draw matching result points
+C_F_M.DrawMatchedPoints(image_left,
+                        key_points_original_left,
+                        key_points_original_right)
+
+plt.xticks([])
+plt.yticks([])
+
+plt.title('Feature Matching (original)',fontdict=title_prop)
+
+plt.savefig('original matching.png',dpi=300,bbox_inches='tight')
+
+'''good matching'''
 plt.figure(figsize=(17,6))
 
 #draw matching result dual images
@@ -102,17 +128,17 @@ if x_shift<0:
 
 if y_shift>0:
     
-    title_str='Result: Right image is %d (+%.4f in reality) pixels higher than left one'%(y_shift_final,y_shift)
+    print_str='Result: Right image is %d (+%.4f in reality) pixels higher than left one'%(y_shift_final,y_shift)
 
 if y_shift<0:
     
-    title_str='Result: Left image is %d (-%.4f in reality) pixels higher than right one'%(y_shift_final,y_shift)
+    print_str='Result: Left image is %d (-%.4f in reality) pixels higher than right one'%(y_shift_final,y_shift)
     
 plt.xticks([])
 plt.yticks([])
 
-plt.title(title_str,fontdict=title_prop)
+plt.title('Feature Matching (good)',fontdict=title_prop)
 
-plt.savefig('matching.png',dpi=300,bbox_inches='tight')
+plt.savefig('good matching.png',dpi=300,bbox_inches='tight')
 
-print('-- Result:',title_str)
+print('-- Result:',print_str)
