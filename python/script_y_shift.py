@@ -33,7 +33,7 @@ plt.plot(np.array(range(len(list_y_shift)))/1500,
 plt.ylabel('Y-Shift (pixel)',fontdict=label_prop)
 plt.xlabel('Time (min)',fontdict=label_prop)
 
-plt.title('Y-Shift from all Frames in a Video Streaming',fontdict=title_prop)
+plt.title('Y-Shift Distribution from Frames in Video Streaming',fontdict=title_prop)
 
 #set ticks fonts
 plt.tick_params(labelsize=12)
