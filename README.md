@@ -5,5 +5,5 @@
 ![Image text](https://github.com/jerryweihuajing/Binocular-Stereo-Matching/blob/main/Product/slope.png)
 ## 3 Feature Points Matching (good matches)
 ![Image text](https://github.com/jerryweihuajing/Stereo-Matching/blob/main/Product/good%20matching.png)
-## 4 Vertical Difference
+## 4 Vertical Difference between Camera Duals
 ![Image text](https://github.com/jerryweihuajing/Binocular-Stereo-Matching/blob/main/Product/y-shift.png)
