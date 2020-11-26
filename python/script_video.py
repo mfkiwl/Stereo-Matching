@@ -39,4 +39,4 @@ capture.get(17)   × 暂时不支持
 capture.get(18)   立体摄像机的矫正标注（目前只有DC1394 v.2.x后端支持这个功能）
 """
 
-frame_count = int(capture.get(cv2.CAP_PROP_FPS))
+frame_count = int(capture.get(1))
