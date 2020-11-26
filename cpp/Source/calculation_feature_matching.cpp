@@ -123,7 +123,7 @@ vector<double> CalculateDifference(Mat image_a,
 	}
 	//write slope into txt file
 	ofstream out_file;
-	out_file.open("output/slope.txt");
+	out_file.open("../Outcome/slope.txt");
 
 	for (int k = 0; k < slope_key_points.size(); k++) {
 

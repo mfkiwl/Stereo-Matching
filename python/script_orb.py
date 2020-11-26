@@ -54,7 +54,7 @@ slope_key_points=C_F_M.SlopeFromKeyPoints(key_points_matched_left,
 good_matches=C_F_M.CalculateGoodMatches(slope_key_points,
                                         matches)
 
-plt.savefig('output/slope.png',dpi=300,bbox_inches='tight')
+plt.savefig('../Outcome/slope.png',dpi=300,bbox_inches='tight')
 
 # C_R.RANSAC(range(len(slope_key_points)),slope_key_points)
 
@@ -86,7 +86,7 @@ plt.yticks([])
 
 plt.title('Feature Matching (original)',fontdict=title_prop)
 
-plt.savefig('output/original matching.png',dpi=300,bbox_inches='tight')
+plt.savefig('../Outcome/original matching.png',dpi=300,bbox_inches='tight')
 
 '''good matching'''
 plt.figure(figsize=(17,6))
@@ -139,6 +139,6 @@ plt.yticks([])
 
 plt.title('Feature Matching (good)',fontdict=title_prop)
 
-plt.savefig('output/good matching.png',dpi=300,bbox_inches='tight')
+plt.savefig('../Outcome/good matching.png',dpi=300,bbox_inches='tight')
 
 print('-- Result:',print_str)

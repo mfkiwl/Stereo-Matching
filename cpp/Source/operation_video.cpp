@@ -44,7 +44,7 @@ int VideoStreaming(string fileName) {
 
 	//write y-shift into txt file
 	ofstream out_file;
-	out_file.open("output/y-shift.txt");
+	out_file.open("../Outcome/y-shift.txt");
 
 	int interval = 1;
 
