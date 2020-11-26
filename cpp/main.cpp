@@ -189,7 +189,7 @@ static void onMouse(int event, int x, int y, int, void*)
     }
 }
 
-int main()
+int GlobalMatching()
 {
 
     left_img = imread("../Material/L3.bmp");
