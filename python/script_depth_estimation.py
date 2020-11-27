@@ -37,4 +37,4 @@ plt.figure()
 plt.imshow(image_left,'gray')
 
 plt.figure()
-plt.imshow(disparity_blurred,'gist_rainbow')
+plt.imshow(disparity_blurred[100:900,100:1900],'gist_rainbow')
