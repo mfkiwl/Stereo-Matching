@@ -14,8 +14,11 @@ from __init__ import *
 # load image
 folder_path='../Material/'
 
-image_left=cv2.imread(folder_path+'L13.jpg')
-image_right=cv2.imread(folder_path+'R13.jpg')
+# image_left=cv2.imread(folder_path+'L13.jpg')
+# image_right=cv2.imread(folder_path+'R13.jpg')
+
+image_left=cv2.imread(folder_path+'L14.png')
+image_right=cv2.imread(folder_path+'R14.png')
 
 # image_left=cv2.imread('input/top_VCM_390.png')
 # image_right=cv2.imread('input/top_VCM_400.png')

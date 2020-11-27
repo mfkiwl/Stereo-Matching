@@ -19,18 +19,21 @@ Created on Mon Nov 11 14:51:37 2020
 
 #include "Header\calculation_feature_matching.h"
 
-int maint(){
+int main(){
 	
 	cout << "Built with OpenCV " << CV_VERSION << endl;
 
 	string folder_path = "../Material";
 
 	////left and right image name
-	string name_image_a = "L13.jpg";
-	string name_image_b = "R13.jpg";
+	//string name_image_a = "L13.jpg";
+	//string name_image_b = "R13.jpg";
 
 	//string name_image_a = "L3.bmp";
 	//string name_image_b = "R3.bmp";
+
+    string name_image_a = "L14.png";
+    string name_image_b = "R14.png";
 
 	Mat image_a = imread(folder_path + "/" + name_image_a);
 	Mat image_b = imread(folder_path + "/" + name_image_b);
@@ -353,6 +356,6 @@ int GlobalMatching()
     //int key = waitKey(30);
     //if (key == 27)//按下Esc退出
 
-    //    return 0;
+    return 0;
     
 }
