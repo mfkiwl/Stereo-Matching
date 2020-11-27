@@ -19,7 +19,7 @@ Created on Mon Nov 11 14:51:37 2020
 
 #include "Header\calculation_feature_matching.h"
 
-int main(){
+int maint(){
 	
 	cout << "Built with OpenCV " << CV_VERSION << endl;
 
@@ -57,8 +57,6 @@ int main(){
 	//VideoStreaming(fileName);
 }
 
-
-
 int blockSize = 0, uniquenessRatio = 0, numDisparities = 0;
 Ptr<StereoBM> bm = StereoBM::create(16, 9);
 Mat xyz;              //三维坐标
@@ -82,8 +80,8 @@ int SADWindowSize = 5;
 void stereo_BM_match(int, void*)
 {
     //不做标定和校正
-    left_rectified_img = imread("../Material/L3.bmp");
-    right_rectified_img = imread("../Material/R3.bmp");
+    left_rectified_img = imread("../Material/L14.png");
+    right_rectified_img = imread("../Material/R14.png");
 
     //立体匹配生成深度图需要用到灰度图
     cvtColor(left_rectified_img, left_rectified_gray, COLOR_BGR2GRAY);
@@ -114,8 +112,8 @@ void stereo_SGBM_match(int, void*)
     Mat disp;
 
     //不做标定和校正
-    left_rectified_img = imread("../Material/L3.bmp");
-    right_rectified_img = imread("../Material/R3.bmp");
+    left_rectified_img = imread("../Material/L14.png");
+    right_rectified_img = imread("../Material/R14.png");
 
     //SGBM
     cv::Ptr<cv::StereoSGBM> sgbm = cv::StereoSGBM::create(mindisparity, ndisparities, SADWindowSize);
@@ -192,11 +190,11 @@ static void onMouse(int event, int x, int y, int, void*)
     }
 }
 
-int GlobalMatching()
+int main()
 {
 
-    left_img = imread("../Material/L3.bmp");
-    right_img = imread("../Material/R3.bmp");
+    left_img = imread("../Material/L14.png");
+    right_img = imread("../Material/R14.png");
 
     //VideoCapture cap(1);
     int FRAME_WIDTH = left_img.cols;
@@ -333,14 +331,15 @@ int GlobalMatching()
 
 
     //imshow("camera", img);
-    imshow("left_img", left_img);
-    imshow("right_img", right_img);
+    //imshow("left_img", left_img);
+    //imshow("right_img", right_img);
     /*imshow("left_rectified_img", left_rectified_img);
     imshow("right_rectified_img", right_rectified_img);
     imshow("aligned_rectified_img", aligned_rectified_img);*/
-    waitKey(666);
-    stereo_BM_match(0, 0);
+    //waitKey(1);
+    //stereo_BM_match(0, 0);
     stereo_SGBM_match(0, 0);
+
 
     ////创建SAD窗口 Trackbar
     //createTrackbar("BlockSize:\n", "disparity_BM", &blockSize, 8, stereo_BM_match);
