@@ -25,8 +25,8 @@ Args:
 Returns:
 	horizontal and vertical difference between left and right images
 */
-vector<double> CalculateDifference(Mat image_a,
-								   Mat image_b,
+vector<double> CalculateDifference(Mat& image_a,
+								   Mat& image_b,
 								   bool display = false) {
 
 	cout << endl;
@@ -67,11 +67,11 @@ vector<double> CalculateDifference(Mat image_a,
 		Mat image_matches;
 
 		drawMatches(image_a,
-			key_points_a,
-			image_b,
-			key_points_b,
-			matches,
-			image_matches);
+					key_points_a,
+					image_b,
+					key_points_b,
+					matches,
+					image_matches);
 
 		namedWindow("Feature Matching (original)", 1);
 		imshow("Feature Matching (original)", image_matches);
@@ -218,7 +218,7 @@ vector<double> CalculateDifference(Mat image_a,
 	}
 	return vector_shift;
 }
-bool CheckOutOrder(Mat image_a, Mat image_b) {
+bool CheckOutOrder(Mat& image_a, Mat& image_b) {
 
 	//horizontal difference
 	double x_shift = CalculateDifference(image_a, image_b)[0];
@@ -232,7 +232,7 @@ bool CheckOutOrder(Mat image_a, Mat image_b) {
 		return false;
 	}
 }
-vector<Mat> DualCamerasOrder(Mat image_a, Mat image_b) {
+vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b) {
 		
 	cout << endl;
 	cout << "-- Dual Order" << endl;
@@ -259,7 +259,7 @@ vector<Mat> DualCamerasOrder(Mat image_a, Mat image_b) {
 
 	return vector_image;
 }
-double CalculateVerticalDifference(Mat image_left, Mat image_right) {
+double CalculateVerticalDifference(Mat& image_left, Mat& image_right) {
 	
 	cout << endl;
 	cout << "-- Calculate Vertical Difference" << endl;
