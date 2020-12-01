@@ -11,6 +11,7 @@ Created on Mon Nov 11 14:51:37 2020
 
 #pragma once
 
+#include <time.h>
 #include <string>
 #include <vector>
 #include <iostream>

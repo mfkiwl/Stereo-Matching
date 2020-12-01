@@ -28,32 +28,52 @@ Mat DisparityMapBM(Mat& image_left, Mat& image_right) {
 
 	cvtColor(image_left, image_gray_left, COLOR_BGR2GRAY);
 	cvtColor(image_right, image_gray_right, COLOR_BGR2GRAY);
+	
+	image_gray_left = image_gray_left;
+	image_gray_right = image_gray_right;
+
+	Point_<int> center_ROI;
+	center_ROI.x = int(image_left.cols / 2);
+	center_ROI.y = int(image_left.rows / 2);
+	
+	//ROI factor
+	double zoom_factor = 0.31;
+
+	//define ROI size
+	int width_ROI = int(image_left.cols * zoom_factor);
+	int height_ROI = int(image_left.rows * zoom_factor);
+
+	//define ROI parameter
+	Rect rect(center_ROI.x - int(width_ROI / 2),
+		center_ROI.y - int(height_ROI / 2),
+		width_ROI,
+		height_ROI);
 
 	Mat disparity, disparity_8U;
 
-	int num_disparities = 128;
-	int uniqueness_ratio = 16;
+	int num_disparities = 16 * 8;
+	int uniqueness_ratio = 15;
 
-	Ptr<StereoBM> bm = StereoBM::create(16, 9);
-	/*Rect roi1, roi2;
-	bm->setROI1(roi1);
-	bm->setROI2(roi2);*/
-	bm->setPreFilterCap(31);
-	bm->setBlockSize(9);
-	bm->setMinDisparity(0);
-	bm->setNumDisparities(num_disparities);
-	bm->setTextureThreshold(10);
-	bm->setUniquenessRatio(uniqueness_ratio);
-	bm->setSpeckleWindowSize(100);
-	bm->setSpeckleRange(32);
-	bm->setDisp12MaxDiff(1);
-	bm->compute(image_gray_left, image_gray_right, disparity);
+	Ptr<StereoBM> BM = StereoBM::create(16, 9);
+
+	//BM->setROI1(ROI);
+	//BM->setROI2(ROI);
+	BM->setPreFilterCap(31);
+	BM->setBlockSize(9);
+	BM->setMinDisparity(-16);
+	BM->setNumDisparities(num_disparities);
+	BM->setTextureThreshold(10);
+	BM->setUniquenessRatio(uniqueness_ratio);
+	BM->setSpeckleWindowSize(100);
+	BM->setSpeckleRange(32);
+	BM->setDisp12MaxDiff(1);
+	BM->compute(image_gray_left(rect), image_gray_right(rect), disparity);
 
 	disparity.convertTo(disparity_8U, CV_8UC1, 255 / (num_disparities));
     
-	namedWindow("Disparity (BM)", 0);
+	/*namedWindow("Disparity (BM)", 1);
 	imshow("Disparity (BM)", disparity_8U);
-	waitKey(0);
+	waitKey(0);*/
 
 	return disparity;
 }
@@ -82,13 +102,23 @@ int main(){
 		cout << "==> ERROR: Images not found" << endl;
 		return -1;
 	}
-	//determine the order of duals
-	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
+	////determine the order of duals
+	//vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
 
-	Mat image_left = vector_image[0];
-	Mat image_right = vector_image[1];
+	//Mat image_left = vector_image[0];
+	//Mat image_right = vector_image[1];
 
-	DisparityMapBM(image_left, image_right);
+	for (int i = 0; i < 10; i++) {
+
+		clock_t t1 = clock();
+
+		DisparityMapBM(image_a, image_b);
+
+		clock_t t2 = clock();
+
+		cout << (t2 - t1) * 1.0 / CLOCKS_PER_SEC * 1000 << endl;
+	}
+	
 
 	//calculate vertical difference between left and right images
 	//double y_shift = CalculateVerticalDifference(image_left, image_right);
