@@ -195,12 +195,13 @@ def CalculateGoodMatches(slope_key_points,matches):
                color='r',
                linestyle='--')
     
-    abs_max=np.max(np.abs(np.min(slope_key_points)),np.abs(np.max(slope_key_points)))
+    abs_max=np.max([np.abs(np.min(slope_key_points)),np.abs(np.max(slope_key_points))])
     
     #minimum of y axis
-    y_min=-abs_max/(slope_threshold/n_interval)
+    y_min=-np.ceil(1.1*abs_max//(slope_threshold/n_interval))*(slope_threshold/n_interval)
+    y_max=-y_min
     
-    plt.ylim([-slope_threshold,slope_threshold])
+    plt.ylim([y_min,y_max])
     
     plt.ylabel('Slope (-)',fontdict=label_prop)
     plt.xlabel('Key Points (-)',fontdict=label_prop)
