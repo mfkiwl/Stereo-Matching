@@ -23,12 +23,12 @@ folder_path='../Material/'
 image_left=cv2.imread(folder_path+'L14.png',0)
 image_right=cv2.imread(folder_path+'R14.png',0)
 
-plt.figure(figsize=(17,31))
+plt.figure(figsize=(17,23))
 
 count=1
 
  # wsize default 3; 5; 7 for SGBM reduced size image; 15 for SGBM full size image (1300px and above); 5 Works nicely
-for window_size in [1,3,5,7,9,11,13,15,17,19]:
+for window_size in [1,3,5,7,9,11,13,15]:
     
     # SGBM Parameters -----------------
     
@@ -47,7 +47,7 @@ for window_size in [1,3,5,7,9,11,13,15,17,19]:
     
     disparity=stereo.compute(image_left,image_right)
     
-    plt.subplot(5,2,count)
+    plt.subplot(4,2,count)
     
     plt.imshow(disparity,'rainbow')
     plt.xticks([])
@@ -57,6 +57,8 @@ for window_size in [1,3,5,7,9,11,13,15,17,19]:
     
     count+=1
     
+plt.savefig('window size.png',dpi=300,bbox_inches='tight')    
+
 plt.figure(figsize=(13,6))
 plt.imshow(image_left,'gray')
 
