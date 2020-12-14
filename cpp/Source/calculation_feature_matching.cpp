@@ -95,7 +95,6 @@ vector<double> CalculateDifference(Mat& image_a,
 		vector_slope_candidate.push_back(this_slope);
 		//cout << this_slope << endl;
 	}
-
 	//collect the final slope
 	vector_slope_candidate.push_back(slope_threshold);
 	//cout << vector_slope_candidate.size() << endl;
