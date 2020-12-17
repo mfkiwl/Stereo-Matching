@@ -73,7 +73,8 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 					matches,
 					image_matches);
 
-		cv::namedWindow("Feature Matching (original)", 1);
+		cv::namedWindow("Feature Matching (original)", cv::WINDOW_NORMAL);
+		cv::resizeWindow("Feature Matching (original)", 1600, 450);
 		cv::imshow("Feature Matching (original)", image_matches);
 		cv::waitKey(666);
 	}
@@ -211,7 +212,8 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 					good_matches,
 					image_good_matches);
 
-		cv::namedWindow("Feature Matching (good)", 0);
+		cv::namedWindow("Feature Matching (good)", cv::WINDOW_NORMAL);
+		cv::resizeWindow("Feature Matching (good)", 1600, 450);
 		cv::imshow("Feature Matching (good)", image_good_matches);
 		cv::waitKey(666);
 	}
@@ -264,7 +266,7 @@ double CalculateVerticalDifference(cv::Mat& image_left, cv::Mat& image_right) {
 	cout << "-- Calculate Vertical Difference" << endl;
 
 	//horizontal difference
-	double y_shift = CalculateDifference(image_left, image_right, true)[1];
+	double y_shift = CalculateDifference(image_left, image_right, false)[1];
 
 	double y_shift_final = round(y_shift / 4) * 4;
 
