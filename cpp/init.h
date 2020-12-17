@@ -22,4 +22,3 @@ Created on Mon Nov 11 14:51:37 2020
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
-using namespace cv;
