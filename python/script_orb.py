@@ -14,8 +14,8 @@ from __init__ import *
 # load image
 folder_path='../Material/'
 
-image_left=cv2.imread(folder_path+'L13.jpg')
-image_right=cv2.imread(folder_path+'R13.jpg')
+image_left=cv2.imread(folder_path+'L15.jpg')
+image_right=cv2.imread(folder_path+'R15.jpg')
 
 # image_left=cv2.imread(folder_path+'L14.png')
 # image_right=cv2.imread(folder_path+'R14.png')
@@ -129,11 +129,11 @@ if x_shift<0:
 
 if y_shift>0:
     
-    print_str='Result: Right image is %d (+%.4f in reality) pixels higher than left one'%(y_shift_final,y_shift)
+    print_str='Result: Right image is %d (+%.4f in reality) pixels higher than left one'%(abs(y_shift_final),abs(y_shift))
 
 if y_shift<0:
     
-    print_str='Result: Left image is %d (-%.4f in reality) pixels higher than right one'%(y_shift_final,y_shift)
+    print_str='Result: Left image is %d (-%.4f in reality) pixels higher than right one'%(abs(y_shift_final),abs(y_shift))
     
 plt.xticks([])
 plt.yticks([])
