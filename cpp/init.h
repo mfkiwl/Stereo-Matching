@@ -22,3 +22,20 @@ Created on Mon Nov 11 14:51:37 2020
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
+
+using cv::Ptr;
+using cv::Mat;
+using cv::ORB;
+using cv::SIFT;
+using cv::DMatch;
+using cv::BFMatcher;
+using cv::KeyPoint;
+using cv::FlannBasedMatcher;
+
+using cv::imshow;
+using cv::waitKey;
+using cv::namedWindow;
+using cv::resizeWindow;
+using cv::drawMatches;
+
+using cv::WINDOW_NORMAL;

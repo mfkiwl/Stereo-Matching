@@ -25,9 +25,9 @@ Args:
 Returns:
 	horizontal and vertical difference between left and right images
 */
-vector<double> CalculateDifference(cv::Mat& image_a,
-								cv::Mat& image_b,
-								bool display = false) {
+vector<double> CalculateDifference(Mat& image_a,
+									Mat& image_b,
+									bool display = false) {
 
 	cout << endl;
 	cout << "-- Calculate Difference" << endl;
@@ -37,26 +37,26 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 
 	//feature matching detector
 	//Ptr<ORB> detector = ORB::create(n_feature_points);
-	cv::Ptr<cv::SIFT> detector = cv::SIFT::create(n_feature_points);
+	Ptr<SIFT> detector = SIFT::create(n_feature_points);
 
 	//define vector of key points
-	vector<cv::KeyPoint> key_points_a;
-	vector<cv::KeyPoint> key_points_b;
+	vector<KeyPoint> key_points_a;
+	vector<KeyPoint> key_points_b;
 
 	//define descriptor
-	cv::Mat descriptor_a;
-	cv::Mat descriptor_b;
+	Mat descriptor_a;
+	Mat descriptor_b;
 
 	//detect and compute descriptor
 	detector->detectAndCompute(image_a, cv::Mat(), key_points_a, descriptor_a);
 	detector->detectAndCompute(image_b, cv::Mat(), key_points_b, descriptor_b);
 
 	//match with Brute Force method or Flann Based
-	cv::BFMatcher matcher;
+	BFMatcher matcher;
 	//FlannBasedMatcher matcher;
 
 	//vector of DMatch which stores information about some of the points in it 
-	vector<cv::DMatch> matches;
+	vector<DMatch> matches;
 
 	//match left and right images
 	matcher.match(descriptor_a, descriptor_b, matches, cv::Mat());
@@ -64,19 +64,19 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 	if (display) {
 
 		//display the matching result of first step
-		cv::Mat image_matches;
+		Mat image_matches;
 
-		cv::drawMatches(image_a,
+		drawMatches(image_a,
 					key_points_a,
 					image_b,
 					key_points_b,
 					matches,
 					image_matches);
 
-		cv::namedWindow("Feature Matching (original)", cv::WINDOW_NORMAL);
-		cv::resizeWindow("Feature Matching (original)", 1600, 450);
-		cv::imshow("Feature Matching (original)", image_matches);
-		cv::waitKey(666);
+		namedWindow("Feature Matching (original)", cv::WINDOW_NORMAL);
+		resizeWindow("Feature Matching (original)", 1600, 450);
+		imshow("Feature Matching (original)", image_matches);
+		waitKey(666);
 	}
 	//slope of all key points
 	vector<double> slope_key_points;
@@ -150,7 +150,7 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 	double matched_slope = vector_slope_candidate[index_min];
 	cout << "==> matched slope: " << matched_slope << endl;
 	//list good matched result
-	vector<cv::DMatch> good_matches;
+	vector<DMatch> good_matches;
 
 	//traverse all slopes and make classification
 	for (int k = 0; k < slope_key_points.size(); ++k) {
@@ -204,36 +204,40 @@ vector<double> CalculateDifference(cv::Mat& image_a,
 
 	if (display) {
 
-		cv::Mat image_good_matches;
-		cv::drawMatches(image_a,
+		Mat image_good_matches;
+		drawMatches(image_a,
 					key_points_a,
 					image_b,
 					key_points_b,
 					good_matches,
 					image_good_matches);
 
-		cv::namedWindow("Feature Matching (good)", cv::WINDOW_NORMAL);
-		cv::resizeWindow("Feature Matching (good)", 1600, 450);
-		cv::imshow("Feature Matching (good)", image_good_matches);
-		cv::waitKey(666);
+		namedWindow("Feature Matching (good)", WINDOW_NORMAL);
+		resizeWindow("Feature Matching (good)", 1600, 450);
+		imshow("Feature Matching (good)", image_good_matches);
+		waitKey(666);
 	}
 	return vector_shift;
 }
-bool CheckOutOrder(cv::Mat& image_a, cv::Mat& image_b) {
+bool CheckOutOrder(Mat& image_a, Mat& image_b) {
 
 	//horizontal difference
 	double x_shift = CalculateDifference(image_a, image_b)[0];
 
 	if (x_shift > 0) {
 
+		cout << "--> Conclusion: Image A is left, and image B is right." << endl;
+
 		return true;
 	}
 	else {
 
+		cout << "--> Conclusion: Image B is right, and image A is left." << endl;
+
 		return false;
 	}
 }
-vector<cv::Mat> DualCamerasOrder(cv::Mat& image_a, cv::Mat& image_b) {
+vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b) {
 		
 	cout << endl;
 	cout << "-- Dual Order" << endl;
@@ -241,26 +245,22 @@ vector<cv::Mat> DualCamerasOrder(cv::Mat& image_a, cv::Mat& image_b) {
 	bool flag = CheckOutOrder(image_a, image_b);
 	
 	//vector to store 2 images
-	vector<cv::Mat> vector_image;
+	vector<Mat> vector_image;
 
 	if (flag) {
 
 		vector_image.push_back(image_a);
 		vector_image.push_back(image_b);
-
-		cout << "--> Conclusion: Image A is left, and image B is right." << endl;
 	}
 	else {
 
 		vector_image.push_back(image_b);
 		vector_image.push_back(image_a);
-
-		cout << "--> Conclusion: Image B is right, and image A is left." << endl;
 	}
 
 	return vector_image;
 }
-double CalculateVerticalDifference(cv::Mat& image_left, cv::Mat& image_right) {
+double CalculateVerticalDifference(Mat& image_left, Mat& image_right) {
 	
 	cout << endl;
 	cout << "-- Calculate Vertical Difference" << endl;
