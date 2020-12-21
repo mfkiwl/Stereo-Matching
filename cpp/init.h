@@ -39,3 +39,5 @@ using cv::resizeWindow;
 using cv::drawMatches;
 
 using cv::WINDOW_NORMAL;
+
+#define ACCURACY_Y_SHIFT 5

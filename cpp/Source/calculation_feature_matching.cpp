@@ -48,8 +48,8 @@ vector<double> CalculateDifference(Mat& image_a,
 	Mat descriptor_b;
 
 	//detect and compute descriptor
-	detector->detectAndCompute(image_a, cv::Mat(), key_points_a, descriptor_a);
-	detector->detectAndCompute(image_b, cv::Mat(), key_points_b, descriptor_b);
+	detector->detectAndCompute(image_a, Mat(), key_points_a, descriptor_a);
+	detector->detectAndCompute(image_b, Mat(), key_points_b, descriptor_b);
 
 	//match with Brute Force method or Flann Based
 	BFMatcher matcher;
@@ -59,7 +59,7 @@ vector<double> CalculateDifference(Mat& image_a,
 	vector<DMatch> matches;
 
 	//match left and right images
-	matcher.match(descriptor_a, descriptor_b, matches, cv::Mat());
+	matcher.match(descriptor_a, descriptor_b, matches, Mat());
 
 	if (display) {
 
@@ -73,7 +73,7 @@ vector<double> CalculateDifference(Mat& image_a,
 					matches,
 					image_matches);
 
-		namedWindow("Feature Matching (original)", cv::WINDOW_NORMAL);
+		namedWindow("Feature Matching (original)", WINDOW_NORMAL);
 		resizeWindow("Feature Matching (original)", 1600, 450);
 		imshow("Feature Matching (original)", image_matches);
 		waitKey(666);
@@ -268,7 +268,7 @@ double CalculateVerticalDifference(Mat& image_left, Mat& image_right) {
 	//horizontal difference
 	double y_shift = CalculateDifference(image_left, image_right, false)[1];
 
-	double y_shift_final = round(y_shift / 4) * 4;
+	double y_shift_final = round(y_shift / ACCURACY_Y_SHIFT) * ACCURACY_Y_SHIFT;
 
 	if (y_shift > 0) {
 
