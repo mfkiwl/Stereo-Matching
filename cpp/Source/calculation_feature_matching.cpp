@@ -27,28 +27,28 @@ Returns:
 */
 pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 												Mat& image_b,
+												const string& match_operator,
 												bool display = false) {
 
 	cout << endl;
 	cout << "-- Calculate Difference" << endl;
+	cout << "==> operator: " << match_operator << endl;
 
 	//feature matching detector
-	Ptr<SURF>detector = SURF::create(100);
-	//Ptr<SIFT>detector = SIFT::create(NUM_FEATURE_POINTS);
-	//Ptr<ORB>detector = ORB::create(NUM_FEATURE_POINTS);
+	Ptr<Feature2D>detector;
 
-	/*if (match_operator == "ORB") {
+	if (match_operator == "ORB") {
 
-		detector = ORB::create(n_feature_points);
+		detector = ORB::create(NUM_FEATURE_POINTS);
 	}
 	if (match_operator == "SIFT") {
 
-		detector = SIFT::create(n_feature_points);
+		detector = SIFT::create(NUM_FEATURE_POINTS);
 	}
 	if (match_operator == "SURF") {
 
-		detector = SURF::create(n_feature_points);
-	}*/
+		detector = SURF::create(HESSION_THRESHOLD);
+	}
 	//define vector of key points
 	vector<KeyPoint> key_points_a;
 	vector<KeyPoint> key_points_b;
@@ -240,10 +240,12 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	}
 	return pair_output;
 }
-bool CheckOutOrder(Mat& image_a, Mat& image_b) {
+bool CheckOutOrder(Mat& image_a, 
+					Mat& image_b, 
+					const string& match_operator) {
 
 	//horizontal difference
-	double x_shift = CalculateDifference(image_a, image_b)[0];
+	double x_shift = CalculateDifference(image_a, image_b, match_operator).second[0];
 
 	if (x_shift > 0) {
 
@@ -258,12 +260,15 @@ bool CheckOutOrder(Mat& image_a, Mat& image_b) {
 		return false;
 	}
 }
-vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b) {
+vector<Mat> DualCamerasOrder(Mat& image_a,
+							Mat& image_b,
+							const string& match_operator) {
 		
 	cout << endl;
 	cout << "-- Dual Order" << endl;
+	cout << "==> operator: " << match_operator << endl;
 
-	bool flag = CheckOutOrder(image_a, image_b);
+	bool flag = CheckOutOrder(image_a, image_b, match_operator);
 	
 	//vector to store 2 images
 	vector<Mat> vector_image;
@@ -281,16 +286,19 @@ vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b) {
 
 	return vector_image;
 }
-pair<bool,double> CalculateVerticalDifference(Mat& image_left,Mat& image_right) {
+pair<bool, double> CalculateVerticalDifference(Mat& image_left,
+												Mat& image_right,
+												const string& match_operator) {
 	
 	cout << endl;
 	cout << "-- Calculate Vertical Difference" << endl;
+	cout << "==> operator: " << match_operator << endl;
 
 	//output result
 	pair<bool, double> pair_output;
 
 	//fet result from last step
-	pair<bool, vector<double>> pair_input = CalculateDifference(image_left, image_right, false);
+	pair<bool, vector<double>> pair_input = CalculateDifference(image_left, image_right, match_operator, false);
 	
 	//horizontal difference
 	double y_shift = pair_input.second[1];

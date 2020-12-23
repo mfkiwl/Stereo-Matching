@@ -134,14 +134,14 @@ int main(){
 	string folder_path = "../Material";
 
 	////left and right image name
-	//string name_image_a = "L13.jpg";
-	//string name_image_b = "R13.jpg";
+	string name_image_a = "L13.jpg";
+	string name_image_b = "R13.jpg";
 
 	//string name_image_a = "L3.bmp";
 	//string name_image_b = "R3.bmp";
 
-    string name_image_a = "L14.png";
-    string name_image_b = "R14.png";
+    //string name_image_a = "L14.png";
+    //string name_image_b = "R14.png";
 
 	Mat image_a = imread(folder_path + "/" + name_image_a);
 	Mat image_b = imread(folder_path + "/" + name_image_b);
@@ -152,7 +152,7 @@ int main(){
 		return -1;
 	}
 	//determine the order of duals
-	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
+	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b, "SIFT");
 
 	Mat image_left = vector_image[0];
 	Mat image_right = vector_image[1];
@@ -163,11 +163,11 @@ int main(){
 
 		//DisparityMapSGBM(image_a, image_b);
 		//calculate vertical difference between left and right images
-		double y_shift = CalculateVerticalDifference(image_left, image_right).second;
+		double y_shift = CalculateVerticalDifference(image_left, image_right, "SURF").second;
 		
 		clock_t t2 = clock();
 
-		cout << (t2 - t1) * 1.0 / CLOCKS_PER_SEC * 1000 << endl;
+		cout << "==> time consumed: " << (t2 - t1) * 1.0 / CLOCKS_PER_SEC * 1000 << endl;
 	}
 	
 	//calculate vertical difference between left and right images

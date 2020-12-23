@@ -74,7 +74,7 @@ int VideoStreaming(string fileName) {
 		//imshow("left", left);
 		//imshow("right", right);
 
-		out_file << CalculateVerticalDifference(left_image, right_image).second << endl;
+		out_file << CalculateVerticalDifference(left_image, right_image, "SIFT").second << endl;
 
 		//recording video
 		//m_video1 << newLeft;
