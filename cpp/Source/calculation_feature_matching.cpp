@@ -25,20 +25,30 @@ Args:
 Returns:
 	horizontal and vertical difference between left and right images
 */
-vector<double> CalculateDifference(Mat& image_a,
-									Mat& image_b,
-									bool display = false) {
+pair<bool, vector<double>> CalculateDifference(Mat& image_a,
+												Mat& image_b,
+												bool display = false) {
 
 	cout << endl;
 	cout << "-- Calculate Difference" << endl;
 
-	//amount of feature points
-	int n_feature_points = 1000;
-
 	//feature matching detector
-	//Ptr<ORB> detector = ORB::create(n_feature_points);
-	Ptr<SIFT> detector = SIFT::create(n_feature_points);
+	Ptr<SURF>detector = SURF::create(100);
+	//Ptr<SIFT>detector = SIFT::create(NUM_FEATURE_POINTS);
+	//Ptr<ORB>detector = ORB::create(NUM_FEATURE_POINTS);
 
+	/*if (match_operator == "ORB") {
+
+		detector = ORB::create(n_feature_points);
+	}
+	if (match_operator == "SIFT") {
+
+		detector = SIFT::create(n_feature_points);
+	}
+	if (match_operator == "SURF") {
+
+		detector = SURF::create(n_feature_points);
+	}*/
 	//define vector of key points
 	vector<KeyPoint> key_points_a;
 	vector<KeyPoint> key_points_b;
@@ -48,8 +58,8 @@ vector<double> CalculateDifference(Mat& image_a,
 	Mat descriptor_b;
 
 	//detect and compute descriptor
-	detector->detectAndCompute(image_a, cv::Mat(), key_points_a, descriptor_a);
-	detector->detectAndCompute(image_b, cv::Mat(), key_points_b, descriptor_b);
+	detector->detectAndCompute(image_a, Mat(), key_points_a, descriptor_a);
+	detector->detectAndCompute(image_b, Mat(), key_points_b, descriptor_b);
 
 	//match with Brute Force method or Flann Based
 	BFMatcher matcher;
@@ -202,6 +212,17 @@ vector<double> CalculateDifference(Mat& image_a,
 	vector_shift.push_back(x_shift);
 	vector_shift.push_back(y_shift);
 
+	//output result
+	pair<bool, vector<double>> pair_output;
+
+	//init
+	pair_output.first = true;
+	pair_output.second = vector_shift;
+
+	if (good_matches.size() < THRESHOLD_NUM_GOOD_MATCHES) {
+	
+		pair_output.first = false;
+	}
 	if (display) {
 
 		Mat image_good_matches;
@@ -217,7 +238,7 @@ vector<double> CalculateDifference(Mat& image_a,
 		imshow("Feature Matching (good)", image_good_matches);
 		waitKey(666);
 	}
-	return vector_shift;
+	return pair_output;
 }
 bool CheckOutOrder(Mat& image_a, Mat& image_b) {
 
@@ -260,15 +281,27 @@ vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b) {
 
 	return vector_image;
 }
-double CalculateVerticalDifference(Mat& image_left, Mat& image_right) {
+pair<bool,double> CalculateVerticalDifference(Mat& image_left,Mat& image_right) {
 	
 	cout << endl;
 	cout << "-- Calculate Vertical Difference" << endl;
 
-	//horizontal difference
-	double y_shift = CalculateDifference(image_left, image_right, false)[1];
+	//output result
+	pair<bool, double> pair_output;
 
-	double y_shift_final = round(y_shift / 4) * 4;
+	//fet result from last step
+	pair<bool, vector<double>> pair_input = CalculateDifference(image_left, image_right, false);
+	
+	//horizontal difference
+	double y_shift = pair_input.second[1];
+
+	//select mutiple of 4
+	double y_shift_final = round(y_shift / ACCURACY_Y_SHIFT) * ACCURACY_Y_SHIFT;
+
+	//init result
+	pair_output.first = pair_input.first;
+	pair_output.second = y_shift;
+	//pair_output.second = y_shift_final;
 
 	if (y_shift > 0) {
 
@@ -290,7 +323,6 @@ double CalculateVerticalDifference(Mat& image_left, Mat& image_right) {
 			<< "pixels higher than right one"
 			<< endl;
 	}
-	return y_shift;
-	//return y_shift_final;
+	return pair_output;
 }
 	

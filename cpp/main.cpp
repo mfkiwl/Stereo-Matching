@@ -151,26 +151,27 @@ int main(){
 		cout << "==> ERROR: Images not found" << endl;
 		return -1;
 	}
-	////determine the order of duals
-	//vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
+	//determine the order of duals
+	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b);
 
-	//Mat image_left = vector_image[0];
-	//Mat image_right = vector_image[1];
+	Mat image_left = vector_image[0];
+	Mat image_right = vector_image[1];
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 10; i++) {
 
 		clock_t t1 = clock();
 
-		DisparityMapSGBM(image_a, image_b);
-
+		//DisparityMapSGBM(image_a, image_b);
+		//calculate vertical difference between left and right images
+		double y_shift = CalculateVerticalDifference(image_left, image_right).second;
+		
 		clock_t t2 = clock();
 
 		cout << (t2 - t1) * 1.0 / CLOCKS_PER_SEC * 1000 << endl;
 	}
 	
-
 	//calculate vertical difference between left and right images
-	//double y_shift = CalculateVerticalDifference(image_left, image_right);
+	//double y_shift = CalculateVerticalDifference(image_left, image_right, "SURF");
 
 	//string fileName = "D:/工作/工业相机3D视频素材/20201113_143105.avi";
 

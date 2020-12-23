@@ -14,13 +14,13 @@ Created on Mon Nov 11 14:51:37 2020
 #ifndef _CALCULATION_FEATURE_MATCHING_H_
 #define _CALCULATION_FEATURE_MATCHING_H_
 
-vector<double> CalculateDifference(Mat& image_a, Mat& image_b, bool display);
+pair<bool, vector<double>> CalculateDifference(Mat& image_a, Mat& image_b, bool display);
 
 bool CheckOutOrder(Mat& image_a, Mat& image_b);
 
 vector<cv::Mat> DualCamerasOrder(Mat& image_a, Mat& image_b);
 
 //Calculate vertical difference and determine which image is left or right
-double CalculateVerticalDifference(Mat& image_left, Mat& image_right);
+pair<bool, double> CalculateVerticalDifference(Mat& image_left, Mat& image_right);
 
 #endif
