@@ -30,8 +30,7 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 												const string& match_operator,
 												bool display = false) {
 
-	cout << endl;
-	cout << "-- Calculate Difference" << endl;
+	cout << endl << "-- Calculate Difference" << endl;
 	cout << "==> operator: " << match_operator << endl;
 
 	//feature matching detector
@@ -264,8 +263,7 @@ vector<Mat> DualCamerasOrder(Mat& image_a,
 							Mat& image_b,
 							const string& match_operator) {
 		
-	cout << endl;
-	cout << "-- Dual Order" << endl;
+	cout << "-- Dual Order" << endl << endl;
 	cout << "==> operator: " << match_operator << endl;
 
 	bool flag = CheckOutOrder(image_a, image_b, match_operator);
@@ -290,8 +288,7 @@ pair<bool, double> CalculateVerticalDifference(Mat& image_left,
 												Mat& image_right,
 												const string& match_operator) {
 	
-	cout << endl;
-	cout << "-- Calculate Vertical Difference" << endl;
+	cout << endl << "-- Calculate Vertical Difference" << endl;
 	cout << "==> operator: " << match_operator << endl;
 
 	//output result
