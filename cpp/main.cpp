@@ -157,6 +157,13 @@ int main(){
 	Mat image_left = vector_image[0];
 	Mat image_right = vector_image[1];
 
+	putText(image_right, "PutText", Point(500, 500), FONT_HERSHEY_PLAIN, 6.6, Scalar(0, 255, 0));
+	
+	namedWindow("PutText", WINDOW_NORMAL);
+	resizeWindow("PutText", 1920, 1080);
+	imshow("PutText", image_right);
+	waitKey(0);
+
 	for (int i = 0; i < 10; i++) {
 
 		double t1 = clock();
