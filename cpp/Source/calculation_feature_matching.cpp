@@ -68,7 +68,7 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	vector<DMatch> matches;
 
 	//match left and right images
-	matcher.match(descriptor_a, descriptor_b, matches, cv::Mat());
+	matcher.match(descriptor_a, descriptor_b, matches, Mat());
 
 	if (display) {
 
