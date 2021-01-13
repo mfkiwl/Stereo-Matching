@@ -13,7 +13,7 @@ def detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # 创建SIFT生成器
     # descriptor是一个对象，这里使用的是SIFT算法
-    descriptor = cv2.xfeatures2d.SIFT_create()
+    descriptor = cv2.xfeatures2d.SIFT_create(1000)
     # 检测特征点及其描述子（128维向量）
     kps, features = descriptor.detectAndCompute(image, None)
     return (kps,features)
@@ -83,26 +83,11 @@ def drawMatches(img_left, img_right, kps_left, kps_right, matches, H):
     image[0:h_left, 0:w_left] = img_left
     return image
 
-# 现在该定义一个主函数了
-def main(img_left,img_right, size=(17,6)):
-    # 模块一：提取特征
-    kps_left, features_left = detect(img_left)
-    kps_right, features_right = detect(img_right)
-    # 模块二：特征匹配
-    matches, H, good = match_keypoints(kps_left,kps_right,features_left,features_right,0.5,0.99)
-    # 模块三：透视变换-拼接
-    vis = drawMatches(img_left, img_right, kps_left, kps_right, matches, H)
-    # show
-    plt.figure(figsize= size)
-    plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
-    plt.show()
-
-
 # load image
 folder_path='../Material/'
 
-img_left=cv2.imread(folder_path+'L15.jpg')
-img_right=cv2.imread(folder_path+'R15.jpg')
+img_left=cv2.imread(folder_path+'L17.jpg')
+img_right=cv2.imread(folder_path+'R17.jpg')
 
 plt.figure(figsize=(17,6))
 
@@ -111,4 +96,20 @@ plt.imshow(cv2.cvtColor(img_left, cv2.COLOR_BGR2RGB))
 plt.subplot(122)
 plt.imshow(cv2.cvtColor(img_right, cv2.COLOR_BGR2RGB))
 
-main(img_left,img_right)
+# 模块一：提取特征
+kps_left, features_left = detect(img_left)
+kps_right, features_right = detect(img_right)
+# 模块二：特征匹配
+matches, H, good = match_keypoints(kps_left,kps_right,features_left,features_right,0.5,0.99)
+# 模块三：透视变换-拼接
+vis = drawMatches(img_left, img_right, kps_left, kps_right, matches, H)
+# show
+plt.figure(figsize= (17,6))
+plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
+plt.show()
+
+#%%
+kps_left = np.float32([kp.pt for kp in kps_left])
+kps_right = np.float32([kp.pt for kp in kps_right])
+    
+H,status = cv2.findHomography(kps_right, kps_left, cv2.RANSAC, .99)
