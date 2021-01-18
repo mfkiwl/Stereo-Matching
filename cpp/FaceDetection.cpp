@@ -5,6 +5,7 @@
 #include <opencv2/features2d.hpp>
 #include <opencv2/objdetect.hpp>
 
+#include <stdlib.h>
 #include <stdio.h>
 
 using namespace std;
@@ -39,6 +40,9 @@ int main(int , char** )
 {
 	// open the left and right camera 
 	double frameWidth = 2560;
+	double threeqtFrameWidth = 1920;
+	double halfFrameWidth = 1280;
+	double quarterFrameWidth = 640;
 	double frameHeight = 720;
 	VideoCapture camera;
 	camera.open(0, CAP_DSHOW);
@@ -80,6 +84,8 @@ int main(int , char** )
     Mat ReferenceFrame;
     Mat GrayFrame;
     vector<Rect> Faces;
+	double FoV;
+	Point CenterFace, CenterText;
 
     do
     {
@@ -91,32 +97,60 @@ int main(int , char** )
 		// show all detected faces in green rectangle
         for (size_t i = 0; i < Faces.size(); i++)
         {
-            rectangle(ReferenceFrame, Faces[i], Scalar(0,255,0));
+            rectangle(ReferenceFrame, Faces[i], Scalar(0,255,0), 2);
            
-            //center of face
-            Point CenterFace = 0.5 * (Faces[i].br() + Faces[i].tl());
+            // center of face/rectangle
+            CenterFace = 0.5 * (Faces[i].br() + Faces[i].tl());
 
-            //center of text
-            Point CenterText;
+            // center of text
+            CenterText = Point(0,0);
 
-            //up
+            // face in lower half
             if (CenterFace.y >= frameHeight * 0.5) {
             
                 CenterText.y = CenterFace.y - 0.5 * Faces[i].height;
             }
-            //left
+            // face in upper half
             if (CenterFace.y <= frameHeight * 0.5) {
-
-                CenterText.y = CenterFace.y + 0.5 * Faces[i].height + 66;
+				// shift the face center about +50 pixels along y-axis as the bottom of text string
+                CenterText.y = CenterFace.y + 0.5 * Faces[i].height + 60;
             }
-            CenterText.x = CenterFace.x - 66;
+			// shift the face center about -50 pixels along x-axis as the left of text string
+			CenterText.x = CenterFace.x - 60;
             
             //attach FOV calculation code here
-            putText(ReferenceFrame, "FOV", CenterText, FONT_HERSHEY_PLAIN, 6.6, Scalar(0, 255, 0));
+			FoV = 0.0;
+			// left frame, left half
+			if (CenterFace.x >= 0 && CenterFace.x <= quarterFrameWidth) 
+			{
+				FoV = (CenterFace.x-quarterFrameWidth)/quarterFrameWidth*45;
+			}
+			// left frame, right half
+			if (CenterFace.x > quarterFrameWidth && CenterFace.x <= halfFrameWidth) 
+			{
+
+				FoV = (CenterFace.x-quarterFrameWidth)/quarterFrameWidth*45;
+			}
+			// right frame, left half
+			if (CenterFace.x > halfFrameWidth && CenterFace.x <= threeqtFrameWidth) 
+			{
+
+				FoV = (CenterFace.x-threeqtFrameWidth)/quarterFrameWidth*45;
+			}
+			// right frame, right half
+			if (CenterFace.x > threeqtFrameWidth && CenterFace.x <= frameWidth) 
+			{
+
+				FoV = (CenterFace.x-threeqtFrameWidth)/quarterFrameWidth*45;
+			}
+			char FoVs[50];
+			_itoa_s(FoV, FoVs, 10);
+			// CenterText: Bottom-left corner of the text string 
+            putText(ReferenceFrame, FoVs, CenterText, FONT_HERSHEY_PLAIN, 5, Scalar(0, 255, 0),3);
         }
-		namedWindow(WindowName, WINDOW_NORMAL);
-		resizeWindow(WindowName, frameWidth*0.5, frameHeight*0.5);
-        imshow(WindowName, ReferenceFrame);
+		cv::namedWindow(WindowName, WINDOW_NORMAL);
+		cv::resizeWindow(WindowName, frameWidth*0.5, frameHeight*0.5);
+        cv::imshow(WindowName, ReferenceFrame);
 
     } while (waitKey(30) < 0);
 
