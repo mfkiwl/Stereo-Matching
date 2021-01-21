@@ -9,32 +9,30 @@ Created on Fri Nov 13 11:41:03 2020
 @title：script-SIFT Matching
 """
 
-import cv2
-from matplotlib import pyplot as plt
+from __init__ import *
 
-import calculation_feature_matching as C_F_M
+# load image
+folder_path='../Material/'
+
+image_left=cv2.imread(folder_path+'L15.jpg')
+image_right=cv2.imread(folder_path+'R15.jpg')
 
 #load image
-folder_path=r'D:\GitHub\KAMERAWERK\Binocular-Stereo-Matching\matlab\Material'
-
 # image_left=cv2.imread(folder_path+'\\L13.jpg')
 # image_right=cv2.imread(folder_path+'\\R13.jpg')
 
 # image_left=cv2.imread('top_VCM_390.png')
 # image_right=cv2.imread('top_VCM_400.png')
 
-image_left=cv2.imread(folder_path+'\\L3.bmp')
-image_right=cv2.imread(folder_path+'\\R3.bmp')
-
 print("SIFT detector......")
 
-n_key_points=None
+n_key_points=1000
 
-SIFT=cv2.xfeatures2d.SIFT_create(n_key_points)
+detector=cv2.xfeatures2d.SIFT_create(n_key_points)
     
 # find the keypoints and descriptors with SIFT
-key_points_left,descriptor_left=SIFT.detectAndCompute(image_left,None)
-key_points_right,descriptor_right=SIFT.detectAndCompute(image_right,None)
+list_key_point_original_left,descriptor_left=detector.detectAndCompute(image_left,None)
+list_key_point_original_right,descriptor_right=detector.detectAndCompute(image_right,None)
 
 """
 Brute Force匹配和FLANN匹配是opencv二维特征点匹配常见的两种办法，分别对应BFMatcher和FlannBasedMatcher。
@@ -53,22 +51,48 @@ Brute Force匹配和FLANN匹配是opencv二维特征点匹配常见的两种办�
 """
 
 # Brute Force Matcher with default params
-matcher=cv2.BFMatcher()
+matcher=cv2.FlannBasedMatcher()
+# matcher=cv2.BFMatcher()
+
 matches=matcher.knnMatch(descriptor_left,descriptor_right,k=2)
 
-# Apply ratio test
-good = [[m] for m, n in matches if m.distance < 0.5 * n.distance]
+# classify by ratio (only exist in SIFT)
+matches=[m for m,n in matches if m.distance < 0.99*n.distance]
 
-# cv2.drawMatchesKnn expects list of lists as matches.
-img3 = cv2.drawMatchesKnn(image_left, 
-                          key_points_left,
-                          image_right,
-                          key_points_right,
-                          good,
-                          None,
-                          flags=2)
+#key points from left and right image
+list_key_point_matched_left,\
+list_key_point_matched_right=C_F_M.KeyPointsFromMatches(list_key_point_original_left,
+                                                    list_key_point_original_right,
+                                                    matches)
 
-plt.imshow(C_F_M.bgr_rgb(img3))
+#coordinate transformation
+list_point_matched_left=[for this_key_point in list_key_point_matched_left]
+list_point_matched_right=[for this_key_point in list_key_point_matched_right]
+
+vector<Point2f>p01,p02;
+for (size_t i=0;i<matches.size();i++)
+{
+    p01.push_back(R_keypoint01[i].pt);
+    p02.push_back(R_keypoint02[i].pt);
+}
+
+//利用基础矩阵剔除误匹配点
+vector<uchar> RansacStatus;
+Mat Fundamental= findFundamentalMat(p01,p02,RansacStatus,FM_RANSAC);
+# # Apply ratio test
+# good = [[m] for m, n in matches if m.distance < 0.5 * n.distance]
+
+# # cv2.drawMatchesKnn expects list of lists as matches.
+# img3 = cv2.drawMatchesKnn(image_left, 
+#                           key_points_left,
+#                           image_right,
+#                           key_points_right,
+#                           good,
+#                           None,
+#                           flags=2)
+
+# plt.figure(figsize=(17,6))
+# plt.imshow(C_F_M.bgr_rgb(img3))
 
 # #key points from left and right image
 # key_points_left,\

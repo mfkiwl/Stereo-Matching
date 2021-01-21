@@ -54,7 +54,7 @@ slope_key_points=C_F_M.SlopeFromKeyPoints(key_points_matched_left,
                                           image_left)
 
 #good matches based on slope
-good_matches=C_F_M.CalculateGoodMatches(slope_key_points,
+good_matches=C_F_M.GoodMatchesFromSlope(slope_key_points,
                                         matches)
 
 plt.savefig('../Outcome/slope.png',dpi=300,bbox_inches='tight')

@@ -86,8 +86,8 @@ def drawMatches(img_left, img_right, kps_left, kps_right, matches, H):
 # load image
 folder_path='../Material/'
 
-img_left=cv2.imread(folder_path+'L17.jpg')
-img_right=cv2.imread(folder_path+'R17.jpg')
+img_left=cv2.imread(folder_path+'L15.jpg')
+img_right=cv2.imread(folder_path+'R15.jpg')
 
 plt.figure(figsize=(17,6))
 
@@ -107,9 +107,3 @@ vis = drawMatches(img_left, img_right, kps_left, kps_right, matches, H)
 plt.figure(figsize= (17,6))
 plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
 plt.show()
-
-#%%
-kps_left = np.float32([kp.pt for kp in kps_left])
-kps_right = np.float32([kp.pt for kp in kps_right])
-    
-H,status = cv2.findHomography(kps_right, kps_left, cv2.RANSAC, .99)

@@ -158,10 +158,11 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	//suitable slope from matching result
 	double matched_slope = vector_slope_candidate[index_min];
 	cout << "==> matched slope: " << matched_slope << endl;
+
 	//list good matched result
 	vector<DMatch> good_matches;
 
-	//traverse all slopes and make classification
+	//traverse all slopes and make classification to define good matches
 	for (int k = 0; k < slope_key_points.size(); ++k) {
 
 		//the key points whose slope is near matched slop may be considered

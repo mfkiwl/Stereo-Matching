@@ -36,7 +36,7 @@ class CascadeDetectorAdapter: public DetectionBasedTracker::IDetector
         cv::Ptr<cv::CascadeClassifier> Detector;
  };
 
-int main(int , char** )
+int mainp(int , char** )
 {
 	// open the left and right camera 
 	double frameWidth = 2560;

@@ -119,7 +119,7 @@ def DrawMatchedPoints(image_left,
                  'b.',
                  markersize=2.3)
         
-def CalculateGoodMatches(slope_key_points,matches):
+def GoodMatchesFromSlope(slope_key_points,matches):
     
     #max slope
     slope_threshold=0.6
