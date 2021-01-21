@@ -113,16 +113,16 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	for (int k = 0; k < matches.size(); ++k) {
 
 		//left key point
-		double x_keypoints_a = key_points_a[matches[k].queryIdx].pt.x;
-		double y_keypoints_a = key_points_a[matches[k].queryIdx].pt.y;
+		double x_key_points_a = key_points_a[matches[k].queryIdx].pt.x;
+		double y_key_points_a = key_points_a[matches[k].queryIdx].pt.y;
 
 		//right key point
-		double x_keypoints_b = key_points_b[matches[k].trainIdx].pt.x;
-		double y_keypoints_b = key_points_b[matches[k].trainIdx].pt.y;
+		double x_key_points_b = key_points_b[matches[k].trainIdx].pt.x;
+		double y_key_points_b = key_points_b[matches[k].trainIdx].pt.y;
 
 		//diff of x and y
-		double diff_x = x_keypoints_a - x_keypoints_b;
-		double diff_y = y_keypoints_a - y_keypoints_b;
+		double diff_x = x_key_points_a - x_key_points_b;
+		double diff_y = y_key_points_a - y_key_points_b;
 
 		//slope
 		slope_key_points.push_back(diff_y / (diff_x - image_a.cols));
@@ -181,16 +181,16 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	for (int k = 0; k < good_matches.size(); ++k) {
 
 		//left key point
-		double x_keypoints_a = key_points_a[good_matches[k].queryIdx].pt.x;
-		double y_keypoints_a = key_points_a[good_matches[k].queryIdx].pt.y;
+		double x_key_points_a = key_points_a[good_matches[k].queryIdx].pt.x;
+		double y_key_points_a = key_points_a[good_matches[k].queryIdx].pt.y;
 
 		//right key point
-		double x_keypoints_b = key_points_b[good_matches[k].trainIdx].pt.x;
-		double y_keypoints_b = key_points_b[good_matches[k].trainIdx].pt.y;
+		double x_key_points_b = key_points_b[good_matches[k].trainIdx].pt.x;
+		double y_key_points_b = key_points_b[good_matches[k].trainIdx].pt.y;
 
 		//diff of x and y
-		double diff_x = x_keypoints_a - x_keypoints_b;
-		double diff_y = y_keypoints_a - y_keypoints_b;
+		double diff_x = x_key_points_a - x_key_points_b;
+		double diff_y = y_key_points_a - y_key_points_b;
 
 		//diff in x and y direction
 		vector_x_diff.push_back(diff_x);
