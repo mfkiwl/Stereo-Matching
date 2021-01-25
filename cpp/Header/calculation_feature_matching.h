@@ -16,7 +16,7 @@ Created on Mon Nov 11 14:51:37 2020
 
 pair<bool, vector<double>> CalculateDifference(Mat& image_a, Mat& image_b, const string& match_operator, bool display);
 
-bool CheckOutOrder(Mat& image_a, Mat& image_b, const string& match_operator);
+int CheckOutOrder(Mat& image_a, Mat& image_b, const string& match_operator);
 
 vector<Mat> DualCamerasOrder(Mat& image_a, Mat& image_b, const string& match_operator);
 

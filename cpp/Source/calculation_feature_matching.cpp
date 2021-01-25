@@ -240,24 +240,31 @@ pair<bool, vector<double>> CalculateDifference(Mat& image_a,
 	}
 	return pair_output;
 }
-bool CheckOutOrder(Mat& image_a, 
-					Mat& image_b, 
-					const string& match_operator) {
+int CheckOutOrder(Mat& image_a, 
+				Mat& image_b, 
+				const string& match_operator) {
 
+	pair<bool, vector<double>>pair_output = CalculateDifference(image_a, image_b, match_operator);
+
+	//invalid output: insufficent matches
+	if (!pair_output.first) {
+	
+		return -1;
+	}
 	//horizontal difference
-	double x_shift = CalculateDifference(image_a, image_b, match_operator).second[0];
+	double x_shift = pair_output.second[0];
 
 	if (x_shift > 0) {
 
 		cout << "--> Conclusion: Image A is left, and image B is right." << endl;
 
-		return true;
+		return 1;
 	}
 	else {
 
 		cout << "--> Conclusion: Image B is right, and image A is left." << endl;
 
-		return false;
+		return 0;
 	}
 }
 vector<Mat> DualCamerasOrder(Mat& image_a,
