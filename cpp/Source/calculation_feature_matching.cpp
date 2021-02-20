@@ -12,6 +12,7 @@ Created on Mon Nov 11 14:51:37 2020
 #include "..\Header\operation_vector.h"
 
 #include "..\Header\calculation_feature_matching.h"
+#include "..\Header\configuration_global_variable.h"
 
 //------------------------------------------------------------------------------
 /*
