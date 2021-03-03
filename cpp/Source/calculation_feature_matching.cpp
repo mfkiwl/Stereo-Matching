@@ -272,7 +272,7 @@ vector<Mat> DualCamerasOrder(Mat& image_a,
 							Mat& image_b,
 							const string& match_operator) {
 		
-	cout << "-- Dual Order" << endl << endl;
+	cout << endl << "-- Dual Order" << endl;
 	cout << "==> operator: " << match_operator << endl;
 
 	bool flag = CheckOutOrder(image_a, image_b, match_operator);
