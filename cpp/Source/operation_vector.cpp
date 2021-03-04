@@ -12,71 +12,71 @@ Created on Mon Nov 11 14:51:37 2020
 #include "..\Header\operation_vector.h"
 
 //Calculate sum of vector
-//overloaded function 1: vector of INT type
-INT VectorSum(vector<INT>& which_vector) {
+//overloaded function 1: vector of int type
+int VectorSum(vector<int>& which_vector) {
 
 	//final result
-	INT sum = 0;
+	int sum = 0;
 
-	for (INT i = 0; i < which_vector.size(); i++) {
+	for (int i = 0; i < which_vector.size(); i++) {
 
 		sum += which_vector[i];
 	}
 	return sum;
 }
-//overloaded function 2: vector of FLOAT type
-FLOAT VectorSum(vector<FLOAT>& which_vector) {
+//overloaded function 2: vector of float type
+float VectorSum(vector<float>& which_vector) {
 
 	//final result
-	FLOAT sum = 0;
+	float sum = 0;
 
-	for (INT i = 0; i < which_vector.size(); i++) {
+	for (int i = 0; i < which_vector.size(); i++) {
 
 		sum += which_vector[i];
 	}
 	return sum;
 }
-//overloaded function 3: vector of DOUBLE type
-DOUBLE VectorSum(vector<DOUBLE>& which_vector) {
+//overloaded function 3: vector of double type
+double VectorSum(vector<double>& which_vector) {
 
 	//final result
-	DOUBLE sum = 0;
+	double sum = 0;
 
-	for (INT i = 0; i < which_vector.size(); i++) {
+	for (int i = 0; i < which_vector.size(); i++) {
 
 		sum += which_vector[i];
 	}
 	return sum;
 }
 //Calculate average of vector
-//overloaded function 1: vector of INT type
-DOUBLE VectorAverage(vector<INT>& which_vector) {
+//overloaded function 1: vector of int type
+double VectorAverage(vector<int>& which_vector) {
 
-	INT sum = VectorSum(which_vector);
+	int sum = VectorSum(which_vector);
 
-	return DOUBLE(sum) / which_vector.size();
+	return double(sum) / which_vector.size();
 }
-//overloaded function 2: vector of FLOAT type
-DOUBLE VectorAverage(vector<FLOAT>& which_vector) {
+//overloaded function 2: vector of float type
+double VectorAverage(vector<float>& which_vector) {
 
-	FLOAT sum = VectorSum(which_vector);
+	float sum = VectorSum(which_vector);
 
-	return DOUBLE(sum) / which_vector.size();
+	return double(sum) / which_vector.size();
 }
-//overloaded function 2: vector of DOUBLE type
-DOUBLE VectorAverage(vector<DOUBLE>& which_vector) {
+//overloaded function 2: vector of double type
+double VectorAverage(vector<double>& which_vector) {
 
-	DOUBLE sum = VectorSum(which_vector);
+	double sum = VectorSum(which_vector);
 
-	return DOUBLE(sum) / which_vector.size();
+	return double(sum) / which_vector.size();
 }
 //Calculate the index of maximum in a vector
-INT MaximumIndex(vector<DOUBLE>& which_vector) {
+int MaximumIndex(vector<double>& which_vector) {
 
-	INT index_maximum = 0;
+	int index_maximum = 0;
 
 	//traverse all element
-	for (INT k = 0; k < which_vector.size(); k++) {
+	for (int k = 0; k < which_vector.size(); k++) {
 
 		if (which_vector[k] > which_vector[index_maximum]) {
 
@@ -86,12 +86,12 @@ INT MaximumIndex(vector<DOUBLE>& which_vector) {
 	return index_maximum;
 }
 //Calculate the index of minimum in a vector
-INT MinimumIndex(vector<DOUBLE>& which_vector) {
+int MinimumIndex(vector<double>& which_vector) {
 
-	INT index_minimum = 0;
+	int index_minimum = 0;
 
 	//traverse all element
-	for (INT k = 0; k < which_vector.size(); k++) {
+	for (int k = 0; k < which_vector.size(); k++) {
 
 		if (which_vector[k] < which_vector[index_minimum]) {
 

@@ -13,10 +13,10 @@ Created on Mon Feb 11 14:51:37 2021
 
 #include "../init.h"
 
-//-------------------------------CONST VARIABLE-------------------------------
-extern CONST INT ACCURACY_Y_SHIFT;
-extern CONST INT HESSION_THRESHOLD;
-extern CONST INT NUM_FEATURE_POINTS;
-extern CONST INT THRESHOLD_NUM_GOOD_MATCHES;
+//-------------------------------const VARIABLE-------------------------------
+extern const int ACCURACY_Y_SHIFT;
+extern const int HESSION_THRESHOLD;
+extern const int NUM_FEATURE_POINTS;
+extern const int THRESHOLD_NUM_GOOD_MATCHES;
 
-extern CONST string MATCH_OPERATOR;
+extern const string MATCH_OPERATOR;

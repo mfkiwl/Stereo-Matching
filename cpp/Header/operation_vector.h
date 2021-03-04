@@ -15,19 +15,19 @@ Created on Mon Nov 11 14:51:37 2020
 #define _CALCULATION_VECTOR_H_
 
 //Calculate sum of vector
-INT VectorSum(vector<INT>& which_vector);
-FLOAT VectorSum(vector<FLOAT>& which_vector);
-DOUBLE VectorSum(vector<DOUBLE>& which_vector);
+int VectorSum(vector<int>& which_vector);
+float VectorSum(vector<float>& which_vector);
+double VectorSum(vector<double>& which_vector);
 
 //Calculate average of vector
-DOUBLE VectorAverage(vector<INT>& which_vector);
-DOUBLE VectorAverage(vector<FLOAT>& which_vector);
-DOUBLE VectorAverage(vector<DOUBLE>& which_vector);
+double VectorAverage(vector<int>& which_vector);
+double VectorAverage(vector<float>& which_vector);
+double VectorAverage(vector<double>& which_vector);
 
 //Calculate the index of maximum in a vector
-INT MaximumIndex(vector<DOUBLE>& which_vector);
+int MaximumIndex(vector<double>& which_vector);
 
 //Calculate the index of minimum in a vector
-INT MinimumIndex(vector<DOUBLE>& which_vector);
+int MinimumIndex(vector<double>& which_vector);
 
 #endif
