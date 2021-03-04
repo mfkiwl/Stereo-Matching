@@ -16,6 +16,7 @@ Created on Mon Nov 11 14:51:37 2020
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <windows.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -33,6 +34,7 @@ using cv::Size;
 using cv::SIFT;
 using cv::Point;
 using cv::Point_;
+using cv::String;
 using cv::Scalar;
 using cv::DMatch;
 using cv::BFMatcher;
