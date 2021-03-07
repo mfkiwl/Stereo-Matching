@@ -18,6 +18,7 @@ Created on Mon Nov 11 14:51:37 2020
 #include "Header\operation_video.h"
 
 #include "Header\calculation_feature_matching.h"
+#include "Header\configuration_global_variable.h"
 
 Mat CenterROI(Mat& image_gray) {
 
@@ -127,6 +128,167 @@ Mat DisparityMapSGBM(Mat& image_left, Mat& image_right) {
 
 	return disparity;
 }
+
+void StereoMapInit() {
+
+	cout << endl << "-- Stereo Map Init" << endl;
+
+	//所有矩阵都需要转置
+	//左相机内参矩阵
+	Mat intrinsic_matrix_a = Mat(3, 3, CV_64F);
+	intrinsic_matrix_a.at<double>(0, 0) = 2.005182633554151e+03;
+	intrinsic_matrix_a.at<double>(0, 1) = 0;
+	intrinsic_matrix_a.at<double>(0, 2) = 0;
+	intrinsic_matrix_a.at<double>(1, 0) = 0;
+	intrinsic_matrix_a.at<double>(1, 1) = 2.006366368253963e+03;
+	intrinsic_matrix_a.at<double>(1, 2) = 0;
+	intrinsic_matrix_a.at<double>(2, 0) = 8.010066457309256e+02;
+	intrinsic_matrix_a.at<double>(2, 1) = 4.400377853888111e+02;
+	intrinsic_matrix_a.at<double>(2, 2) = 1;
+
+	//左相机的畸变参数(k1,k2,p1,p2,k3)
+	Mat distortion_coefficient_a(1, 5, CV_64F);
+	distortion_coefficient_a.at<double>(0, 0) = -0.178078498617486;
+	distortion_coefficient_a.at<double>(0, 1) = 0.226350065179346;
+	distortion_coefficient_a.at<double>(0, 2) = -0.015540558748130;
+	distortion_coefficient_a.at<double>(0, 3) = -0.013437532780737;
+	distortion_coefficient_a.at<double>(0, 4) = -0.121476516691349;
+
+	//右相机内参矩阵
+	Mat intrinsic_matrix_b(3, 3, CV_64F);
+	intrinsic_matrix_b.at<double>(0, 0) = 2.009000287782642e+03;
+	intrinsic_matrix_b.at<double>(0, 1) = 0;
+	intrinsic_matrix_b.at<double>(0, 2) = 0;
+	intrinsic_matrix_b.at<double>(1, 0) = 0;
+	intrinsic_matrix_b.at<double>(1, 1) = 2.011309308071456e+03;
+	intrinsic_matrix_b.at<double>(1, 2) = 0;
+	intrinsic_matrix_b.at<double>(2, 0) = 8.153930281494353e+02;
+	intrinsic_matrix_b.at<double>(2, 1) = 4.627645386372207e+02;
+	intrinsic_matrix_b.at<double>(2, 2) = 1;
+
+	//右相机的畸变参数(k1,k2,p1,p2,k3)
+	Mat distortion_coefficient_b(1, 5, CV_64F);
+	distortion_coefficient_b.at<double>(0, 0) = -0.177032341326181;
+	distortion_coefficient_b.at<double>(0, 1) = 0.262501615144189;
+	distortion_coefficient_b.at<double>(0, 2) = -0.014773020825257;
+	distortion_coefficient_b.at<double>(0, 3) = -0.015143141187270;
+	distortion_coefficient_b.at<double>(0, 4) = -0.185692825451214;
+
+	//旋转矩阵
+	Mat rotation_matrix(3, 3, CV_64F);
+	rotation_matrix.at<double>(0, 0) = 0.999905691637665;
+	rotation_matrix.at<double>(0, 1) = -0.002955011737588;
+	rotation_matrix.at<double>(0, 2) = -0.013411776028318;
+	rotation_matrix.at<double>(1, 0) = 0.003020378968938;
+	rotation_matrix.at<double>(1, 1) = 0.999983647022888;
+	rotation_matrix.at<double>(1, 2) = 0.004856232870113;
+	rotation_matrix.at<double>(2, 0) = 0.013397206480720;
+	rotation_matrix.at<double>(2, 1) = -0.004896283532996;
+	rotation_matrix.at<double>(2, 2) = 0.999898265458080;
+
+	//转换成角度
+	//平移向量												  
+	Mat translation_vector(1, 3, CV_64F);
+	translation_vector.at<double>(0, 0) = -87.199038864082680;
+	translation_vector.at<double>(0, 1) = 1.285589506676971;
+	translation_vector.at<double>(0, 2) = 9.830495895638665;
+
+	//transpose
+	intrinsic_matrix_a = intrinsic_matrix_a.t();
+	intrinsic_matrix_b = intrinsic_matrix_b.t();
+	distortion_coefficient_a = distortion_coefficient_a.t();
+	distortion_coefficient_b = distortion_coefficient_b.t();
+	rotation_matrix = rotation_matrix.t();
+	translation_vector = translation_vector.t();
+
+	//旋转矩阵
+	Mat rotation_vector;
+
+	//旋转矩阵转化为旋转向量，罗德里格斯变换
+	Rodrigues(rotation_matrix, rotation_vector);
+
+	//图像尺寸
+	Size image_size = Size(WIDTH, HEIGHT);
+
+	//左右相机的3x3矫正变换(旋转矩阵)
+	Mat rotation_matrix_a;
+	Mat rotation_matrix_b;
+
+	//左右相机新的坐标系统(矫正过的)输出 3x4 的投影矩阵
+	Mat projection_matrix_a;
+	Mat projection_matrix_b;
+
+	//深度视差映射矩阵4*4
+	Mat disparity_mapping_matrix;
+
+	//图像校正之后，会对图像进行裁剪，这里的validRoi就是指裁剪之后的区域
+	Rect valid_ROI_a;
+	Rect valid_ROI_b;
+
+	//alpha-拉伸参数。如果设置为负或忽略，将不进行拉伸。
+	//如果设置为0，那么校正后图像只有有效的部分会被显示（没有黑色的部分）,
+	//如果设置为1，那么就会显示整个图像。设置为0~1之间的某个值，其效果也居于两者之间。
+
+	//立体校正
+	stereoRectify(intrinsic_matrix_a,
+		distortion_coefficient_a,
+		intrinsic_matrix_b,
+		distortion_coefficient_b,
+		image_size,
+		rotation_vector,
+		translation_vector,
+		rotation_matrix_a,
+		rotation_matrix_b,
+		projection_matrix_a,
+		projection_matrix_b,
+		disparity_mapping_matrix,
+		CALIB_ZERO_DISPARITY,
+		0,
+		image_size,
+		&valid_ROI_a,
+		&valid_ROI_b);
+
+	//rectification mapping matrix
+	Mat mapping_x_a;
+	Mat mapping_y_a;
+	Mat mapping_x_b;
+	Mat mapping_y_b;
+
+	//用来计算畸变映射，输出的X / Y坐标重映射参数, remap把求得的映射应用到图像上。
+	initUndistortRectifyMap(intrinsic_matrix_a,
+		distortion_coefficient_a,
+		rotation_matrix_a,
+		projection_matrix_a,
+		image_size,
+		CV_32FC1,
+		mapping_x_a,
+		mapping_y_a);
+
+	initUndistortRectifyMap(intrinsic_matrix_b,
+		distortion_coefficient_b,
+		rotation_matrix_b,
+		projection_matrix_b,
+		image_size,
+		CV_32FC1,
+		mapping_x_b,
+		mapping_y_b);
+
+	//determine order based on x-shift
+	if (translation_vector.at<double>(0, 0) > 0) {
+
+		mapping_x_left = mapping_x_a;
+		mapping_y_left = mapping_y_a;
+		mapping_x_right = mapping_x_b;
+		mapping_y_right = mapping_y_b;
+	}
+	else {
+
+		mapping_x_left = mapping_x_b;
+		mapping_y_left = mapping_y_b;
+		mapping_x_right = mapping_x_a;
+		mapping_y_right = mapping_y_a;
+	}
+}
 int main(){
 	
 	cout << "Built with OpenCV " << CV_VERSION << endl;
@@ -134,8 +296,8 @@ int main(){
 	string folder_path = "../Material";
 
 	//left and right image name
-	string name_image_a = "L13.jpg";
-	string name_image_b = "R13.jpg";
+	string name_image_a = "Left/12.jpg";
+	string name_image_b = "Right/12.jpg";
 
 	//string name_image_a = "L3.bmp";
 	//string name_image_b = "R3.bmp";
@@ -157,25 +319,47 @@ int main(){
 	Mat image_left = vector_image[0];
 	Mat image_right = vector_image[1];
 
-	putText(image_right, "PutText", Point(500, 500), FONT_HERSHEY_PLAIN, 6.6, Scalar(0, 255, 0));
-	
-	namedWindow("PutText", WINDOW_NORMAL);
-	resizeWindow("PutText", 1920, 1080);
-	imshow("PutText", image_right);
-	waitKey(0);
+	Mat image_rectified_left;
+	Mat image_rectified_right;
 
-	for (int i = 0; i < 10; i++) {
+	StereoMapInit();
 
-		double t1 = clock();
+	remap(image_left, image_rectified_left, mapping_x_left, mapping_y_left, INTER_LINEAR);
+	remap(image_right, image_rectified_right, mapping_x_right, mapping_y_right, INTER_LINEAR);
 
-		//DisparityMapSGBM(image_a, image_b);
-		//calculate vertical difference between left and right images
-		double y_shift = CalculateVerticalDifference(image_left, image_right, MATCH_OPERATOR).second;
-		
-		double t2 = clock();
+	imshow("original left", image_left);
+	imshow("original right", image_right);
+	imshow("rectified left", image_rectified_left);
+	imshow("rectified right", image_rectified_right);
 
-		cout << "==> time consumed: " << (t2 - t1) / CLOCKS_PER_SEC * 1000 << endl;
-	}
+	string folder_name_left = "/Rectified ";
+	string folder_name_right = "/Rectified ";
+
+	waitKey(1);
+
+	//save left and right image
+	imwrite(folder_path + folder_name_left + name_image_a, image_rectified_left);
+	imwrite(folder_path + folder_name_right + name_image_b, image_rectified_left);
+
+	//putText(image_right, "PutText", Point(500, 500), FONT_HERSHEY_PLAIN, 6.6, Scalar(0, 255, 0));
+	//
+	//namedWindow("PutText", WINDOW_NORMAL);
+	//resizeWindow("PutText", WIDTH, HEIGHT);
+	//imshow("PutText", image_right);
+	//waitKey(0);
+
+	//for (int i = 0; i < 10; i++) {
+
+	//	double t1 = clock();
+
+	//	//DisparityMapSGBM(image_a, image_b);
+	//	//calculate vertical difference between left and right images
+	//	double y_shift = CalculateVerticalDifference(image_left, image_right, MATCH_OPERATOR).second;
+	//	
+	//	double t2 = clock();
+
+	//	cout << "==> time consumed: " << (t2 - t1) / CLOCKS_PER_SEC * 1000 << endl;
+	//}
 	
 	//calculate vertical difference between left and right images
 	//double y_shift = CalculateVerticalDifference(image_left, image_right, "SURF");

@@ -9,7 +9,7 @@ Created on Mon Nov  9 14:51:37 2020
 @title: script-calculate y-shift from binocular images after rectification
 %}
 
-clc;
+clc; 
 clear;
 close all;
 
@@ -20,11 +20,11 @@ folder_path='../Material/';
 % image_left=imread([folder_path,'L11.png']);
 % image_right=imread([folder_path,'R11.png']);
 
-% image_left = imread([folder_path,'L8.bmp']);
-% image_right = imread([folder_path,'R8.bmp']);
+image_left = imread([folder_path,'L3.bmp']);
+image_right = imread([folder_path,'R3.bmp']);
 
-image_left=imread([folder_path,'L13.jpg']);
-image_right=imread([folder_path,'R13.jpg']);
+% image_left=imread([folder_path,'L13.jpg']);
+% image_right=imread([folder_path,'R13.jpg']);
 
 %size of dual images
 [rows,cols]=calculation_image_size(image_left,...

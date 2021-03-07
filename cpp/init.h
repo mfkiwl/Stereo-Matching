@@ -54,10 +54,12 @@ using cv::namedWindow;
 using cv::resizeWindow;
 using cv::drawMatches;
 
+using cv::INTER_LINEAR;
 using cv::CAP_PROP_FPS;
 using cv::WINDOW_NORMAL;
 using cv::COLOR_BGR2GRAY;
 using cv::FONT_HERSHEY_PLAIN;
+using cv::CALIB_ZERO_DISPARITY;
 using cv::CAP_PROP_FRAME_COUNT;
 using cv::CAP_PROP_FRAME_WIDTH;
 using cv::CAP_PROP_FRAME_HEIGHT;
