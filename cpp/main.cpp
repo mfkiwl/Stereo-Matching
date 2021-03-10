@@ -136,62 +136,62 @@ void StereoMapInit() {
 	//所有矩阵都需要转置
 	//左相机内参矩阵
 	Mat intrinsic_matrix_a = Mat(3, 3, CV_64F);
-	intrinsic_matrix_a.at<double>(0, 0) = 2.005182633554151e+03;
+	intrinsic_matrix_a.at<double>(0, 0) = 2.025302732582580e+03;
 	intrinsic_matrix_a.at<double>(0, 1) = 0;
 	intrinsic_matrix_a.at<double>(0, 2) = 0;
 	intrinsic_matrix_a.at<double>(1, 0) = 0;
-	intrinsic_matrix_a.at<double>(1, 1) = 2.006366368253963e+03;
+	intrinsic_matrix_a.at<double>(1, 1) = 2.017205378516199e+03;
 	intrinsic_matrix_a.at<double>(1, 2) = 0;
-	intrinsic_matrix_a.at<double>(2, 0) = 8.010066457309256e+02;
-	intrinsic_matrix_a.at<double>(2, 1) = 4.400377853888111e+02;
+	intrinsic_matrix_a.at<double>(2, 0) = 9.041139186082133e+02;
+	intrinsic_matrix_a.at<double>(2, 1) = 4.923717435392825e+02;
 	intrinsic_matrix_a.at<double>(2, 2) = 1;
 
 	//左相机的畸变参数(k1,k2,p1,p2,k3)
 	Mat distortion_coefficient_a(1, 5, CV_64F);
-	distortion_coefficient_a.at<double>(0, 0) = -0.178078498617486;
-	distortion_coefficient_a.at<double>(0, 1) = 0.226350065179346;
-	distortion_coefficient_a.at<double>(0, 2) = -0.015540558748130;
-	distortion_coefficient_a.at<double>(0, 3) = -0.013437532780737;
-	distortion_coefficient_a.at<double>(0, 4) = -0.121476516691349;
+	distortion_coefficient_a.at<double>(0, 0) = -0.168900512358313;
+	distortion_coefficient_a.at<double>(0, 1) = -0.225738897303396;
+	distortion_coefficient_a.at<double>(0, 2) = -0.004945481275994;
+	distortion_coefficient_a.at<double>(0, 3) = -0.003308759407141;
+	distortion_coefficient_a.at<double>(0, 4) = 0;
 
 	//右相机内参矩阵
 	Mat intrinsic_matrix_b(3, 3, CV_64F);
-	intrinsic_matrix_b.at<double>(0, 0) = 2.009000287782642e+03;
+	intrinsic_matrix_b.at<double>(0, 0) = 2.028101198985155e+03;
 	intrinsic_matrix_b.at<double>(0, 1) = 0;
 	intrinsic_matrix_b.at<double>(0, 2) = 0;
 	intrinsic_matrix_b.at<double>(1, 0) = 0;
-	intrinsic_matrix_b.at<double>(1, 1) = 2.011309308071456e+03;
+	intrinsic_matrix_b.at<double>(1, 1) = 2.019747675060556e+03;
 	intrinsic_matrix_b.at<double>(1, 2) = 0;
-	intrinsic_matrix_b.at<double>(2, 0) = 8.153930281494353e+02;
-	intrinsic_matrix_b.at<double>(2, 1) = 4.627645386372207e+02;
+	intrinsic_matrix_b.at<double>(2, 0) = 9.170004607229216e+02;
+	intrinsic_matrix_b.at<double>(2, 1) = 5.082350278821574e+02;
 	intrinsic_matrix_b.at<double>(2, 2) = 1;
 
 	//右相机的畸变参数(k1,k2,p1,p2,k3)
 	Mat distortion_coefficient_b(1, 5, CV_64F);
-	distortion_coefficient_b.at<double>(0, 0) = -0.177032341326181;
-	distortion_coefficient_b.at<double>(0, 1) = 0.262501615144189;
-	distortion_coefficient_b.at<double>(0, 2) = -0.014773020825257;
-	distortion_coefficient_b.at<double>(0, 3) = -0.015143141187270;
-	distortion_coefficient_b.at<double>(0, 4) = -0.185692825451214;
+	distortion_coefficient_b.at<double>(0, 0) = -0.171025662304250;
+	distortion_coefficient_b.at<double>(0, 1) = -0.231978044444149;
+	distortion_coefficient_b.at<double>(0, 2) = -0.005470034522850;
+	distortion_coefficient_b.at<double>(0, 3) = -0.004569382288119;
+	distortion_coefficient_b.at<double>(0, 4) = 0;
 
 	//旋转矩阵
 	Mat rotation_matrix(3, 3, CV_64F);
-	rotation_matrix.at<double>(0, 0) = 0.999905691637665;
-	rotation_matrix.at<double>(0, 1) = -0.002955011737588;
-	rotation_matrix.at<double>(0, 2) = -0.013411776028318;
-	rotation_matrix.at<double>(1, 0) = 0.003020378968938;
-	rotation_matrix.at<double>(1, 1) = 0.999983647022888;
-	rotation_matrix.at<double>(1, 2) = 0.004856232870113;
-	rotation_matrix.at<double>(2, 0) = 0.013397206480720;
-	rotation_matrix.at<double>(2, 1) = -0.004896283532996;
-	rotation_matrix.at<double>(2, 2) = 0.999898265458080;
+	rotation_matrix.at<double>(0, 0) = 0.999896935428937;
+	rotation_matrix.at<double>(0, 1) = -0.002671235636848;
+	rotation_matrix.at<double>(0, 2) = -0.014106134126420;
+	rotation_matrix.at<double>(1, 0) = 0.002664753042799;
+	rotation_matrix.at<double>(1, 1) = 0.999996335137106;
+	rotation_matrix.at<double>(1, 2) = -4.783341704535389e-04;
+	rotation_matrix.at<double>(2, 0) = 0.014107360172655;
+	rotation_matrix.at<double>(2, 1) = 4.406955073119460e-04;
+	rotation_matrix.at<double>(2, 2) = 0.999900389127052;
 
 	//转换成角度
 	//平移向量												  
 	Mat translation_vector(1, 3, CV_64F);
-	translation_vector.at<double>(0, 0) = -87.199038864082680;
-	translation_vector.at<double>(0, 1) = 1.285589506676971;
-	translation_vector.at<double>(0, 2) = 9.830495895638665;
+	translation_vector.at<double>(0, 0) = -88.310241092249840;
+	translation_vector.at<double>(0, 1) = -0.128020177295975;
+	translation_vector.at<double>(0, 2) = 3.751702383354567;
 
 	//transpose
 	intrinsic_matrix_a = intrinsic_matrix_a.t();
@@ -293,53 +293,64 @@ int main(){
 	
 	cout << "Built with OpenCV " << CV_VERSION << endl;
 
-	string folder_path = "../Material";
+	string folder_path = "../Material/20210309";
 
 	//left and right image name
-	string name_image_a = "Left/12.jpg";
-	string name_image_b = "Right/12.jpg";
-
-	//string name_image_a = "L3.bmp";
-	//string name_image_b = "R3.bmp";
-
-    //string name_image_a = "L14.png";
-    //string name_image_b = "R14.png";
-
-	Mat image_a = imread(folder_path + "/" + name_image_a);
-	Mat image_b = imread(folder_path + "/" + name_image_b);
-
-	if (!image_a.data || !image_b.data){
-
-		cout << "==> ERROR: Images not found" << endl;
-		return -1;
-	}
-	//determine the order of duals
-	vector<Mat> vector_image = DualCamerasOrder(image_a, image_b, MATCH_OPERATOR);
-
-	Mat image_left = vector_image[0];
-	Mat image_right = vector_image[1];
-
-	Mat image_rectified_left;
-	Mat image_rectified_right;
-
+	string name_image_a = "L13.jpg";
+	string name_image_b = "R13.jpg";
+	
 	StereoMapInit();
 
-	remap(image_left, image_rectified_left, mapping_x_left, mapping_y_left, INTER_LINEAR);
-	remap(image_right, image_rectified_right, mapping_x_right, mapping_y_right, INTER_LINEAR);
+	for (int k = 1; k <= 20; ++k) {
 
-	imshow("original left", image_left);
-	imshow("original right", image_right);
-	imshow("rectified left", image_rectified_left);
-	imshow("rectified right", image_rectified_right);
+		name_image_a = "Left/" + to_string(k) + ".jpg";
+		name_image_b = "Right/" + to_string(k) + ".jpg";
 
-	string folder_name_left = "/Rectified ";
-	string folder_name_right = "/Rectified ";
+		cout << name_image_a << endl;
 
-	waitKey(1);
+		//string name_image_a = "L3.bmp";
+		//string name_image_b = "R3.bmp";
 
-	//save left and right image
-	imwrite(folder_path + folder_name_left + name_image_a, image_rectified_left);
-	imwrite(folder_path + folder_name_right + name_image_b, image_rectified_left);
+		//string name_image_a = "L14.png";
+		//string name_image_b = "R14.png";
+
+		Mat image_a = imread(folder_path + "/" + name_image_a);
+		Mat image_b = imread(folder_path + "/" + name_image_b);
+
+		cout << folder_path + "/" + name_image_a << endl;
+
+
+		if (!image_a.data || !image_b.data) {
+
+			cout << "==> ERROR: Images not found" << endl;
+			return -1;
+		}
+		//determine the order of duals
+		vector<Mat> vector_image = DualCamerasOrder(image_a, image_b, MATCH_OPERATOR);
+
+		Mat image_left = vector_image[0];
+		Mat image_right = vector_image[1];
+
+		Mat image_rectified_left;
+		Mat image_rectified_right;
+
+		remap(image_left, image_rectified_left, mapping_x_left, mapping_y_left, INTER_LINEAR);
+		remap(image_right, image_rectified_right, mapping_x_right, mapping_y_right, INTER_LINEAR);
+
+		imshow("original left", image_left);
+		imshow("original right", image_right);
+		imshow("rectified left", image_rectified_left);
+		imshow("rectified right", image_rectified_right);
+
+		string folder_name_left = "/Rectified ";
+		string folder_name_right = "/Rectified ";
+
+		waitKey(0);
+
+		//save left and right image
+		imwrite(folder_path + folder_name_left + name_image_a, image_rectified_left);
+		imwrite(folder_path + folder_name_right + name_image_b, image_rectified_left);
+	}
 
 	//putText(image_right, "PutText", Point(500, 500), FONT_HERSHEY_PLAIN, 6.6, Scalar(0, 255, 0));
 	//
