@@ -263,7 +263,7 @@ int CheckOutOrder(Mat& image_a,
 	}
 	else {
 
-		cout << "--> Conclusion: Image B is right, and image A is left." << endl;
+		cout << "--> Conclusion: Image B is left, and image A is right." << endl;
 
 		return 0;
 	}
