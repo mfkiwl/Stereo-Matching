@@ -138,62 +138,62 @@ void StereoMapInit() {
 	//所有矩阵都需要转置
 	//左相机内参矩阵
 	Mat intrinsic_matrix_a = Mat(3, 3, CV_64F);
-	intrinsic_matrix_a.at<double>(0, 0) = 1.968958211711969e+03;
+	intrinsic_matrix_a.at<double>(0, 0) = 2.038924225776060e+03;
 	intrinsic_matrix_a.at<double>(0, 1) = 0;
 	intrinsic_matrix_a.at<double>(0, 2) = 0;
 	intrinsic_matrix_a.at<double>(1, 0) = 0;
-	intrinsic_matrix_a.at<double>(1, 1) = 1.968636028076926e+03;
+	intrinsic_matrix_a.at<double>(1, 1) = 2.030314353709770e+03;
 	intrinsic_matrix_a.at<double>(1, 2) = 0;
-	intrinsic_matrix_a.at<double>(2, 0) = 9.701416705962316e+02;
-	intrinsic_matrix_a.at<double>(2, 1) = 5.297940054174467e+02;
+	intrinsic_matrix_a.at<double>(2, 0) = 9.841035664103363e+02;
+	intrinsic_matrix_a.at<double>(2, 1) = 5.762309734852039e+02;
 	intrinsic_matrix_a.at<double>(2, 2) = 1;
 
 	//左相机的畸变参数(k1,k2,p1,p2,k3)
 	Mat distortion_coefficient_a(1, 5, CV_64F);
-	distortion_coefficient_a.at<double>(0, 0) = -0.168082628908104;
-	distortion_coefficient_a.at<double>(0, 1) = 0.785889251141544;
-	distortion_coefficient_a.at<double>(0, 2) = -0.016278796684638;
-	distortion_coefficient_a.at<double>(0, 3) = -8.693687029740024e-04;
+	distortion_coefficient_a.at<double>(0, 0) = -0.165718370647340;
+	distortion_coefficient_a.at<double>(0, 1) = -0.276752948643466;
+	distortion_coefficient_a.at<double>(0, 2) = -0.003100751518165;
+	distortion_coefficient_a.at<double>(0, 3) = -0.001081475719210;
 	distortion_coefficient_a.at<double>(0, 4) = 0;
 
 	//右相机内参矩阵
 	Mat intrinsic_matrix_b(3, 3, CV_64F);
-	intrinsic_matrix_b.at<double>(0, 0) = 1.965449170008238e+03;
+	intrinsic_matrix_b.at<double>(0, 0) = 2.048613794937828e+03;
 	intrinsic_matrix_b.at<double>(0, 1) = 0;
 	intrinsic_matrix_b.at<double>(0, 2) = 0;
 	intrinsic_matrix_b.at<double>(1, 0) = 0;
-	intrinsic_matrix_b.at<double>(1, 1) = 1.965132705496374e+03;
+	intrinsic_matrix_b.at<double>(1, 1) = 2.040699933731351e+03;
 	intrinsic_matrix_b.at<double>(1, 2) = 0;
-	intrinsic_matrix_b.at<double>(2, 0) = 9.740227428359748e+02;
-	intrinsic_matrix_b.at<double>(2, 1) = 5.166114220399866e+02;
+	intrinsic_matrix_b.at<double>(2, 0) = 1.005426123407286e+03;
+	intrinsic_matrix_b.at<double>(2, 1) = 5.391931214357833e+02;
 	intrinsic_matrix_b.at<double>(2, 2) = 1;
 
 	//右相机的畸变参数(k1,k2,p1,p2,k3)
 	Mat distortion_coefficient_b(1, 5, CV_64F);
-	distortion_coefficient_b.at<double>(0, 0) = -0.163281917185428;
-	distortion_coefficient_b.at<double>(0, 1) = 0.586620103930138;
-	distortion_coefficient_b.at<double>(0, 2) = -0.015409472257440;
-	distortion_coefficient_b.at<double>(0, 3) = -0.003290827558631;
+	distortion_coefficient_b.at<double>(0, 0) = -0.163481998594970;
+	distortion_coefficient_b.at<double>(0, 1) = -0.157297358378774;
+	distortion_coefficient_b.at<double>(0, 2) = -0.002324121557120;
+	distortion_coefficient_b.at<double>(0, 3) = -7.510331292777578e-04;
 	distortion_coefficient_b.at<double>(0, 4) = 0;
 
 	//旋转矩阵
 	Mat rotation_matrix(3, 3, CV_64F);
-	rotation_matrix.at<double>(0, 0) = 0.999777073616913;
-	rotation_matrix.at<double>(0, 1) = 8.276943022604731e-04;
-	rotation_matrix.at<double>(0, 2) = -0.021097819606417;
-	rotation_matrix.at<double>(1, 0) = -7.787013368596594e-04;
-	rotation_matrix.at<double>(1, 1) = 0.999996981679368;
-	rotation_matrix.at<double>(1, 2) = 0.002330291051101;
-	rotation_matrix.at<double>(2, 0) = 0.021099684695058;
-	rotation_matrix.at<double>(2, 1) = -0.002313342667413;
-	rotation_matrix.at<double>(2, 2) = 0.999774700495803;
+	rotation_matrix.at<double>(0, 0) = 0.999960931998933;
+	rotation_matrix.at<double>(0, 1) = 0.001511786658302;
+	rotation_matrix.at<double>(0, 2) = -0.008709131812311;
+	rotation_matrix.at<double>(1, 0) = -0.001483010750471;
+	rotation_matrix.at<double>(1, 1) = 0.999993423530581;
+	rotation_matrix.at<double>(1, 2) = 0.003309618512966;
+	rotation_matrix.at<double>(2, 0) = 0.008714077974084;
+	rotation_matrix.at<double>(2, 1) = -0.003296573476681;
+	rotation_matrix.at<double>(2, 2) = 0.999956597782311;
 
 	//转换成角度
 	//平移向量												  
 	Mat translation_vector(1, 3, CV_64F);
-	translation_vector.at<double>(0, 0) = -88.401978203314040;
-	translation_vector.at<double>(0, 1) = 0.674901833391322;
-	translation_vector.at<double>(0, 2) = -0.679973323689471;
+	translation_vector.at<double>(0, 0) = -89.869220974104560;
+	translation_vector.at<double>(0, 1) = 1.654964572198974;
+	translation_vector.at<double>(0, 2) = 1.955064339879037;
 
 	//no undistortion transform
 	if (MODE_RECTIFICATION == "STEREO") {
