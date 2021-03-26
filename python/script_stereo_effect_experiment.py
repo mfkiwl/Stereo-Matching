@@ -11,8 +11,9 @@ Created on Wed Mar 24 11:13:29 2021
 
 from __init__ import *
 
-folder_name_a=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\A'
-folder_name_b=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\B'
+folder_name=r'E:\GitHub\KAMERAWERK\VCM-Dual\Material\Stereo Effect Experiment\20210326'
+folder_name_a=folder_name+'\A'
+folder_name_b=folder_name+'\B'
 
 # image_name='VCM_300.png'
 
@@ -24,7 +25,10 @@ str_window_name='SBS'
 
 # cv2.namedWindow(str_window_name, cv2.WINDOW_NORMAL)
 
-for this_image_name in os.listdir(folder_name_a):
+#define a list to collect merged image
+list_image_merged=[]
+
+for this_image_name in os.listdir(folder_name_a)[:1]:
     
     #read image
     image_left=cv2.imread(folder_name_a+'//'+this_image_name)
@@ -94,7 +98,7 @@ for this_image_name in os.listdir(folder_name_a):
     # plt.yticks([])
     # plt.title('image right homography',fontdict=title_prop)
     
-    WIDTH_BLANKED=int(WIDTH*16/9)
+    WIDTH_BLANKED=int(HEIGHT*16/9)
     
     i_start=int(0.5*(WIDTH_BLANKED-WIDTH))
     
@@ -120,4 +124,35 @@ for this_image_name in os.listdir(folder_name_a):
     # # 按下esc时，退出
     # cv2.waitKey(666)
         
-    cv2.imwrite('../Outcome/'+this_image_name,image_merged)
+    cv2.imwrite('../Outcome/20210326/'+this_image_name,image_merged)
+
+
+# # 使用得到的变换矩阵对原图像的四个角进行变换,获得在目标图像上对应的坐标。
+# # 输入原始图像和变换之后的图像的对应4个点，便可以得到变换矩阵。
+# # 之后用求解得到的矩阵输入perspectiveTransform便可以对一组点进行变换：
+# pts = np.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
+
+
+# # 注意这里src和dst的输入并不是图像，而是图像对应的坐标
+# dst = cv2.perspectiveTransform(pts, M)
+# #cv2.findHomography().如果我们传了两个图像里的点集合，
+# # 它会找到那个目标的透视转换。然后我们可以使用cv2.perspectiveTransform()来找目标，
+# # 它需要至少4个正确的点来找变换。
+
+#  #得到旋转矩阵getPerspectiveTransform函数：根据输入和输出点获得图像透视变换的矩阵
+# #getPerspectiveTransform()：计算4个二维点对之间的透射变换矩阵 H（3行x3列）
+# perspectiveM = cv2.getPerspectiveTransform(np.float32(dst), pts)
+# # perspectiveM[2][1] = 0
+# # perspectiveM[2][0] = 0
+
+# estimateRigidTransform()：计算多个二维点对或者图像之间的最优仿射变换矩阵（2行x3列），H可以是部分自由度，比如各向一致的切变。
+# getAffineTransform()：计算3个二维点对之间的仿射变换矩阵H（2行x3列），自由度为6.
+# warpAffine()：对输入图像进行仿射变换
+# findHomography：计算多个二维点对之间的最优单映射变换矩阵H（3行x3列） ，使用最小均方误差或者RANSAC方法 。
+# getPerspectiveTransform()：计算4个二维点对之间的透射变换矩阵H（3行x3列）
+# warpPerspective()：对输入图像进行透射变换
+# perspectiveTransform()：对二维或者三维矢量进行透射变换，也就是对输入二维坐标点或者三维坐标点进行投射变换。
+# estimateAffine3D：计算多个三维点对之间的最优三维仿射变换矩阵H （3行x4列）
+# transform()：对输入的N维矢量进行变换，可用于进行仿射变换、图像色彩变换.
+# findFundamentalMat：计算多个点对之间的基矩阵H。
+#warpPerspective()：对输入图像进行透射变换

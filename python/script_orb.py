@@ -14,8 +14,8 @@ from __init__ import *
 # load image
 folder_path='../Material/'
 
-image_left=cv2.imread(folder_path+'L13.jpg')
-image_right=cv2.imread(folder_path+'R13.jpg')
+image_left=cv2.imread(folder_path+'L24.jpg')
+image_right=cv2.imread(folder_path+'R24.jpg')
 
 # image_left=cv2.imread(folder_path+'L14.png')
 # image_right=cv2.imread(folder_path+'R14.png')
@@ -32,8 +32,8 @@ n_key_points=1000
 detector=cv2.ORB_create(n_key_points)
 
 # 寻找关键点并计算描述符
-key_points_original_left,descriptor_left=detector.detectAndCompute(image_left,None)
-key_points_original_right,descriptor_right=detector.detectAndCompute(image_right,None)
+list_key_point_original_left,descriptor_left=detector.detectAndCompute(image_left,None)
+list_key_point_original_right,descriptor_right=detector.detectAndCompute(image_right,None)
 
 # 初始化 BFMatcher
 matcher=cv2.BFMatcher(cv2.NORM_HAMMING)
@@ -43,14 +43,17 @@ matches=matcher.match(descriptor_left,
                       descriptor_right)
 
 #key points from left and right image
-key_points_matched_left,\
-key_points_matched_right=C_F_M.KeyPointsFromMatches(key_points_original_left,
-                                                    key_points_original_right,
+list_key_point_matched_left,\
+list_key_point_matched_right=C_F_M.KeyPointsFromMatches(list_key_point_original_left,
+                                                    list_key_point_original_right,
                                                     matches)
+#matched key points
+list_key_point_matched_left=[list_key_point_original_left[this_match.queryIdx] for this_match in matches]
+list_key_point_matched_right=[list_key_point_original_right[this_match.trainIdx] for this_match in matches]
 
 #slope of each key point in the list
-slope_key_points=C_F_M.SlopeFromKeyPoints(key_points_matched_left,
-                                          key_points_matched_right,
+slope_key_points=C_F_M.SlopeFromKeyPoints(list_key_point_matched_left,
+                                          list_key_point_matched_right,
                                           image_left)
 
 #good matches based on slope
@@ -63,8 +66,8 @@ plt.savefig('../Outcome/slope.png',dpi=300,bbox_inches='tight')
 
 #key points from good matches
 good_key_points_left,\
-good_key_points_right=C_F_M.KeyPointsFromMatches(key_points_original_left,
-                                                 key_points_original_right,
+good_key_points_right=C_F_M.KeyPointsFromMatches(list_key_point_original_left,
+                                                 list_key_point_original_right,
                                                  good_matches)
 
 '''original matching'''
@@ -75,14 +78,14 @@ C_F_M.DrawDualImages(image_left,
                      image_right)
 
 #draw matching result lines
-C_F_M.DrawMatchedLines(key_points_original_left,
-                       key_points_original_right,
+C_F_M.DrawMatchedLines(list_key_point_matched_left,
+                       list_key_point_matched_right,
                        image_left)
 
 #draw matching result points
 C_F_M.DrawMatchedPoints(image_left,
-                        key_points_original_left,
-                        key_points_original_right)
+                        list_key_point_matched_left,
+                        list_key_point_matched_right)
 
 plt.xticks([])
 plt.yticks([])
