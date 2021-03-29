@@ -28,7 +28,7 @@ str_window_name='SBS'
 #define a list to collect merged image
 list_image_merged=[]
 
-for this_image_name in os.listdir(folder_name_a)[:1]:
+for this_image_name in os.listdir(folder_name_a):
     
     #read image
     image_left=cv2.imread(folder_name_a+'//'+this_image_name)
@@ -107,7 +107,7 @@ for this_image_name in os.listdir(folder_name_a)[:1]:
     
     #add blank
     image_merged[:HEIGHT,i_start:i_start+WIDTH,:]=image_left
-    image_merged[:HEIGHT,i_start+WIDTH_BLANKED:i_start+WIDTH_BLANKED+WIDTH,:]=image_right_warped
+    image_merged[:HEIGHT,i_start+WIDTH_BLANKED:i_start+WIDTH_BLANKED+WIDTH,:]=image_right
     
     # plt.figure(figsize=(13,6))
     # plt.imshow(C_F_M.bgr_rgb(image_merged))
