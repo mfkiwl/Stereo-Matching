@@ -220,6 +220,39 @@ def GoodMatchesFromSlope(slope_key_points,matches):
     
     return good_matches
     
+
+def GoodMatchesFromRANSAC(list_key_point_original_left,
+                          list_key_point_original_right,
+                          matches):
+    
+    #matched key points
+    list_key_point_matched_left=[list_key_point_original_left[this_match.queryIdx] for this_match in matches]
+    list_key_point_matched_right=[list_key_point_original_right[this_match.trainIdx] for this_match in matches]
+    
+    #list of point (pt)
+    list_point_left=[this_key_point.pt for this_key_point in list_key_point_matched_left]
+    list_point_right=[this_key_point.pt for this_key_point in list_key_point_matched_right]
+
+    #通过RANSAC消除误匹配，并用RANSAC_status记录是否剔除
+    # M, RANSACStatus = cv2.findHomography(list_point_matched_left, list_point_matched_right, cv2.RANSAC, 5.0)
+    fundamental_matrix, RANSAC_status=cv2.findFundamentalMat(points1=np.array(list_point_left),
+                                                              points2=np.array(list_point_right),
+                                                              method=cv2.FM_RANSAC);
+    
+    # #define good matches
+    good_matches=[]
+    
+    for k in range(len(RANSAC_status)):
+        
+        if RANSAC_status[k]:
+        
+            good_matches.append(matches[k])
+
+    print('==> amount of matches:',len(matches))
+    print('==> amount of good matches:',len(good_matches))
+    
+    return good_matches,fundamental_matrix
+        
 def CalculateVerticalDifference(key_points_left,key_points_right):
     
     #y coordinate of key points

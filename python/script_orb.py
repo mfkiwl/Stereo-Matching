@@ -14,8 +14,8 @@ from __init__ import *
 # load image
 folder_path='../Material/'
 
-image_left=cv2.imread(folder_path+'L24.jpg')
-image_right=cv2.imread(folder_path+'R24.jpg')
+image_left=cv2.imread(folder_path+'L22.jpg')
+image_right=cv2.imread(folder_path+'R22.jpg')
 
 # image_left=cv2.imread(folder_path+'L14.png')
 # image_right=cv2.imread(folder_path+'R14.png')
@@ -56,19 +56,25 @@ slope_key_points=C_F_M.SlopeFromKeyPoints(list_key_point_matched_left,
                                           list_key_point_matched_right,
                                           image_left)
 
-#good matches based on slope
-good_matches=C_F_M.GoodMatchesFromSlope(slope_key_points,
-                                        matches)
+# '''slope'''
+# #good matches based on slope
+# good_matches=C_F_M.GoodMatchesFromSlope(slope_key_points,matches)
 
-plt.savefig('../Outcome/slope.png',dpi=300,bbox_inches='tight')
+# plt.savefig('../Outcome/slope.png',dpi=300,bbox_inches='tight')
+
+'''ransac'''
+#good matches based on ransac
+good_matches,fundamental_matrix=C_F_M.GoodMatchesFromRANSAC(list_key_point_original_left,
+                                                             list_key_point_original_right,
+                                                             matches)
 
 # C_R.RANSAC(range(len(slope_key_points)),slope_key_points)
 
 #key points from good matches
-good_key_points_left,\
-good_key_points_right=C_F_M.KeyPointsFromMatches(list_key_point_original_left,
-                                                 list_key_point_original_right,
-                                                 good_matches)
+list_key_point_good_left,\
+list_key_point_good_right=C_F_M.KeyPointsFromMatches(list_key_point_original_left,
+                                                     list_key_point_original_right,
+                                                     good_matches)
 
 '''original matching'''
 plt.figure(figsize=(17,6))
@@ -102,20 +108,20 @@ C_F_M.DrawDualImages(image_left,
                      image_right)
 
 #draw matching result lines
-C_F_M.DrawMatchedLines(good_key_points_left,
-                       good_key_points_right,
+C_F_M.DrawMatchedLines(list_key_point_good_left,
+                       list_key_point_good_right,
                        image_left)
 
 #draw matching result points
 C_F_M.DrawMatchedPoints(image_left,
-                        good_key_points_left,
-                        good_key_points_right)
+                        list_key_point_good_left,
+                        list_key_point_good_right)
 
-x_shift=C_F_M.CalculateHorizontalDifference(good_key_points_left,
-                                            good_key_points_right)
+x_shift=C_F_M.CalculateHorizontalDifference(list_key_point_good_left,
+                                            list_key_point_good_right)
 
-y_shift=C_F_M.CalculateVerticalDifference(good_key_points_left,
-                                          good_key_points_right)
+y_shift=C_F_M.CalculateVerticalDifference(list_key_point_good_left,
+                                          list_key_point_good_right)
 
 print('==> x shift:',x_shift)
 print('==> y shift:',y_shift)
